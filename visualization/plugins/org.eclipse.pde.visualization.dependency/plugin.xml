@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <category
+            name="Sample Category"
+            id="org.eclipse.pde.visualization">
+      </category>
+      <view
+            name="Graph Plug-in Dependencies"
+            icon="icons/sample.gif"
+            category="org.eclipse.pde.visualization"
+            class="org.eclipse.pde.visualization.dependency.views.PluginVisualizationView"
+            id="org.eclipse.pde.visualization.views.SampleView">
+      </view>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectiveExtensions">
+      <perspectiveExtension
+            targetID="org.eclipse.ui.resourcePerspective">
+         <view
+               ratio="0.5"
+               relative="org.eclipse.ui.views.TaskList"
+               relationship="right"
+               id="org.eclipse.pde.visualization.views.SampleView">
+         </view>
+      </perspectiveExtension>
+   </extension>
+</plugin>
