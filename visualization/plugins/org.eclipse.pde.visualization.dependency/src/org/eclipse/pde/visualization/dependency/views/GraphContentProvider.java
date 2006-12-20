@@ -27,8 +27,8 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 	private BundleDescription[] getDependencies(BundleDescription bundle) {
 		if (bundle != null) {
 			return AnalysisUtil.getPrerequisites(new BundleDescription[] { currentBundle });
-		} else
-			return new BundleDescription[0];
+		} 
+		return new BundleDescription[0];
 	}
 
 	public Object[] getConnectedTo(Object entity) {

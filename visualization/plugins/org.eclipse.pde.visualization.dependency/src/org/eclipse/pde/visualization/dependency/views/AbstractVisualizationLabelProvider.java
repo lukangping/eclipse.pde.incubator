@@ -177,8 +177,7 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	protected BundleDescription getSelected() {
 		if (pinnedNode != null)
 			return pinnedNode;
-		else
-			return selected;
+		return selected;
 	}
 
 	/**
