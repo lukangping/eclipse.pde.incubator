@@ -25,8 +25,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylar.zest.core.ZestStyles;
+import org.eclipse.mylar.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
+import org.eclipse.mylar.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.mylar.zest.core.viewers.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.mylar.zest.layouts.LayoutAlgorithm;
 import org.eclipse.mylar.zest.layouts.LayoutStyles;
 import org.eclipse.mylar.zest.layouts.algorithms.CompositeLayoutAlgorithm;
@@ -57,7 +60,7 @@ import org.eclipse.ui.part.ViewPart;
  * are presented in the same way everywhere.
  * <p>
  */
-public class PluginVisualizationView extends ViewPart {
+public class PluginVisualizationView extends ViewPart implements IZoomableWorkbenchPart {
 
 	private FormToolkit toolKit = null;
 	private Form form = null;
@@ -332,6 +335,9 @@ public class PluginVisualizationView extends ViewPart {
 
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(historyAction);
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		ZoomContributionViewItem contributionViewItem = new ZoomContributionViewItem(this.getSite().getPage());
+		manager.add(contributionViewItem);
 	}
 
 	/**
@@ -347,5 +353,9 @@ public class PluginVisualizationView extends ViewPart {
 	public void dispose() {
 		form.dispose();
 		super.dispose();
+	}
+
+	public AbstractZoomableViewer getZoomableViewer() {
+		return viewer;
 	}
 }

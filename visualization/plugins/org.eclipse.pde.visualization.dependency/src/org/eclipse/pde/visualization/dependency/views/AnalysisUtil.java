@@ -18,7 +18,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Set;
 
 import org.eclipse.osgi.service.resolver.BundleDescription;
@@ -33,12 +32,12 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 public class AnalysisUtil {
 	
 	public static BundleDescription[] getPath(BundleDescription root, BundleDescription bundle ) {
-		Queue q = new LinkedList();
+		LinkedList q = new LinkedList();
 		Set orderedSet = new HashSet();
 		LinkedList orderedList = new LinkedList();
 		q.add(root);
 		while(!q.isEmpty()) {
-			BundleDescription head = (BundleDescription) q.poll();
+			BundleDescription head = (BundleDescription) q.remove(0);
 			if ( !orderedSet.contains(head)) {
 				orderedSet.add(head);
 				orderedList.add(head);
@@ -49,7 +48,7 @@ public class AnalysisUtil {
 		return path;
 	}
 	
-	private static void buildQueue(BundleDescription root, Queue q) {
+	private static void buildQueue(BundleDescription root, LinkedList q) {
 		BundleDescription[] descriptions = getDependencies(root);
 		if ( descriptions == null || descriptions.length == 0 ) return;
 		for (int i = 0; i < descriptions.length; i++) {
@@ -58,7 +57,7 @@ public class AnalysisUtil {
 	}
 	
 	
-	public static BundleDescription[] modifiedDijkstra(Queue q, BundleDescription s, BundleDescription t) {
+	public static BundleDescription[] modifiedDijkstra(LinkedList q, BundleDescription s, BundleDescription t) {
 		HashMap previous = new HashMap();
 		HashMap dValues = new HashMap();
 		for( Iterator iter = q.iterator(); iter.hasNext(); ) {
@@ -67,7 +66,7 @@ public class AnalysisUtil {
 		dValues.put(s, new Integer(0));
 		
 		while ( !q.isEmpty() ) {
-			BundleDescription head = (BundleDescription) q.poll();
+			BundleDescription head = (BundleDescription) q.remove(0);
 			BundleDescription[] outgoing = getDependencies(head);
 			for (int i = 0; i < outgoing.length; i++) {
 				BundleDescription v = outgoing[i];
