@@ -28,3 +28,4 @@ Export-Package: org.eclipse.mylar.zest.core,
  org.eclipse.mylar.zest.core.viewers,
  org.eclipse.mylar.zest.core.widgets
 Import-Package: com.ibm.icu.text
+Bundle-RequiredExecutionEnvironment: J2SE-1.4
