@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %bundle.name
+Bundle-SymbolicName: org.eclipsecon.browser;singleton:=true
+Bundle-Version: 1.2.0
+Bundle-Activator: org.eclipsecon.browser.view.BrowserPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.forms
+Eclipse-LazyStart: true
+Bundle-Localization: plugin
