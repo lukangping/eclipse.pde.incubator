@@ -16,18 +16,16 @@ import java.net.URL;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.forms.FormColors;
 import org.eclipse.ui.forms.HyperlinkGroup;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
+import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
@@ -68,8 +66,6 @@ public class EclipseLinksView extends ViewPart {
 	private EclipseLinkModel fModel;
 
 	private FormText fEclipseImageFormText;	
-	
-	private Label fViewLabel;
 
 	private Composite fBaseComposite;
 	
@@ -145,8 +141,6 @@ public class EclipseLinksView extends ViewPart {
 	private void createUIBody() {
 		ScrolledForm form = createUIScrolledForm(fSashForm, 0, 0, GridData.FILL_BOTH);
 		fManagedForm = new ManagedForm(fToolkit, form);
-		// TODO: MP: LINKEX: Use form title rather than label
-		//form.setText("Eclipse Links");
 		//
 		createUISectionProjectLinks(form.getBody());
 		//
@@ -161,9 +155,8 @@ public class EclipseLinksView extends ViewPart {
 	 * 
 	 */
 	private void createUIHeader() {
-		Composite parent = createUIComposite(fSashForm, 10, 5, GridData.FILL_HORIZONTAL);		
-		//
-		createUILabelViewTitle(parent);	
+		Form form = createUIForm(fSashForm, 0, 0, GridData.FILL_BOTH);
+		form.setText(BrowserMessages.EclipseLinksView_titleEclipseLinks);
 	}
 
 	/**
@@ -281,14 +274,19 @@ public class EclipseLinksView extends ViewPart {
 	}
 
 	/**
-	 * 
+	 * @param parent
 	 */
-	private void createUILabelViewTitle(Composite parent) {
-		fViewLabel = fToolkit.createLabel(parent, BrowserMessages.EclipseLinksView_titleEclipseLinks);
-		// Post 3.3 M4:  Use IFormColors.TITLE
-		fViewLabel.setForeground(fToolkit.getColors().getColor(FormColors.TITLE));
-		fViewLabel.setFont(JFaceResources.getHeaderFont());
-	}
+	private Form createUIForm(Composite parent,
+			int marginWidth, int marginHeight, int style) {
+		Form form = fToolkit.createForm(parent);
+		GridLayout layout = new GridLayout();
+		layout.marginWidth = marginWidth;
+		layout.marginHeight = marginHeight;		
+		form.getBody().setLayout(layout);
+		GridData data = new GridData(style);		
+		form.getBody().setLayoutData(data);	
+		return form;
+	}	
 	
 	/**
 	 * 

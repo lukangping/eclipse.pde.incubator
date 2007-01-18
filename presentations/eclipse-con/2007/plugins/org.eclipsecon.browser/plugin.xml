@@ -13,7 +13,7 @@
             allowMultiple="false"
             category="org.eclipsecon.browser.category"
             class="org.eclipsecon.browser.view.ui.EclipseLinksView"
-            icon="icons/sample.gif"
+            icon="icons/eclipse_icon.gif"
             id="org.eclipsecon.browser.view"
             name="%view.name.links">
       </view>
