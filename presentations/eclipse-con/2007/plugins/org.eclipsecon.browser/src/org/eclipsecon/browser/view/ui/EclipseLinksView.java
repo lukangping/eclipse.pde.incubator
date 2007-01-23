@@ -43,8 +43,6 @@ import org.eclipsecon.browser.view.ui.sections.EclipseProjectLinksSection;
 import org.eclipsecon.browser.view.ui.sections.EclipseSearchSection;
 import org.eclipsecon.browser.view.ui.sections.EclipseUsefulLinksSection;
 
-// TODO: MP: LINKEX: Change name of sample.gif
-
 /**
  * EclipseLinksView
  *
@@ -215,8 +213,7 @@ public class EclipseLinksView extends ViewPart {
 	 * 
 	 */
 	private void createUISectionProjectLinks(Composite parent) {
-		int style = Section.DESCRIPTION | ExpandableComposite.TITLE_BAR
-				| ExpandableComposite.TWISTIE;
+		int style = Section.DESCRIPTION | ExpandableComposite.TITLE_BAR;
 		fEclipseProjectLinksSection = new EclipseProjectLinksSection(this, parent, fToolkit, style, BrowserMessages.EclipseLinksView_sectionTitleProjectLinks, BrowserMessages.EclipseLinksView_sectionDescProjectLinks);
 		fEclipseProjectLinksSection.createUI();
 	}
