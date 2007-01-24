@@ -98,13 +98,6 @@
          description="Dynamic update, install, and field service">
       </component>	
 
-      <!-- Link -->		
-      <component 
-         name="WebDAV" 
-         link="http://dev.eclipse.org/viewcvs/index.cgi/platform-webdav-home/main.html?view=co"
-         description="WebDAV integration">
-      </component>	
-      
    </subproject>		
 
    <!-- Link -->		
