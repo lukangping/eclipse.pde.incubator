@@ -44,7 +44,7 @@ public class Stub implements EditPartListener {
 	 * @see org.eclipse.gef.EditPartListener#selectedStateChanged(EditPart)
 	 */
 	public void selectedStateChanged(EditPart part) { }
-};
+}
 
 /**
  * Called after a child EditPart has been added to its parent.
