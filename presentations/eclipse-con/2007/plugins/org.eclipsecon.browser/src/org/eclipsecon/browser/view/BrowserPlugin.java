@@ -32,6 +32,9 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle
  */
 public class BrowserPlugin extends AbstractUIPlugin {
+	
+	public static String PERSPECTIVE_ID = "org.eclipsecon.browser.perspective"; //$NON-NLS-1$
+	public static String VIEW_ID = "org.eclipsecon.browser.view"; //$NON-NLS-1$
 
 	private static BrowserPlugin plugin;
 	

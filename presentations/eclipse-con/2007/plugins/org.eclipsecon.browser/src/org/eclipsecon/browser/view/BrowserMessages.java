@@ -29,6 +29,8 @@ public class BrowserMessages extends NLS {
 
 	public static String EclipseLinkHandler_errorUnrecognizedElement;
 
+	public static String EclipseLinksApplicationWorkbenchWindowAdvisor_title;
+
 	public static String EclipseLinksView_errorMissingModelFile;
 
 	public static String EclipseLinksView_errorModelLoad;

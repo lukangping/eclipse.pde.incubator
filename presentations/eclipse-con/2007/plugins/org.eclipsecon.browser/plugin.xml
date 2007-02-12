@@ -17,12 +17,6 @@
             id="org.eclipsecon.browser.view"
             name="%view.name.links">
       </view>
-      <stickyView
-            closeable="true"
-            id="org.eclipsecon.browser.view"
-            location="RIGHT"
-            moveable="true">
-      </stickyView>
    </extension>
    <extension
          point="org.eclipsecon.browser.usefulLinks">
@@ -41,6 +35,24 @@
             link="http://wiki.eclipse.org/index.php/Main_Page"
             name="%link.object.name.eclipsepedia">
       </linkObject>         
+   </extension>
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.eclipsecon.browser.application.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipsecon.browser.application.EclipseLinksPerspective"
+            icon="icons/eclipse_icon.gif"
+            id="org.eclipsecon.browser.perspective"
+            name="%perspective.name.links">
+      </perspective>
    </extension>
 
 </plugin>
