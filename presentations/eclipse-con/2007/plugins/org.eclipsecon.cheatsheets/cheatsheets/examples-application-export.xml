@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Export RCP product">
+   <intro>
+      <description>
+         This cheat sheet will demonstrate how to export the Eclipse Browser plug-in as an RCP application. 
+         <br/>
+         <br/>
+         To learn more about using cheat sheets, click the help button
+         in the top right corner (?).
+      </description>
+   </intro>
+   <item title="Open the plug-in development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
+      <description>
+         To open the plug-in development perspective,
+         select <b>Window-&gt;Open Perspective-&gt;Other...</b> 
+         and choose <b>Plug-in Development</b>.
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)" confirm="false">
+      </command>
+   </item>
+   <item title="Create the product configuration" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/file_wizards/new_product_config.htm">
+      <description>
+         To create the product configuration, perform the following steps:
+      </description>
+      <subitem label="Select &quot;File-&gt;New-&gt;Product Configuration&quot; from the main menu" skip="true">
+         <command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.pde.ui.NewProductConfigurationWizard)" confirm="false">
+         </command>
+      </subitem>
+      <subitem label="Select &quot;org.eclipsecon.browser&quot; in the resulting &quot;New Product Configuration&quot; wizard page" skip="false">
+      </subitem>
+      <subitem label="Input &quot;browser.product&quot; into the &quot;File name&quot; text box" skip="false">
+      </subitem>
+      <subitem label="Select the &quot;Use a launch configuration&quot; radio button inside the &quot;Initialize the file content&quot; group and click &quot;Finish&quot;." skip="false">
+      </subitem>
+   </item>
+   <item title="Open the product editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/editor.htm">
+      <description>
+         To open the product editor (if it is not already open),
+         expand the <b>org.eclipsecon.browser</b> tree dialog
+         in the <b>Package Explorer</b> view and double-click
+         on the <b>browser.product</b> file (the <b>Overview</b> page
+         should be open initially).
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/browser.product)" confirm="false">
+      </command>
+   </item>
+   <item title="Define the product" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/overview.htm">
+      <description>
+         To define the product, perform the following steps:
+      </description>
+      <subitem label="Input &quot;Browser RCP Application&quot; into the &quot;Product Name&quot; text box" skip="false">
+      </subitem>
+      <subitem label="Click the &quot;New...&quot; button next to the &quot;Product ID&quot; drop down menu to open the &quot;New Product Definition&quot; dialog box" skip="false">
+      </subitem>
+      <subitem label="Verify &quot;org.eclipsecon.browser&quot; is the inputted value for the &quot;Defining Plug-in&quot; text box" skip="true">
+      </subitem>
+      <subitem label="Verify &quot;product&quot; is the inputted value for the &quot;Product ID&quot; text box" skip="true">
+      </subitem>
+      <subitem label="Select &quot;org.eclipsecon.browser.application&quot; in the &quot;Application&quot; combo." skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Synchronize the product configuration with the defining plug-in" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/overview.htm">
+      <description>
+         Product configurations and their constituent files may become
+         unsynchronized.  This situation is apparent when changes 
+         made using the product editor are not reflected in the application.  
+         <br/>
+         <br/>
+         To synchronize the product configuration with the defining plug-in, 
+         click the <b>Synchronize</b> hyperlink under the <b>Testing</b>
+         heading on the product editor <b>Overview</b> page.
+         <br/>
+         <br/>
+         Note:  PDE automatically synchronizes the product configuration
+         when the <b>Launch the product</b> hyperlinks under the 
+         <b>Testing</b> heading are used.
+      </description>
+   </item>
+   <item title="Run the RCP product" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/overview.htm">
+      <description>
+         To run the RCP product,
+         perform the following steps:
+      </description>
+      <subitem label="Click the &quot;Launch the product&quot; hyperlink under the &quot;Testing&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Note: &quot;Browser RCP Application&quot; now shows up in the window title bar" skip="true">
+      </subitem>
+      <subitem label="Exit the RCP application" skip="false">
+      </subitem>
+   </item>
+   <item title="Open the build configuration editor" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/build.htm">
+      <description>
+         To open the build configuration editor,
+         expand the <b>org.eclipsecon.browser</b> tree dialog
+         in the <b>Package Explorer</b> view and double-click
+         on the <b>build.properties</b> file.
+         <br/>
+         <br/>
+         Select the <b>Build</b> tab to display the <b>Build Configuration</b> 
+         page if it is not the initial page.
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/build.properties)" confirm="false">
+      </command>
+   </item>
+   <item title="Modify the build configuration" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/build.htm">
+      <description>
+         In order to control what files are deployed with our packaged
+         RCP application, we need to modify the build configuration.
+         <br/>
+         <br/>
+         To modify the build configuration, perform the following steps:
+      </description>
+      <subitem label="Select the checkbox corresponding to the &quot;data&quot; directory under the &quot;Binary Build&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select the checkbox corresponding to the &quot;icons&quot; directory under the &quot;Binary Build&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select the checkbox corresponding to the &quot;schema&quot; directory under the &quot;Binary Build&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select the checkbox corresponding to the &quot;plugin.properties&quot; file under the &quot;Binary Build&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select the checkbox corresponding to the &quot;splash.bmp&quot; file under the &quot;Binary Build&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Open the product editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/editor.htm">
+      <description>
+         To open the product editor (if it is not already open),
+         expand the <b>org.eclipsecon.browser</b> tree dialog
+         in the <b>Package Explorer</b> view and double-click
+         on the <b>browser.product</b> file.
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/browser.product)" confirm="false">
+      </command>
+   </item>
+   <item title="Add window images" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/branding.htm">
+      <description>
+         To add window images, perform the following steps:
+      </description>
+      <subitem label="Select the &quot;Branding&quot; tab within the product editor to display the &quot;Branding&quot; page" skip="false">
+      </subitem>
+      <subitem label="Click the &quot;Browse&quot; button adjacent to the &quot;16x16&quot; text box under the &quot;Window Images&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Fully expand the &quot;org.eclipsecon.browser&quot; tree in the &quot;Image Selection&quot; dialog box and select &quot;alt_window_16.gif&quot; and click &quot;OK&quot;" skip="false">
+      </subitem>
+      <subitem label="Click the &quot;Browse&quot; button adjacent to the &quot;32x32&quot; text box under the &quot;Window Images&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Fully expand the &quot;org.eclipsecon.browser&quot; tree in the &quot;Image Selection&quot; dialog box and select &quot;alt_window_32.gif&quot; and click &quot;OK&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Customize the launcher" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/launcher.htm">
+      <description>
+         We will walk through this task assuming we are working on a Windows
+         platform (Similar steps may be followed for other platforms).
+         <br/>
+         <br/>
+         To customize the launcher, perform the following steps:
+      </description>
+      <subitem label="Select the &quot;Launcher&quot; tab within the product editor to display the &quot;Launcher&quot; page" skip="false">
+      </subitem>
+      <subitem label="Input &quot;browser&quot; into the &quot;Launcher Name&quot; text box under the &quot;Program Launcher&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select the &quot;win32&quot; tab under the &quot;Program Launcher&quot; heading" skip="true">
+      </subitem>
+      <subitem label="Select the &quot;Use a single ICO file containing 7 images as specified above&quot; radio button" skip="true">
+      </subitem>
+      <subitem label="Click the &quot;Browse...&quot; button adjacent to the &quot;File&quot; text box" skip="true">
+      </subitem>
+      <subitem label="Fully expand the &quot;org.eclipsecon.browser&quot; tree in the &quot;Image Selection&quot; dialog box and select &quot;alt_launcher.ico&quot; and click &quot;OK&quot;" skip="true">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Export the plug-in based product" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/overview.htm">
+      <description>
+         To export the plug-in based product, perform the following steps:
+      </description>
+      <subitem label="Select the &quot;Overview&quot; tab within the product editor to display the &quot;Overview&quot; page" skip="false">
+      </subitem>
+      <subitem label="Click the &quot;Eclipse Product export wizard&quot; hyperlink under the &quot;Exporting&quot; heading to launch the &quot;Export&quot; dialog box" skip="true">
+         <command serialization="org.eclipse.ui.file.export(exportWizardId=org.eclipse.pde.ui.productExportWizard)" confirm="false">
+         </command>
+      </subitem>
+      <subitem label="Verify that &quot;/org.eclipsecon.browser/browser.product&quot; is entered in the &quot;Configuration&quot; combo box within the &quot;Product Configuration&quot; group" skip="true">
+      </subitem>
+      <subitem label="Input &quot;browser_rcpapp&quot; in the &quot;Root directory&quot; text box contained in the &quot;Product Configuration&quot; group" skip="false">
+      </subitem>
+      <subitem label="Input a destination directory in the &quot;Directory&quot; text box under the &quot;Destination&quot; group (e.g. &quot;C:\&quot; for Windows) and click &quot;Finish&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Browse the exported plug-in based product directory" dialog="true" skip="false">
+      <description>
+         To browse the exported plug-in based product directory, perform the following steps:
+      </description>
+      <subitem label="Navigate your file system to the destination directory specified in the previous step (e.g. &quot;C:\&quot; for Windows)" skip="false">
+      </subitem>
+      <subitem label="Note the presence of the &quot;rcpapp_plugin-based&quot; directory in the destination directory and open it" skip="false">
+      </subitem>
+      <subitem label="Note the presence of the &quot;org.eclipsecon.browser&quot; plug-in along with many other RCP plug-ins it depends upon within the &quot;plugins&quot; sub-directory" skip="true">
+      </subitem>
+      <subitem label="Note the &quot;browser&quot; launcher with a branded icon (&quot;browser.exe&quot; on Windows)" skip="false">
+      </subitem>
+      <subitem label="Run the &quot;browser&quot; launcher" skip="false">
+      </subitem>
+      <subitem label="Observe the plug-in based RCP application you created that is fully executable outside the Eclipse workspace" skip="true">
+      </subitem>
+      <subitem label="Exit the RCP application" skip="false">
+      </subitem>
+   </item>
+</cheatsheet>

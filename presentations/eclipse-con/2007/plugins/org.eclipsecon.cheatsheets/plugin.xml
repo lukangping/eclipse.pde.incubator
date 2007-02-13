@@ -5,24 +5,17 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet
             category="org.eclipse.pde"
-            composite="false"
-            contentFile="cheatsheets/examples-import.xml"
+            composite="true"
+            contentFile="cheatsheets/examples-import-composite.xml"
             id="org.eclipsecon.cheatsheets.import"
             name="Importing the EclipseCon tutorial">
       </cheatsheet>
       <cheatsheet
             category="org.eclipse.pde"
-            composite="false"
-            contentFile="cheatsheets/examples-custom-extension.xml"
-            id="org.eclipsecon.cheatsheets.extension"
-            name="Extending the EcliseCon tutorial">
-      </cheatsheet>
-      <cheatsheet
-            category="org.eclipse.pde"
-            composite="false"
-            contentFile="cheatsheets/examples-application-extension.xml"
-            id="org.eclipsecon.cheatsheets.application"
-            name="Creating EclipseCon tutorial RCP application">
+            composite="true"
+            contentFile="cheatsheets/examples-rcpapp-composite.xml"
+            id="org.eclipsecon.cheatsheets.rcp"
+            name="Creating EclipseCon tutorial RCP Application">
       </cheatsheet>
    </extension>
 

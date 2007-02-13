@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Create Eclipse Browser RCP Application">
+   <taskGroup kind="set" name="Create Eclipse Browser RCP application" skip="false">
+      <onCompletion>
+         Congratulations!  You just created the a customized, branded Eclipse RCP application using PDE.
+      </onCompletion>
+      <task kind="cheatsheet" name="Create RCP application" skip="false">
+         <onCompletion>
+            Congratulations!  You just create an RCP application for the Eclipse Browser plug-in!
+         </onCompletion>
+         <param name="path" value="examples-application-extension.xml">
+         </param>
+      </task>
+      <task kind="cheatsheet" name="Create, customize, and export a product" skip="false">
+         <onCompletion>
+            Congratulations!  You created and exported a custom product!
+         </onCompletion>
+         <param name="path" value="examples-application-export.xml">
+         </param>
+      </task>
+   </taskGroup>
+</compositeCheatsheet>
