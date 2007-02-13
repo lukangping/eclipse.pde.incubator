@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="org.eclipse.pde"
+            composite="false"
+            contentFile="cheatsheets/examples-import.xml"
+            id="org.eclipsecon.cheatsheets.import"
+            name="Importing the EclipseCon tutorial">
+      </cheatsheet>
+      <cheatsheet
+            category="org.eclipse.pde"
+            composite="false"
+            contentFile="cheatsheets/examples-custom-extension.xml"
+            id="org.eclipsecon.cheatsheets.extension"
+            name="Extending the EcliseCon tutorial">
+      </cheatsheet>
+      <cheatsheet
+            category="org.eclipse.pde"
+            composite="false"
+            contentFile="cheatsheets/examples-application-extension.xml"
+            id="org.eclipsecon.cheatsheets.application"
+            name="Creating EclipseCon tutorial RCP application">
+      </cheatsheet>
+   </extension>
+
+</plugin>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Utilize custom extension">
+   <intro>
+      <description>
+         This cheat sheet will demonstrate how to extend the example plug-in by adding a custom extesion using PDE. 
+         <br/>
+         <br/>
+         To learn more about using cheat sheets, click the help button
+         in the top right corner (?).
+      </description>
+   </intro>
+   <item title="Open the plug-in development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
+      <description>
+         To open the plug-in development perspective,
+         select <b>Window-&gt;Open Perspective-&gt;Other...</b> 
+         and choose <b>Plug-in Development</b>.
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)" confirm="false">
+      </command>
+   </item>
+   <item title="Create a new plug-in" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/project_wizards/new_plugin_project.htm">
+      <description>
+         To create the plug-in perform the following steps
+      </description>
+      <subitem label="Select &quot;File-&gt;New-&gt;Project...&quot; from the main menu, expand the &quot;Plug-in Development&quot; category within the resulting &quot;New Project&quot; dialog box, and choose &quot;Plug-in Project&quot;" skip="true">
+         <command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.pde.ui.NewProjectWizard)" confirm="false">
+         </command>
+      </subitem>
+      <subitem label="Input &quot;org.eclipsecon.browser.extension&quot; into the &quot;Project Name&quot; text box" skip="false">
+      </subitem>
+      <subitem label="Accept the rest of the default preloaded values on the &quot;Plug-in Project&quot; page and click &quot;Next &gt;&quot;" skip="false">
+      </subitem>
+      <subitem label="Accept the default preloaded values on the &quot;Plug-in Content&quot; page and click &quot;Finish&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Define a useful links extension" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
+      <description>
+         To define a view extension, perform the following steps:
+      </description>
+      <subitem label="Select the &quot;Extensions&quot; tab of the Manifest Editor (which should open automatically)" skip="false">
+      </subitem>
+      <subitem label="Click the &quot;Add&quot; button in the &quot;All Extensions&quot; section, to open the &quot;New Extension&quot; wizard" skip="false">
+      </subitem>
+      <subitem label="Deselect the checkbox labeled &quot;Show only extension points from the required plug-ins&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;org.eclipsecon.browser.usefulLinks&quot; from the &quot;Extension Points&quot; list box and click &quot;Finish&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;Yes&quot; when prompted &quot;Do you want to add plug-in org.eclipsecon.browser, declaring the usefulLinks extension point, to the list of plug-in dependencies?&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Add new link object" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
+      <description>
+         To add an additional link object, perform the following steps:
+      </description>
+      <subitem label="Select &quot;org.eclipsecon.browser.usefulLinks&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
+      </subitem>
+      <subitem label="Right-click and select &quot;New-&gt;linkObject&quot; from the context menu" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;name&quot; text box under &quot;Extension Element Details&quot; with &quot;Eclipse Articles&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;link&quot; text box with &quot;http://www.eclipse.org/articles/&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;description&quot; text box with &quot;Web site to find eclipse related articles&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Test the plug-in" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/launchers/eclipse_application_launcher.htm">
+      <description>
+         To test your Eclipse plug-in inside a target Eclipse platform,
+         perform the following steps:
+      </description>
+      <subitem label="Select the &quot;Overview&quot; tab of the Manifest Editor" skip="true">
+         <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser.extension/META-INF/MANIFEST.MF)" confirm="false">
+         </command>
+      </subitem>
+      <subitem label="Click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select &quot;Window-&gt;Show View-&gt;Other...&quot; from the main menu in the newly launched Eclipse platform" skip="false">
+      </subitem>
+      <subitem label="Select &quot;EclipseCon&gt;Links&quot; and click the &quot;OK&quot; button" skip="false">
+      </subitem>
+      <subitem label="Note the &quot;Eclipse Homepage&quot; and &quot;Eclipse Articles&quot; links under the &quot;Useful Links&quot; section in the Links view" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Exit&quot; from the main menu to exit the target Eclipse platform" skip="false">
+      </subitem>
+   </item>
+</cheatsheet>

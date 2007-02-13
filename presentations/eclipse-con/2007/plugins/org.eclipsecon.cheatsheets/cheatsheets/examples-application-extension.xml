@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Utilize application extension">
+   <intro>
+      <description>
+         This cheat sheet will demonstrate how create a RCP application. 
+         <br/>
+         <br/>
+         To learn more about using cheat sheets, click the help button
+         in the top right corner (?).
+      </description>
+   </intro>
+   <item title="Open the plug-in development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
+      <description>
+         To open the plug-in development perspective,
+         select <b>Window-&gt;Open Perspective-&gt;Other...</b> 
+         and choose <b>Plug-in Development</b>.
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)" confirm="false">
+      </command>
+   </item>
+   <item title="Open the plug-in editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
+      <description>
+         To open the plug-in editor (if it is not already open),
+         expand the <b>org.eclipsecon.browser</b> tree dialog
+         in the <b>Package Explorer</b> view and double-click
+         on the <b>plugin.xml</b> file (the <b>Extensions</b> page
+         should be open initially).
+         <br/>
+         <br/>
+         Alternatively, click the following button to perform the task.
+      </description>
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/plugin.xml)" confirm="false">
+      </command>
+   </item>
+   <item title="Define a perspective extension" dialog="false" skip="false">
+      <description>
+         To define a perspective extension, perform the following steps:
+      </description>
+      <subitem label="Click the &quot;Add&quot; button to open the &quot;New Extension&quot; wizard" skip="false">
+      </subitem>
+      <subitem label="Select &quot;org.eclipse.ui.perspectives&quot; from the &quot;Extension Points&quot; list box and click &quot;Finish&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Define a perspective" dialog="false" skip="false">
+      <description>
+         To define a perspective, perform the following steps:
+      </description>
+      <subitem label="Select &quot;org.eclipse.ui.perspectives&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
+      </subitem>
+      <subitem label="Right-click and select &quot;New-&gt;perspective&quot; from the context menu" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipsecon.browser.perspective&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;name&quot; text box with &quot;%perspective.name.links&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;class&quot; text box with &quot;org.eclipsecon.browser.application.EclipseLinksPerspective&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;icon&quot; text box with &quot;icons/eclipse_icon.gif&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Define an application extension" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
+      <description>
+         To define an application extension, perform the following steps:
+      </description>
+      <subitem label="Click the &quot;Add&quot; button to open the &quot;New Extension&quot; wizard" skip="false">
+      </subitem>
+      <subitem label="Select &quot;org.eclipse.core.runtime.applications&quot; from the &quot;Extension Points&quot; list box and click &quot;Finish&quot;" skip="false">
+      </subitem>
+      <subitem label="Set the contents of the &quot;ID&quot; field to &quot;application&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Add an application" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
+      <description>
+         To define an application, perform the following steps:
+      </description>
+      <subitem label="Select &quot;org.eclipse.ui.perspectives&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
+      </subitem>
+      <subitem label="Right-click and select &quot;New-&gt;application&quot; from the context menu" skip="false">
+      </subitem>
+      <subitem label="Select &quot;(application)&quot; under &quot;org.eclipse.core.runtime.applications&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
+      </subitem>
+      <subitem label="Right-click and select &quot;New-&gt;run&quot; from the context menu" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;class&quot; text box with &quot;org.eclipsecon.browser.application.Application&quot;" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      </subitem>
+   </item>
+   <item title="Test the plug-in" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/launchers/eclipse_application_launcher.htm">
+      <description>
+         To test your Eclipse plug-in inside a target Eclipse platform,
+         perform the following steps:
+      </description>
+      <subitem label="Open the plug-in editor for the &quot;org.eclipsecon.browser&quot; plug-in and select the &quot;Overview&quot; tab" skip="true">
+         <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/META-INF/MANIFEST.MF)" confirm="false">
+         </command>
+      </subitem>
+      <subitem label="Click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading" skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Exit&quot; from the main menu to exit the target Eclipse platform" skip="false">
+      </subitem>
+   </item>
+</cheatsheet>
