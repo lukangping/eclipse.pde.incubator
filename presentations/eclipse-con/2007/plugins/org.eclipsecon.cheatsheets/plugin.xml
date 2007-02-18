@@ -8,7 +8,7 @@
             composite="true"
             contentFile="cheatsheets/view-composite.xml"
             id="org.eclipse.browser.cheatsheets.view"
-            name="Importing the EclipseCon tutorial">
+            name="Create an Eclipse Browser view">
       </cheatsheet>
    </extension>
    <extension
@@ -18,7 +18,7 @@
             composite="true"
             contentFile="cheatsheets/rcpapp-composite.xml"
             id="org.eclipse.browser.cheatsheets.rcp"
-            name="Creating EclipseCon tutorial RCP Application">
+            name="Create an Eclipse Browser RCP Application">
       </cheatsheet>
    </extension>
    <extension
