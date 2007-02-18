@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Creating Eclipse Browser Tutorial">
+   <taskGroup kind="set" name="Create the Eclipse Browser tutorial" skip="false">
+      <intro>
+         This cheat sheet will guide you through the individual steps to 
+         import and run the tutorial and extend the Eclipse Browser plug-in to customize the example using the Plug-in Development Environment (PDE).
+         <br/>
+         <br/>
+         To assist you along the way, wizards and commands
+         will be available for you to launch automatically.
+      </intro>
+      <onCompletion>
+         Congratulations!  You just created the imported, ran, and extended the Eclipse Links plug-in using PDE.
+      </onCompletion>
+      <task kind="cheatsheet" name="Create the Eclipse Browser view" skip="false">
+         <intro>
+            This cheat sheet will demonstrate how to import, modify and run the Eclipse Browser plug-in
+         </intro>
+         <onCompletion>
+            Congratulations!  You just ran the Eclipse Browser plug-in!
+         </onCompletion>
+         <param name="path" value="view-extension.xml">
+         </param>
+      </task>
+      <task kind="cheatsheet" name="Extend the Eclipse Browser view" skip="false">
+         <intro>
+            This cheat sheet will demonstrate how to extend the Eclipse Browser plug-in.
+         </intro>
+         <onCompletion>
+            Congratulations!  You just customized the Eclipse Browser plug-in !
+         </onCompletion>
+         <param name="path" value="custom-extension.xml">
+         </param>
+      </task>
+   </taskGroup>
+</compositeCheatsheet>

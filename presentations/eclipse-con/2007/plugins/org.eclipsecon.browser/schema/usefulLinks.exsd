@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <!-- Schema file written by PDE -->
-<schema targetNamespace="org.eclipsecon.browser">
+<schema targetNamespace="org.eclipse.browser">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipsecon.browser" id="usefulLinks" name="Useful Links"/>
+         <meta.schema plugin="org.eclipse.browser" id="usefulLinks" name="Useful Links"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -49,6 +49,9 @@
 
    <element name="linkObject">
       <complexType>
+         <sequence>
+            <element ref="description" minOccurs="0" maxOccurs="1"/>
+         </sequence>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
@@ -66,17 +69,15 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="description" type="string">
-            <annotation>
-               <documentation>
-                  TODO
-               </documentation>
-               <appInfo>
-                  <meta.attribute translatable="true"/>
-               </appInfo>
-            </annotation>
-         </attribute>
       </complexType>
+   </element>
+
+   <element name="description" type="string">
+      <annotation>
+         <appInfo>
+            <meta.element translatable="true"/>
+         </appInfo>
+      </annotation>
    </element>
 
    <annotation>

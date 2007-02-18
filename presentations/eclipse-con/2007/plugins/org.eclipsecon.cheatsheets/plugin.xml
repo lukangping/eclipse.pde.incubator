@@ -4,19 +4,29 @@
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet
-            category="org.eclipse.pde"
+            category="org.eclipse.browser.cheatsheets.category"
             composite="true"
-            contentFile="cheatsheets/examples-import-composite.xml"
-            id="org.eclipsecon.cheatsheets.import"
+            contentFile="cheatsheets/view-composite.xml"
+            id="org.eclipse.browser.cheatsheets.view"
             name="Importing the EclipseCon tutorial">
       </cheatsheet>
-      <cheatsheet
-            category="org.eclipse.pde"
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+       <cheatsheet
+            category="org.eclipse.browser.cheatsheets.category"
             composite="true"
-            contentFile="cheatsheets/examples-rcpapp-composite.xml"
-            id="org.eclipsecon.cheatsheets.rcp"
+            contentFile="cheatsheets/rcpapp-composite.xml"
+            id="org.eclipse.browser.cheatsheets.rcp"
             name="Creating EclipseCon tutorial RCP Application">
       </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            id="org.eclipse.browser.cheatsheets.category"
+            name="Fundamentals of Plug-in and RCP Development">
+      </category>
    </extension>
 
 </plugin>
