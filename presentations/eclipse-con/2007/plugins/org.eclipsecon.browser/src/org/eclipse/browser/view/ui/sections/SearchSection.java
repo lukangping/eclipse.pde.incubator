@@ -73,7 +73,7 @@ public class SearchSection extends LinkSection {
 	 * @param parent
 	 */
 	private void createUIButtonSearch(Composite parent) {
-		fSearchButton = getToolkit().createButton(parent, BrowserMessages.EclipseSearchSection_buttonNameSearch, SWT.PUSH);
+		fSearchButton = getToolkit().createButton(parent, BrowserMessages.SearchSection_buttonNameSearch, SWT.PUSH);
 		GridData data = new GridData(GridData.VERTICAL_ALIGN_CENTER);
 		fSearchButton.setLayoutData(data);
 	}

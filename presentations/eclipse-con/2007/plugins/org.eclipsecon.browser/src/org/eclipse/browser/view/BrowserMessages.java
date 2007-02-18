@@ -25,31 +25,31 @@ public class BrowserMessages extends NLS {
 
 	public static String CollapseAction_actionNameCollapseAll;
 
-	public static String EclipseLinkHandler_errorAttributeMissing;
+	public static String LinkHandler_errorAttributeMissing;
 
-	public static String EclipseLinkHandler_errorUnrecognizedElement;
+	public static String LinkHandler_errorUnrecognizedElement;
 
-	public static String EclipseLinksApplicationWorkbenchWindowAdvisor_title;
+	public static String BrowserWorkbenchWindowAdvisor_title;
 
-	public static String EclipseLinksView_errorMissingModelFile;
+	public static String EclipseBrowserView_errorMissingModelFile;
 
-	public static String EclipseLinksView_errorModelLoad;
+	public static String EclipseBrowserView_errorModelLoad;
 
-	public static String EclipseLinksView_sectionDescProjectLinks;
+	public static String EclipseBrowserView_sectionDescProjectLinks;
 
-	public static String EclipseLinksView_sectionDescSearch;
+	public static String EclipseBrowserView_sectionDescSearch;
 
-	public static String EclipseLinksView_sectionDescUsefulLinks;
+	public static String EclipseBrowserView_sectionDescUsefulLinks;
 
-	public static String EclipseLinksView_sectionTitleProjectLinks;
+	public static String EclipseBrowserView_sectionTitleProjectLinks;
 
-	public static String EclipseLinksView_sectionTitleSearch;
+	public static String EclipseBrowserView_sectionTitleSearch;
 
-	public static String EclipseLinksView_sectionTitleUsefulLinks;
+	public static String EclipseBrowserView_sectionTitleUsefulLinks;
 
-	public static String EclipseLinksView_titleEclipseLinks;
+	public static String EclipseBrowserView_title;
 
-	public static String EclipseSearchSection_buttonNameSearch;
+	public static String SearchSection_buttonNameSearch;
 
 	public static String ExternalBrowserAction_actionNameExternalBrowser;
 

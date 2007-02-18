@@ -18,6 +18,7 @@ import org.eclipse.browser.view.model.LinkObject;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.osgi.util.NLS;
 
 /**
  * UsefulLinkManager
@@ -66,10 +67,10 @@ public class UsefulLinkManager {
 			if ((name == null) ||
 					(name.length() == 0)) {
 				BrowserPlugin.logException(
-						BrowserMessages.bind(
+						NLS.bind(
 								BrowserMessages.UsefulLinkManager_errorRequiredAttributeMissing, 
 								F_ATTRIBUTE_NAME), 
-						BrowserMessages.bind(
+						NLS.bind(
 								BrowserMessages.UsefulLinkManager_errorMissingAttribute, 
 								F_ATTRIBUTE_NAME), 
 						new Exception());
@@ -78,10 +79,10 @@ public class UsefulLinkManager {
 			if ((link == null) ||
 					(link.length() == 0)) {
 				BrowserPlugin.logException(
-						BrowserMessages.bind(
+						NLS.bind(
 								BrowserMessages.UsefulLinkManager_errorRequiredAttributeMissing, 
 								F_ATTRIBUTE_LINK), 
-						BrowserMessages.bind(
+						NLS.bind(
 								BrowserMessages.UsefulLinkManager_errorMissingAttribute, 
 								F_ATTRIBUTE_LINK), 
 						new Exception());

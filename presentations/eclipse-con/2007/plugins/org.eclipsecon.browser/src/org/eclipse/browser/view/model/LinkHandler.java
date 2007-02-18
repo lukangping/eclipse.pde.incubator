@@ -15,6 +15,7 @@ import java.io.StringReader;
 import java.util.Stack;
 
 import org.eclipse.browser.view.BrowserMessages;
+import org.eclipse.osgi.util.NLS;
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -84,7 +85,7 @@ public class LinkHandler extends DefaultHandler {
 		if ((attr_name == null) ||
 				(attr_link == null) ||
 				(attr_description == null)) {
-			throw new SAXException(BrowserMessages.EclipseLinkHandler_errorAttributeMissing);
+			throw new SAXException(BrowserMessages.LinkHandler_errorAttributeMissing);
 		}
 
 		// Get the parent object
@@ -108,7 +109,7 @@ public class LinkHandler extends DefaultHandler {
 		} else {
 			// Unrecognized element
 			throw new SAXException(
-					BrowserMessages.bind(BrowserMessages.EclipseLinkHandler_errorUnrecognizedElement, name));
+					NLS.bind(BrowserMessages.LinkHandler_errorUnrecognizedElement, name));
 		}		
 		// Set the link object fields
 		linkObject.setFieldName(attr_name);

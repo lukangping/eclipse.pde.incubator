@@ -19,6 +19,7 @@ import org.eclipse.browser.view.BrowserPlugin;
 import org.eclipse.browser.view.BrowserPluginImages;
 import org.eclipse.browser.view.model.LinkObject;
 import org.eclipse.jface.action.Action;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.browser.IWebBrowser;
@@ -118,7 +119,7 @@ public class OpenLinkAction extends Action {
 			setLink(null);
 			setName(null);
 		} else {
-			setToolTipText(BrowserMessages.bind(
+			setToolTipText(NLS.bind(
 					BrowserMessages.OpenLinkAction_toolTipOpenLink, 
 					linkObject.getFieldName()));
 			setLink(linkObject.getFieldLink());

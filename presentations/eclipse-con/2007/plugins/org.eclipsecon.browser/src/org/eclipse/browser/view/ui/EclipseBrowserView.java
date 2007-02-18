@@ -27,6 +27,7 @@ import org.eclipse.browser.view.ui.sections.UsefulLinksSection;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.osgi.util.NLS;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.layout.GridData;
@@ -154,7 +155,7 @@ public class EclipseBrowserView extends ViewPart {
 	 */
 	private void createUIHeader() {
 		Form form = createUIForm(fSashForm, 0, 0, GridData.FILL_BOTH);
-		form.setText(BrowserMessages.EclipseLinksView_titleEclipseLinks);
+		form.setText(BrowserMessages.EclipseBrowserView_title);
 	}
 
 	/**
@@ -204,8 +205,8 @@ public class EclipseBrowserView extends ViewPart {
 		int style = Section.DESCRIPTION | ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE;
 		fEclipseUsefulLinksSection = new UsefulLinksSection(this,
-				parent, fToolkit, style, BrowserMessages.EclipseLinksView_sectionTitleUsefulLinks,
-				BrowserMessages.EclipseLinksView_sectionDescUsefulLinks);
+				parent, fToolkit, style, BrowserMessages.EclipseBrowserView_sectionTitleUsefulLinks,
+				BrowserMessages.EclipseBrowserView_sectionDescUsefulLinks);
 		fEclipseUsefulLinksSection.createUI();		
 	}
 
@@ -214,7 +215,7 @@ public class EclipseBrowserView extends ViewPart {
 	 */
 	private void createUISectionProjectLinks(Composite parent) {
 		int style = Section.DESCRIPTION | ExpandableComposite.TITLE_BAR;
-		fEclipseProjectLinksSection = new ProjectLinksSection(this, parent, fToolkit, style, BrowserMessages.EclipseLinksView_sectionTitleProjectLinks, BrowserMessages.EclipseLinksView_sectionDescProjectLinks);
+		fEclipseProjectLinksSection = new ProjectLinksSection(this, parent, fToolkit, style, BrowserMessages.EclipseBrowserView_sectionTitleProjectLinks, BrowserMessages.EclipseBrowserView_sectionDescProjectLinks);
 		fEclipseProjectLinksSection.createUI();
 	}
 
@@ -225,8 +226,8 @@ public class EclipseBrowserView extends ViewPart {
 		int style = Section.DESCRIPTION | ExpandableComposite.TITLE_BAR
 				| ExpandableComposite.TWISTIE;
 		fEclipseSearchSection = new SearchSection(this, parent,
-				fToolkit, style, BrowserMessages.EclipseLinksView_sectionTitleSearch,
-				BrowserMessages.EclipseLinksView_sectionDescSearch);
+				fToolkit, style, BrowserMessages.EclipseBrowserView_sectionTitleSearch,
+				BrowserMessages.EclipseBrowserView_sectionDescSearch);
 		fEclipseSearchSection.createUI();			
 	}
 	
@@ -316,10 +317,10 @@ public class EclipseBrowserView extends ViewPart {
 		URL url = BrowserPlugin.getDefault().getBundle().getEntry(F_DEFAULT_MODEL_FILE);
 		// Ensure the model XML file was found in the bundle
 		if (url == null) {
-			String message = BrowserMessages.bind(
-					BrowserMessages.EclipseLinksView_errorMissingModelFile, 
+			String message = NLS.bind(
+					BrowserMessages.EclipseBrowserView_errorMissingModelFile, 
 					url.toString());
-			BrowserPlugin.logException(BrowserMessages.EclipseLinksView_errorModelLoad, message, new Exception(message));
+			BrowserPlugin.logException(BrowserMessages.EclipseBrowserView_errorModelLoad, message, new Exception(message));
 			return false;
 		}
 		// Try to load the model
@@ -331,7 +332,7 @@ public class EclipseBrowserView extends ViewPart {
 			// Load the model
 			fModel.load();			
 		} catch (Exception e) {
-			BrowserPlugin.logException(BrowserMessages.EclipseLinksView_errorModelLoad, e.getMessage(), e);
+			BrowserPlugin.logException(BrowserMessages.EclipseBrowserView_errorModelLoad, e.getMessage(), e);
 			return false;
 		}
 		
