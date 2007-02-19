@@ -8,7 +8,7 @@
  To learn more about using cheat sheets, click the help button in the top right corner (?).
       </description>
    </intro>
-   <item title="Open the plug-in development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
+   <item title="Open the Plug-in Development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
       <description>
          To open the plug-in development perspective, select <b>Window-&gt;Open Perspective-&gt;Other...</b> and choose <b>Plug-in Development</b>.
          <br/>
@@ -31,7 +31,7 @@ Alternatively, click the following button to perform the task:
       <subitem label="Select the &quot;org.eclipse.browser&quot; plug-in in the &quot;Plug-ins and Fragments found&quot; table.  Click the &quot;Add--&gt;&quot; button to move it to the table on the right .  Press &quot;Finish&quot;." skip="false">
       </subitem>
    </item>
-   <item title="Open the plug-in editor" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
+   <item title="Open the plug-in manifest editor" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
       <description>
          Expand the <b>org.eclipse.browser</b> project in the <b>Package Explorer</b> view and double-click on the <b>plugin.xml</b> file.
          <br/>
