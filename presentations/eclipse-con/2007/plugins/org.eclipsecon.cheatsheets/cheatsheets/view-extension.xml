@@ -1,136 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="Importing PDE example">
+<cheatsheet title="Create the Eclipse Browser view">
    <intro>
       <description>
-         This cheat sheet will demonstrate how to import and run the PDE tutorial example. 
+         This cheat sheet will demonstrate how to import, modify and test the Eclipse Browser plug-in.
          <br/>
          <br/>
-         To learn more about using cheat sheets, click the help button
-         in the top right corner (?).
+ To learn more about using cheat sheets, click the help button in the top right corner (?).
       </description>
    </intro>
    <item title="Open the plug-in development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
       <description>
-         To open the plug-in development perspective,
-         select <b>Window-&gt;Open Perspective-&gt;Other...</b> 
-         and choose <b>Plug-in Development</b>.
+         To open the plug-in development perspective, select <b>Window-&gt;Open Perspective-&gt;Other...</b> and choose <b>Plug-in Development</b>.
          <br/>
          <br/>
-         Alternatively, click the following button to perform the task.
+Alternatively, click the following button to perform the task:
       </description>
       <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)" confirm="false">
       </command>
    </item>
-   <item title="Import Sample Plugin" dialog="true" skip="false">
+   <item title="Import the Eclipse Browser plug-in" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/import_wizards/import_plugins.htm">
       <description>
-         To import the sample plug-in for the PDE tutorial,
-         perform the following steps:
+         To import the sample plug-in for this tutorial, perform the following steps:
       </description>
-      <subitem label="Select &quot;File-&gt;Import...&quot; from the main menu, expand the &quot;Plug-in Development&quot; category within the resulting &quot;Import&quot; wizard, and choose &quot;Plugins and Fragments&quot;" skip="false">
+      <subitem label="Select &quot;File-&gt;Import...&quot; from the main menu to bring up the Import wizard.  Expand the &quot;Plug-in Development&quot; category, and choose &quot;Plug-ins and Fragments&quot;.  Press &quot;Next&quot;." skip="false">
+         <command serialization="org.eclipse.ui.file.import(importWizardId=org.eclipse.pde.ui.PluginImportWizard)" confirm="false">
+         </command>
       </subitem>
-      <subitem label="Deselect the checkbox labeled &quot;The target platform (as specified in the Preferences)&quot;.  Then click the Browse button and go to !!!!!!!!!!!!!!!!.  Lastly, select the &quot;Projects with source folders&quot; radio button in the &quot;Import As&quot; section towards the bottom of the page.  Click &quot;Next&quot;" skip="false">
+      <subitem label="Select the &quot;Projects with source folders&quot; radio button in the &quot;Import As&quot; section towards the bottom of the page.  Press &quot;Next&quot;." skip="false">
       </subitem>
-      <subitem label="Select the &quot;org.eclipsecon.browser&quot; plug-in in the &quot;Plug-ins and Fragments found&quot; table, click the &quot;Add--&gt;&quot; button, and select &quot;Finish&quot;" skip="false">
+      <subitem label="Select the &quot;org.eclipse.browser&quot; plug-in in the &quot;Plug-ins and Fragments found&quot; table.  Click the &quot;Add--&gt;&quot; button to move it to the table on the right .  Press &quot;Finish&quot;." skip="false">
       </subitem>
    </item>
-   <item title="Open the plug-in editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
+   <item title="Open the plug-in editor" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
       <description>
-         To open the plug-in editor (if it is not already open),
-         expand the <b>org.eclipsecon.browser</b> tree dialog
-         in the <b>Package Explorer</b> view and double-click
-         on the <b>plugin.xml</b> file (the <b>Extensions</b> page
-         should be open initially).
+         Expand the <b>org.eclipse.browser</b> project in the <b>Package Explorer</b> view and double-click on the <b>plugin.xml</b> file.
          <br/>
          <br/>
-         Alternatively, click the following button to perform the task.
+Alternatively, click the following button to perform the task:
       </description>
-      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/plugin.xml)" confirm="false">
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipse.browser/plugin.xml)" confirm="false">
       </command>
    </item>
    <item title="Define a view extension" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
       <description>
          To define a view extension, perform the following steps:
       </description>
-      <subitem label="Click the &quot;Add&quot; button to open the &quot;New Extension&quot; wizard" skip="false">
+      <subitem label="Click the &quot;Add...&quot; button to open the &quot;New Extension&quot; wizard." skip="false">
       </subitem>
-      <subitem label="Select &quot;org.eclipse.ui.views&quot; from the &quot;Extension Points&quot; list box and click &quot;Finish&quot;" skip="false">
+      <subitem label="Select &quot;org.eclipse.ui.views&quot; from the &quot;Extension Points&quot; list box and press &quot;Finish&quot;." skip="false">
       </subitem>
-   </item>
-   <item title="Add a view category" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
-      <description>
-         To define a view category, perform the following steps:
-      </description>
-      <subitem label="Select &quot;org.eclipse.ui.views&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
+      <subitem label="Right-click on the &quot;org.eclipse.ui.views&quot; node and select &quot;New-&gt;view&quot; from the context menu." skip="false">
       </subitem>
-      <subitem label="Right-click and select &quot;New-&gt;category&quot; from the context menu" skip="false">
+      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipse.browser.view&quot;." skip="false">
       </subitem>
-      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipsecon.browser.category&quot;" skip="false">
+      <subitem label="Replace the content of the &quot;name&quot; text box with &quot;Eclipse Browser&quot;." skip="false">
       </subitem>
-      <subitem label="Replace the content of the &quot;name&quot; text box with &quot;%category.name.browser&quot;" skip="false">
+      <subitem label="Replace the content of the &quot;class&quot; text box with &quot;org.eclipse.browser.view.ui.EclipseBrowserView&quot;." skip="false">
       </subitem>
-      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      <subitem label="Replace the content of the &quot;icon&quot; text box with &quot;icons/eclipse_icon.gif&quot;." skip="false">
       </subitem>
-   </item>
-   <item title="Add a view" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
-      <description>
-         To define a view, perform the following steps:
-      </description>
-      <subitem label="Select &quot;org.eclipse.ui.views&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
-      </subitem>
-      <subitem label="Right-click and select &quot;New-&gt;view&quot; from the context menu" skip="false">
-      </subitem>
-      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipsecon.browser.view&quot;" skip="false">
-      </subitem>
-      <subitem label="Replace the content of the &quot;name&quot; text box with &quot;%view.name.links&quot;" skip="false">
-      </subitem>
-      <subitem label="Replace the content of the &quot;class&quot; text box with &quot;org.eclipsecon.browser.view.ui.EclipseLinksView&quot;" skip="false">
-      </subitem>
-      <subitem label="Replace the content of the &quot;category&quot; text box with &quot;org.eclipsecon.browser.category&quot;" skip="false">
-      </subitem>
-      <subitem label="Replace the content of the &quot;icon&quot; text box with &quot;icons/eclipse_icon.gif&quot;" skip="false">
-      </subitem>
-      <subitem label="In the &quot;allowMultiple&quot; combo, select &quot;false&quot;" skip="false">
-      </subitem>
-      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
-      </subitem>
-   </item>
-   <item title="Add a sticky view" dialog="false" skip="true">
-      <description>
-         To define a stickyView, perform the following steps:
-      </description>
-      <subitem label="Select &quot;org.eclipse.ui.views&quot; in the list box under &quot;All Extensions&quot; heading in the &quot;Extensions&quot; page" skip="false">
-      </subitem>
-      <subitem label="Right-click and select &quot;New-&gt;stickyView&quot; from the context menu" skip="false">
-      </subitem>
-      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipsecon.browser.view&quot;" skip="false">
-      </subitem>
-      <subitem label="From the &quot;location&quot; combo under &quot;Extension Element Details&quot; select &quot;RIGHT&quot;" skip="false">
-      </subitem>
-      <subitem label="From the &quot;closeable&quot; combo select &quot;true&quot;" skip="false">
-      </subitem>
-      <subitem label="From the &quot;moveable&quot; combo select &quot;true&quot;" skip="false">
-      </subitem>
-      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu." skip="false">
       </subitem>
    </item>
    <item title="Test the plug-in" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/launchers/eclipse_application_launcher.htm">
       <description>
-         To test your Eclipse plug-in inside a target Eclipse platform,
-         perform the following steps:
+         To test your plug-in, perform the following steps:
       </description>
-      <subitem label="Open the plug-in editor and select the &quot;Overview&quot; tab" skip="true">
-         <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipsecon.browser/META-INF/MANIFEST.MF)" confirm="false">
-         </command>
+      <subitem label="On the &quot;Overview&quot; of the plug-in manifest editor, click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading to launch a second instance of Eclipse." skip="false">
       </subitem>
-      <subitem label="Click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading" skip="false">
+      <subitem label="In the second Eclipse instance, dismiss the Intro by clicking on the &quot;Go to Workbench&quot; image.  Select &quot;Window-&gt;Show View-&gt;Other...&quot; from the top level menu." skip="false">
       </subitem>
-      <subitem label="Select &quot;Window-&gt;Show View-&gt;Other...&quot; from the main menu in the newly launched Eclipse platform" skip="false">
+      <subitem label="Under the &quot;Other&quot; category, select the &quot;Eclipse Browser&quot; view and press OK.  This will open the Eclipse Browser view at the bottom right." skip="false">
       </subitem>
-      <subitem label="Note the &quot;EclipseCon&quot; category and expand its tree dialog" skip="false">
+      <subitem label="Drag the Eclipse Browser view and stack it over the Outline view on the left of the workbench window." skip="false">
       </subitem>
-      <subitem label="Select the &quot;Links&quot; view and click the &quot;OK&quot; button" skip="false">
+      <subitem label="Explore the various sections of the view depicting the structure of the Eclipse Project.  Double-click on links and nodes to open the associated web pages in an embedded browser." skip="false">
       </subitem>
-      <subitem label="Select &quot;File-&gt;Exit&quot; from the main menu to exit the target Eclipse platform" skip="false">
+      <subitem label="Select &quot;File-&gt;Exit&quot; from the main menu to close the second Eclipse instance." skip="false">
       </subitem>
    </item>
 </cheatsheet>

@@ -8,7 +8,10 @@
             composite="true"
             contentFile="cheatsheets/view-composite.xml"
             id="org.eclipse.browser.cheatsheets.view"
-            name="Create an Eclipse Browser view">
+            name="Create the Eclipse Browser Plug-in">
+         <description>
+            This cheat sheet helps you to create and extend a plug-in that contributes an Eclipse Browser view to the Eclipse SDK.
+         </description>
       </cheatsheet>
    </extension>
    <extension
@@ -18,7 +21,10 @@
             composite="true"
             contentFile="cheatsheets/rcpapp-composite.xml"
             id="org.eclipse.browser.cheatsheets.rcp"
-            name="Create an Eclipse Browser RCP Application">
+            name="Create the Eclipse Browser RCP Application">
+          <description>
+             This cheat sheet helps you to create a standalone, fully-branded Eclipse Browser rich client application.
+          </description>
       </cheatsheet>
    </extension>
    <extension
