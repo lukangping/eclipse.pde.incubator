@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="Export RCP product">
+<cheatsheet title="Create an Eclipse Product">
    <intro>
       <description>
          This cheat sheet will demonstrate how to export the Eclipse Browser plug-in as an RCP application. 
@@ -57,6 +57,11 @@
       </subitem>
       <subitem label="Select &quot;File-&gt;Save&quot; from the main menu" skip="false">
       </subitem>
+   </item>
+   <item title="Customize the About dialog" dialog="false" skip="false">
+      <description>
+         Body
+      </description>
    </item>
    <item title="Run the RCP product" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/overview.htm">
       <description>

@@ -5,8 +5,7 @@
          This cheat sheet will demonstrate how to extend the Eclipse Browser view by adding a custom extesion using PDE. 
          <br/>
          <br/>
-To learn more about using cheat sheets, click the help button
-         in the top right corner (?).
+To learn more about using cheat sheets, click the help button in the top right corner (?).
       </description>
    </intro>
    <item title="Create a new plug-in" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/project_wizards/new_plugin_project.htm">
@@ -26,7 +25,7 @@ To learn more about using cheat sheets, click the help button
       <description>
          To contribute a new link to the Eclipse Browser view, perform the following steps:
       </description>
-      <subitem label="On the &quot;Extensions&quot; page of the plug-in manifest editor, click the &quot;Add...&quot; button in the &quot;All Extensions&quot; section to open the &quot;New Extension&quot; wizard." skip="false">
+      <subitem label="On the &quot;Extensions&quot; page of the plug-in manifest editor, press the &quot;Add...&quot; button in the &quot;All Extensions&quot; section to open the &quot;New Extension&quot; wizard." skip="false">
       </subitem>
       <subitem label="Deselect the checkbox labeled &quot;Show only extension points from the required plug-ins&quot;." skip="false">
       </subitem>

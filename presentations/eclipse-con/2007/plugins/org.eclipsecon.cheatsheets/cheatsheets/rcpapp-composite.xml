@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<compositeCheatsheet name="Create Eclipse Browser RCP Application">
-   <taskGroup kind="set" name="Create Eclipse Browser RCP application" skip="false">
+<compositeCheatsheet name="Create the Eclipse Browser RCP Application">
+   <taskGroup kind="set" name="Create the Eclipse Browser RCP application" skip="false">
+      <intro>
+         This cheat sheet will guide you through the individual steps to create a standalone fully-branded Eclipse Browser product using the Plug-in Development Environment (PDE).
+<br/>
+<br/>
+To assist you along the way, wizards and commands will be available for you to launch automatically.
+      </intro>
       <onCompletion>
-         Congratulations!  You just created the a customized, branded Eclipse RCP application using PDE.
+         Congratulations!  You just created a standalone, fully-branded RCP product using PDE.
       </onCompletion>
       <task kind="cheatsheet" name="Create an RCP application" skip="false">
+         <intro>
+            This tutorial will demonstrate how to turn the Eclipse Browser plug-in into a minimal RCP application.
+         </intro>
          <onCompletion>
             Congratulations!  You just create an RCP application for the Eclipse Browser plug-in!
          </onCompletion>
          <param name="path" value="application-extension.xml">
          </param>
       </task>
-      <task kind="cheatsheet" name="Create, customize and export a product" skip="false">
+      <task kind="cheatsheet" name="Create an Eclipse Product" skip="false">
+         <intro>
+            This tutorial will demonstrate how to use the RCP tooling in PDE to create a fully-branded product.
+         </intro>
          <onCompletion>
-            Congratulations!  You created and exported a custom product!
+            Congratulations!  You created a fully-branded standalone Eclipse product!
          </onCompletion>
          <param name="path" value="product-export.xml">
          </param>
