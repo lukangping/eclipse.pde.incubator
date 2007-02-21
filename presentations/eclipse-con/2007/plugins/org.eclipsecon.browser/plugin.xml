@@ -5,13 +5,7 @@
 
    <extension
          point="org.eclipse.ui.views">
-      <category
-            name="%category.name.browser"
-            id="org.eclipse.browser.category">
-      </category>
       <view
-            allowMultiple="false"
-            category="org.eclipse.browser.category"
             class="org.eclipse.browser.view.ui.EclipseBrowserView"
             icon="icons/eclipse_icon.gif"
             id="org.eclipse.browser.view"
