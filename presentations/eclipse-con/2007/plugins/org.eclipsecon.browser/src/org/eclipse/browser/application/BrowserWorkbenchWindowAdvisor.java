@@ -1,6 +1,5 @@
 package org.eclipse.browser.application;
 
-import org.eclipse.browser.view.BrowserMessages;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.ui.application.ActionBarAdvisor;
 import org.eclipse.ui.application.IActionBarConfigurer;
@@ -25,7 +24,6 @@ public class BrowserWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
         configurer.setInitialSize(new Point(400, 750));
         configurer.setShowCoolBar(false);
         configurer.setShowStatusLine(false);
-        configurer.setTitle(BrowserMessages.BrowserWorkbenchWindowAdvisor_title);
     }
 
 }
