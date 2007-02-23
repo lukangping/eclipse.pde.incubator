@@ -11,8 +11,8 @@ To learn more about using cheat sheets, click the help button in the top right c
    <item title="Open the Plug-in Development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
       <description>
          To open the plug-in development perspective, select <b>Window-&gt;Open Perspective-&gt;Other...</b> and choose <b>Plug-in Development</b>.
-         <br/>
-         <br/>
+<br/>
+<br/>
 Alternatively, click the following button to perform the task:
       </description>
       <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)" confirm="false">
