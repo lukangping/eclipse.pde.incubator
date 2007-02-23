@@ -38,16 +38,16 @@ To learn more about using cheat sheets, click the help button in the top right c
       </description>
       <subitem label="Select the &quot;Branding&quot; page of the product editor." skip="false">
       </subitem>
-      <subitem label="In the &quot;Window Images&quot; section, press the &quot;Browse...&quot; button adjacent to the &quot;16x16&quot; text box to select the &quot;org.eclipse.browser/branding/world_16-16_windows.gif&quot; image.  Press &quot;OK&quot;." skip="false">
+      <subitem label="In the &quot;Window Images&quot; section, press the &quot;Browse...&quot; button adjacent to the &quot;16x16&quot; text box to select the &quot;/org.eclipse.browser/branding/world_16-16_windows.gif&quot; image.  Press &quot;OK&quot;." skip="false">
       </subitem>
-      <subitem label="In the &quot;Window Images&quot; section, press the &quot;Browse...&quot; button adjacent to the &quot;32x32&quot; text box to select the &quot;org.eclipse.browser/branding/world_32-32_windows.gif&quot; image.  Press &quot;OK&quot;." skip="false">
+      <subitem label="In the &quot;Window Images&quot; section, press the &quot;Browse...&quot; button adjacent to the &quot;32x32&quot; text box to select the &quot;/org.eclipse.browser/branding/world_32-32_windows.gif&quot; image.  Press &quot;OK&quot;." skip="false">
       </subitem>
    </item>
    <item title="Customize the About dialog" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/branding.htm">
       <description>
          To customize the About dialog, perform the following steps:
       </description>
-      <subitem label="In the &quot;About Text&quot; section, press the &quot;Browse...&quot; button adjacent to the &quot;Image&quot; text box to select the &quot;org.eclipse.browser/branding/world_about.gif&quot; image.  Press &quot;OK&quot;." skip="false">
+      <subitem label="In the &quot;About Text&quot; section, press the &quot;Browse...&quot; button adjacent to the &quot;Image&quot; text box to select the &quot;/org.eclipse.browser/branding/world_about.gif&quot; image.  Press &quot;OK&quot;." skip="false">
       </subitem>
       <subitem label="In the &quot;Text&quot; area, input &quot;This is a blurb about my Eclipse Browser Product&quot;." skip="false">
       </subitem>
@@ -81,7 +81,7 @@ To learn more about using cheat sheets, click the help button in the top right c
       </subitem>
       <subitem label="Select the &quot;win32&quot; tab under the &quot;Program Launcher&quot; heading and select the &quot;Use a single ICO file containing 7 images as specified above&quot; radio button." skip="true">
       </subitem>
-      <subitem label="Press the &quot;Browse...&quot; button adjacent to the &quot;File&quot; text box to select the &quot;org.eclipse.browser/branding/world_launcher.ico&quot; file.  Press &quot;OK&quot;." skip="true">
+      <subitem label="Press the &quot;Browse...&quot; button adjacent to the &quot;File&quot; text box to select the &quot;/org.eclipse.browser/branding/world_launcher.ico&quot; file.  Press &quot;OK&quot;." skip="true">
       </subitem>
       <subitem label="Select &quot;File-&gt;Save&quot; from the main menu." skip="false">
       </subitem>
