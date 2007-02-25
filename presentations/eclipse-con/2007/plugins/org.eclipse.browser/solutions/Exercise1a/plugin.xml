@@ -35,5 +35,15 @@
             name="%perspective.name">
       </perspective>
    </extension>
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.browser.view.ui.EclipseBrowserView"
+            icon="icons/eclipse_icon.gif"
+            id="org.eclipse.browser.view"
+            name="%view.name">
+      </view>
+   </extension>
  
 </plugin>

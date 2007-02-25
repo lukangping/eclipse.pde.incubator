@@ -35,5 +35,48 @@
             name="%perspective.name">
       </perspective>
    </extension>
- 
+
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.browser.view.ui.EclipseBrowserView"
+            icon="icons/eclipse_icon.gif"
+            id="org.eclipse.browser.view"
+            name="%view.name">
+      </view>
+   </extension>
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.eclipse.browser.application.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.browser.application"
+            name="Eclipse Browser Product">
+         <property
+               name="appName"
+               value="Eclipse Browser Product">
+         </property>
+         <property
+               name="aboutImage"
+               value="branding/world_about.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="This is a blurb about my product.">
+         </property>
+         <property
+               name="windowImages"
+               value="branding/world_16-16_windows.gif,branding/world_32-32_windows.gif">
+         </property>
+      </product>
+   </extension>
+
 </plugin>
