@@ -14,7 +14,6 @@ package org.eclipse.browser.view;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.browser.view.util.UsefulLinkManager;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -188,7 +187,6 @@ public class BrowserPlugin extends AbstractUIPlugin {
 			status = new Status(IStatus.ERROR, getPluginID(), IStatus.OK,
 					message, e);
 		}
-		ResourcesPlugin.getPlugin().getLog().log(status);
 		Display display = getStandardDisplay();
 		final IStatus fstatus = status;
 		display.asyncExec(new Runnable() {
