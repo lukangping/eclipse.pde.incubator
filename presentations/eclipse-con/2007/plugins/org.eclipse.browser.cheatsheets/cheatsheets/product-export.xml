@@ -16,9 +16,7 @@ To learn more about using cheat sheets, click the help button in the top right c
          <command serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.pde.ui.NewProductConfigurationWizard)" confirm="false">
          </command>
       </subitem>
-      <subitem label="In the &quot;New Product Configuration wizard&quot;, select the &quot;org.eclipse.browser&quot; project as the parent folder, then input &quot;browser.product&quot; into the &quot;File name&quot; text box." skip="false">
-      </subitem>
-      <subitem label="Select the &quot;Use a launch configuration&quot; radio button inside the &quot;Initialize the file content&quot; section and press &quot;Finish&quot;." skip="false">
+      <subitem label="In the &quot;New Product Configuration wizard&quot;, select the &quot;org.eclipse.browser&quot; project as the parent folder, then input &quot;browser.product&quot; into the &quot;File name&quot; text box.  Press &quot;Finish&quot;." skip="false">
       </subitem>
    </item>
    <item title="Define the product" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/overview.htm">
@@ -30,6 +28,17 @@ To learn more about using cheat sheets, click the help button in the top right c
       <subitem label="Press the &quot;New...&quot; button next to the &quot;Product ID&quot; drop down menu to open the &quot;New Product Definition&quot; dialog box." skip="false">
       </subitem>
       <subitem label="Select &quot;org.eclipse.browser.application&quot; from the list of available applications in the &quot;Application&quot; section.  Press &quot;Finish&quot;." skip="false">
+      </subitem>
+   </item>
+   <item title="Specify the constituent plug-ins" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/configuration.htm">
+      <description>
+         To specify the plug-ins that make up the product, perform the following steps:
+      </description>
+      <subitem label="On the &quot;Configuration&quot; tab of the product editor, press &quot;Add...&quot; in the &quot;Plug-ins and Fragments&quot; section." skip="false">
+      </subitem>
+      <subitem label="In the plug-in selection dialog, select &quot;org.eclipse.browser&quot; and press OK." skip="false">
+      </subitem>
+      <subitem label="Press &quot;Add Required Plug-ins&quot; to include in the list all the plug-ins that need to be present for the org.eclipse.browser plug-in to run." skip="false">
       </subitem>
    </item>
    <item title="Add window images" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/product_editor/branding.htm">
