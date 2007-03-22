@@ -1,24 +1,23 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC, Canada.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Canada. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     The Chisel Group, University of Victoria
- *     IBM CAS, IBM Toronto Lab
- *******************************************************************************/
+ * 
+ * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
+ * Lab
+ ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
+import org.eclipse.mylar.zest.core.viewer.IGraphEntityContentProvider;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * 
  * @author Ian Bull
- *
+ * 
  */
 class GraphContentProvider implements IGraphEntityContentProvider {
 
@@ -27,7 +26,7 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 	private BundleDescription[] getDependencies(BundleDescription bundle) {
 		if (bundle != null) {
 			return AnalysisUtil.getPrerequisites(new BundleDescription[] { currentBundle });
-		} 
+		}
 		return new BundleDescription[0];
 	}
 

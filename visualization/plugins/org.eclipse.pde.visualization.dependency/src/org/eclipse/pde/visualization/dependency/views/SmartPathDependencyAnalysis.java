@@ -1,46 +1,48 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC, Canada.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Canada. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     The Chisel Group, University of Victoria
- *     IBM CAS, IBM Toronto Lab
- *******************************************************************************/
+ * 
+ * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
+ * Lab
+ ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.eclipse.mylar.zest.core.viewers.EntityConnectionData;
-import org.eclipse.mylar.zest.core.viewers.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewer.EntityConnectionData;
+import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * 
- * This computues the nodes and edges in the "smart" path.  The smart path consists of all
- * your direct dependencies that have paths to the selected nodes.
+ * This computues the nodes and edges in the "smart" path. The smart path
+ * consists of all your direct dependencies that have paths to the selected
+ * nodes.
  * 
  * @author Ian Bull
- *
+ * 
  */
 public class SmartPathDependencyAnalysis extends AbstractVisualizationLabelProvider {
 
-	
 	/**
 	 * SmartPathDependencyAnalysis constructor
-	 * @param viewer The GraphViewer
+	 * 
+	 * @param viewer
+	 *            The GraphViewer
 	 */
 	public SmartPathDependencyAnalysis(StaticGraphViewer viewer) {
 		super(viewer);
 	}
 
-
 	/*
 	 * (non-Javadoc)
-	 * @see org.eclipse.pde.visualization.views.AbstractVisualizationLabelProvider#calculateInterestingDependencies(java.util.HashSet, java.util.HashSet)
+	 * 
+	 * @see org.eclipse.pde.visualization.views.AbstractVisualizationLabelProvider#calculateInterestingDependencies(java.util.HashSet,
+	 *      java.util.HashSet)
 	 */
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {
 
@@ -74,7 +76,7 @@ public class SmartPathDependencyAnalysis extends AbstractVisualizationLabelProvi
 					}
 				}
 				interestingEntities.addAll(Arrays.asList(path));
-				
+
 			}
 			interestingEntities.add(this.rootNode);
 		}

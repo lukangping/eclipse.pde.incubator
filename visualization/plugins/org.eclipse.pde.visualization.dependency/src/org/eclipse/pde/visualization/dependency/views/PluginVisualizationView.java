@@ -1,14 +1,13 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC, Canada.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Canada. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     The Chisel Group, University of Victoria
- *     IBM CAS, IBM Toronto Lab
- *******************************************************************************/
+ * 
+ * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
+ * Lab
+ ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
 import java.util.Stack;
@@ -25,11 +24,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylar.zest.core.ZestStyles;
-import org.eclipse.mylar.zest.core.viewers.AbstractZoomableViewer;
-import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
-import org.eclipse.mylar.zest.core.viewers.IZoomableWorkbenchPart;
-import org.eclipse.mylar.zest.core.viewers.StaticGraphViewer;
-import org.eclipse.mylar.zest.core.viewers.ZoomContributionViewItem;
+import org.eclipse.mylar.zest.core.viewer.AbstractZoomableViewer;
+import org.eclipse.mylar.zest.core.viewer.IGraphEntityContentProvider;
+import org.eclipse.mylar.zest.core.viewer.IZoomableWorkbenchPart;
+import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewer.ZoomContributionViewItem;
 import org.eclipse.mylar.zest.layouts.LayoutAlgorithm;
 import org.eclipse.mylar.zest.layouts.LayoutStyles;
 import org.eclipse.mylar.zest.layouts.algorithms.CompositeLayoutAlgorithm;
@@ -75,6 +74,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private VisualizationLabelProvider currentLabelProvider;
 	private IGraphEntityContentProvider contentProvider;
 	private Object pinnedNode = null;
+	private ZoomContributionViewItem contextZoomContributionViewItem;
+	private ZoomContributionViewItem toolbarZoomContributionViewItem;
 
 	/**
 	 * The constructor.
@@ -100,17 +101,17 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setLabelProvider(this.currentLabelProvider);
 		viewer.setInput(null);
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
-		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING,
-				new LayoutAlgorithm[] { new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING),
-						new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
+		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
-				PluginVisualizationView.this.selectionChanged(((IStructuredSelection) event.getSelection())
-						.getFirstElement());
+				PluginVisualizationView.this.selectionChanged(((IStructuredSelection) event.getSelection()).getFirstElement());
 			}
 		});
+		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
+		contextZoomContributionViewItem = new ZoomContributionViewItem(this);
+
 		makeActions();
 		hookContextMenu();
 		fillToolBar();
@@ -124,19 +125,23 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	void setDependencyPath(boolean dependencyPath, String dependencyPathType) {
 		// If the viewer has not been created, return
-		if (viewer == null)
+		if (viewer == null) {
 			return;
+		}
 
 		if (dependencyPath) {
 			// If dependencyPath is set to true set the
 			// ShortestPathDependencyAnalyis label provider
 
-			if (dependencyPathType == VisualizationForm.Show_Smart_Path)
+			if (dependencyPathType == VisualizationForm.Show_Smart_Path) {
 				this.currentLabelProvider = new SmartPathDependencyAnalysis(this.viewer);
-			if (dependencyPathType == VisualizationForm.Show_All_Paths)
+			}
+			if (dependencyPathType == VisualizationForm.Show_All_Paths) {
 				this.currentLabelProvider = new PathDependencyAnalysis(this.viewer);
-			if (dependencyPathType == VisualizationForm.Show_Shortest_Path)
+			}
+			if (dependencyPathType == VisualizationForm.Show_Shortest_Path) {
 				this.currentLabelProvider = new ShortestPathDependencyAnalysis(this.viewer);
+			}
 
 			viewer.setLabelProvider(this.currentLabelProvider);
 
@@ -151,8 +156,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		this.currentLabelProvider.setPinnedNode((BundleDescription) pinnedNode);
 		if (viewer.getSelection() != null) {
 			viewer.setSelection(viewer.getSelection());
-			this.currentLabelProvider.setCurrentSelection(currentNode, ((IStructuredSelection) viewer.getSelection())
-					.getFirstElement());
+			this.currentLabelProvider.setCurrentSelection(currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
 		}
 	}
 
@@ -172,6 +176,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	private void fillToolBar() {
 		IActionBars bars = getViewSite().getActionBars();
+		bars.getMenuManager().add(toolbarZoomContributionViewItem);
+
 		fillLocalToolBar(bars.getToolBarManager());
 
 	}
@@ -286,8 +292,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private void pinNode(Object objectToPin) {
 		this.currentLabelProvider.setPinnedNode((BundleDescription) objectToPin);
 		this.pinnedNode = objectToPin;
-		this.currentLabelProvider.setCurrentSelection(this.currentNode, ((IStructuredSelection) viewer.getSelection())
-				.getFirstElement());
+		this.currentLabelProvider.setCurrentSelection(this.currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
 		this.viewer.update(contentProvider.getElements(currentNode), null);
 	}
 
@@ -297,14 +302,18 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private void hookContextMenu() {
 		MenuManager menuMgr = new MenuManager("#PopupMenu");
 		menuMgr.setRemoveAllWhenShown(true);
+		fillContextMenu(menuMgr);
+
 		menuMgr.addMenuListener(new IMenuListener() {
 			public void menuAboutToShow(IMenuManager manager) {
 				PluginVisualizationView.this.fillContextMenu(manager);
+
 			}
 		});
 		Menu menu = menuMgr.createContextMenu(viewer.getControl());
 		viewer.getControl().setMenu(menu);
 		getSite().registerContextMenu(menuMgr, viewer);
+
 	}
 
 	/**
@@ -336,8 +345,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(historyAction);
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-		ZoomContributionViewItem contributionViewItem = new ZoomContributionViewItem(this.getSite().getPage());
-		manager.add(contributionViewItem);
+		manager.add(contextZoomContributionViewItem);
 	}
 
 	/**

@@ -1,17 +1,16 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC, Canada.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
+ * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Canada. All rights reserved. This program and the accompanying materials are
+ * made available under the terms of the Eclipse Public License v1.0 which
+ * accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *     The Chisel Group, University of Victoria
- *     IBM CAS, IBM Toronto Lab
- *******************************************************************************/
+ * 
+ * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
+ * Lab
+ ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
-import org.eclipse.mylar.zest.core.viewers.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -38,8 +37,8 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 /* package */class VisualizationForm {
 
 	/*
-	 * These are all the strings used in the form.  These can probably be abstracted
-	 * for internationalization
+	 * These are all the strings used in the form. These can probably be
+	 * abstracted for internationalization
 	 */
 	private static String Plugin_Dependency_Analysis = "Plug-in Dependency Analysis";
 	private static String Controls = "Controls";
@@ -53,9 +52,9 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private static String Java3 = "Java 3.0 and above";
 	private static String Java2 = "Java 2.0 and above";
 	private static String Java1 = "Java 1.0 and above";
-	
+
 	/*
-	 * These are strings and used to determine which radio button is selected 
+	 * These are strings and used to determine which radio button is selected
 	 */
 	public static String Show_All_Paths = "Show All Paths";
 	public static String Show_Smart_Path = "Show Smart Path";
@@ -68,7 +67,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private FormToolkit toolkit;
 	private StaticGraphViewer viewer;
 	private PluginVisualizationView view;
-	
+
 	/*
 	 * Some buttons that we need to access in local methods
 	 */
@@ -76,7 +75,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private Button showShortestPath = null;
 	private Button showAllPaths = null;
 	private Button dependencyAnalysis = null;
-	
+
 	private String currentPathAnalysis = null;
 
 	/**
@@ -103,7 +102,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		SashForm sash = new SashForm(parent, SWT.NONE);
 		sash.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		this.toolkit.paintBordersFor(parent);
-		
+
 		sash.setLayout(new GridLayout());
 		createGraphSection(sash);
 		createControlsSection(sash);
@@ -125,27 +124,36 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		section.setClient(composite);
 	}
 
-	
 	private void setDependencyPath(boolean enabled) {
-		if ( showAllPaths.getEnabled() != enabled ) showAllPaths.setEnabled(enabled);
-		if ( showSmartPath.getEnabled() != enabled ) showSmartPath.setEnabled(enabled);
-		if ( showShortestPath.getEnabled() != enabled ) showShortestPath.setEnabled(enabled);
+		if (showAllPaths.getEnabled() != enabled) {
+			showAllPaths.setEnabled(enabled);
+		}
+		if (showSmartPath.getEnabled() != enabled) {
+			showSmartPath.setEnabled(enabled);
+		}
+		if (showShortestPath.getEnabled() != enabled) {
+			showShortestPath.setEnabled(enabled);
+		}
 
 		if (!enabled) {
 			showAllPaths.setSelection(false);
 			showSmartPath.setSelection(false);
 			showShortestPath.setSelection(false);
-		}
-		else {
-			if ( currentPathAnalysis == Show_All_Paths ) showAllPaths.setSelection(true);
-			else if (currentPathAnalysis == Show_Smart_Path ) showSmartPath.setSelection(true);
-			else if (currentPathAnalysis == Show_Shortest_Path ) showShortestPath.setSelection(true);
+		} else {
+			if (currentPathAnalysis == Show_All_Paths) {
+				showAllPaths.setSelection(true);
+			} else if (currentPathAnalysis == Show_Smart_Path) {
+				showSmartPath.setSelection(true);
+			} else if (currentPathAnalysis == Show_Shortest_Path) {
+				showShortestPath.setSelection(true);
+			}
 		}
 		view.setDependencyPath(enabled, currentPathAnalysis);
 	}
-	
+
 	/**
 	 * Creates the section holding the analysis controls.
+	 * 
 	 * @param parent
 	 */
 	private void createControlsSection(Composite parent) {
@@ -158,15 +166,15 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		dependencyAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 		dependencyAnalysis.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				setDependencyPath(((Button)e.getSource()).getSelection());
+				setDependencyPath(((Button) e.getSource()).getSelection());
 			}
 		});
-		
-		Section dependencyOptions = this.toolkit.createSection(controlComposite, Section.EXPANDED | Section.NO_TITLE );
+
+		Section dependencyOptions = this.toolkit.createSection(controlComposite, Section.EXPANDED | Section.NO_TITLE);
 		dependencyOptions.setLayout(new FillLayout());
 		Composite dependencyOptionsComposite = this.toolkit.createComposite(dependencyOptions);
 		dependencyOptionsComposite.setLayout(new TableWrapLayout());
-		
+
 		showSmartPath = this.toolkit.createButton(dependencyOptionsComposite, Show_Smart_Path, SWT.RADIO);
 		showSmartPath.setLayoutData(new TableWrapData(TableWrapData.FILL));
 		showSmartPath.addSelectionListener(new SelectionAdapter() {
@@ -175,7 +183,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 				view.setDependencyPath(dependencyAnalysis.getSelection(), currentPathAnalysis);
 			}
 		});
-		
+
 		showAllPaths = this.toolkit.createButton(dependencyOptionsComposite, Show_All_Paths, SWT.RADIO);
 		showAllPaths.setLayoutData(new TableWrapData(TableWrapData.FILL));
 		showAllPaths.addSelectionListener(new SelectionAdapter() {
@@ -184,7 +192,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 				view.setDependencyPath(dependencyAnalysis.getSelection(), currentPathAnalysis);
 			}
 		});
-		
+
 		showShortestPath = this.toolkit.createButton(dependencyOptionsComposite, Show_Shortest_Path, SWT.RADIO);
 		showShortestPath.setLayoutData(new TableWrapData(TableWrapData.FILL));
 		showShortestPath.addSelectionListener(new SelectionAdapter() {
@@ -193,20 +201,21 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 				view.setDependencyPath(dependencyAnalysis.getSelection(), currentPathAnalysis);
 			}
 		});
-		
+
 		currentPathAnalysis = Show_Smart_Path;
-		
+
 		setDependencyPath(false);
 		dependencyOptions.setClient(dependencyOptionsComposite);
-		
+
 		Button filterEnabled = this.toolkit.createButton(controlComposite, Filter_Enanled_Plugins, SWT.CHECK);
 		filterEnabled.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 		createEEAnalysisSection(controlComposite);
 		controls.setClient(controlComposite);
 	}
-	
+
 	/**
 	 * Creates the section holding the Execution Environment Controls
+	 * 
 	 * @param parent
 	 */
 	private void createEEAnalysisSection(Composite parent) {
@@ -216,17 +225,17 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		Composite eeAnalysisControls = this.toolkit.createComposite(eeAnalysis);
 		eeAnalysisControls.setLayout(new TableWrapLayout());
 		this.toolkit.createLabel(eeAnalysisControls, Execution_Environment_Instructions, SWT.WRAP);
-		Button ee6 = this.toolkit.createButton( eeAnalysisControls, Java6, SWT.RADIO);
+		Button ee6 = this.toolkit.createButton(eeAnalysisControls, Java6, SWT.RADIO);
 		ee6.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee5 = this.toolkit.createButton( eeAnalysisControls, Java5, SWT.RADIO);
+		Button ee5 = this.toolkit.createButton(eeAnalysisControls, Java5, SWT.RADIO);
 		ee5.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee4 = this.toolkit.createButton( eeAnalysisControls, Java4, SWT.RADIO);
+		Button ee4 = this.toolkit.createButton(eeAnalysisControls, Java4, SWT.RADIO);
 		ee4.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee3 = this.toolkit.createButton( eeAnalysisControls, Java3, SWT.RADIO);
+		Button ee3 = this.toolkit.createButton(eeAnalysisControls, Java3, SWT.RADIO);
 		ee3.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee2 = this.toolkit.createButton( eeAnalysisControls, Java2, SWT.RADIO);
+		Button ee2 = this.toolkit.createButton(eeAnalysisControls, Java2, SWT.RADIO);
 		ee2.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee1 = this.toolkit.createButton( eeAnalysisControls, Java1, SWT.RADIO);
+		Button ee1 = this.toolkit.createButton(eeAnalysisControls, Java1, SWT.RADIO);
 		ee1.setLayoutData(new TableWrapData(TableWrapData.FILL));
 		eeAnalysis.setClient(eeAnalysisControls);
 	}
@@ -239,8 +248,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	public StaticGraphViewer getGraphViewer() {
 		return viewer;
 	}
-	
-	
+
 	/**
 	 * Gets the form we created.
 	 */
