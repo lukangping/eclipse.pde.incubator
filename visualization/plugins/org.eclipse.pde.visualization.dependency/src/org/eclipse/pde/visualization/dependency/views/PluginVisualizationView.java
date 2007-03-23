@@ -24,11 +24,11 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylar.zest.core.ZestStyles;
-import org.eclipse.mylar.zest.core.viewer.AbstractZoomableViewer;
-import org.eclipse.mylar.zest.core.viewer.IGraphEntityContentProvider;
-import org.eclipse.mylar.zest.core.viewer.IZoomableWorkbenchPart;
-import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
-import org.eclipse.mylar.zest.core.viewer.ZoomContributionViewItem;
+import org.eclipse.mylar.zest.core.viewers.AbstractZoomableViewer;
+import org.eclipse.mylar.zest.core.viewers.GraphViewer;
+import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
+import org.eclipse.mylar.zest.core.viewers.IZoomableWorkbenchPart;
+import org.eclipse.mylar.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.mylar.zest.layouts.LayoutAlgorithm;
 import org.eclipse.mylar.zest.layouts.LayoutStyles;
 import org.eclipse.mylar.zest.layouts.algorithms.CompositeLayoutAlgorithm;
@@ -63,7 +63,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 	private FormToolkit toolKit = null;
 	private Form form = null;
-	private StaticGraphViewer viewer;
+	private GraphViewer viewer;
 	private Action focusDialogAction;
 	private Action focusAction;
 	private Action pinAction;

@@ -13,8 +13,8 @@ package org.eclipse.pde.visualization.dependency.views;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.eclipse.mylar.zest.core.viewer.EntityConnectionData;
-import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewers.EntityConnectionData;
+import org.eclipse.mylar.zest.core.viewers.GraphViewer;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
@@ -24,7 +24,7 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  */
 public class PathDependencyAnalysis extends AbstractVisualizationLabelProvider {
 
-	public PathDependencyAnalysis(StaticGraphViewer viewer) {
+	public PathDependencyAnalysis(GraphViewer viewer) {
 		super(viewer);
 	}
 

@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
-import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewers.GraphViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -65,7 +65,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 */
 	private Form form;
 	private FormToolkit toolkit;
-	private StaticGraphViewer viewer;
+	private GraphViewer viewer;
 	private PluginVisualizationView view;
 
 	/*
@@ -120,7 +120,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		section.setLayout(new FillLayout());
 		Composite composite = this.toolkit.createComposite(section, SWT.NONE);
 		composite.setLayout(new FillLayout());
-		viewer = new StaticGraphViewer(composite, SWT.BORDER);
+		viewer = new GraphViewer(composite, SWT.BORDER);
 		section.setClient(composite);
 	}
 
@@ -245,7 +245,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 * 
 	 * @return
 	 */
-	public StaticGraphViewer getGraphViewer() {
+	public GraphViewer getGraphViewer() {
 		return viewer;
 	}
 

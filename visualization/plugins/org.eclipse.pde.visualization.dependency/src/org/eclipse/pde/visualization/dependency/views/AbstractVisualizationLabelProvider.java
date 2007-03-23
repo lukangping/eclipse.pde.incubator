@@ -16,10 +16,10 @@ import java.util.Iterator;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.mylar.zest.core.ZestStyles;
-import org.eclipse.mylar.zest.core.viewer.EntityConnectionData;
-import org.eclipse.mylar.zest.core.viewer.IConnectionStyleProvider;
-import org.eclipse.mylar.zest.core.viewer.IEntityStyleProvider;
-import org.eclipse.mylar.zest.core.viewer.StaticGraphViewer;
+import org.eclipse.mylar.zest.core.viewers.EntityConnectionData;
+import org.eclipse.mylar.zest.core.viewers.GraphViewer;
+import org.eclipse.mylar.zest.core.viewers.IConnectionStyleProvider;
+import org.eclipse.mylar.zest.core.viewers.IEntityStyleProvider;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -66,14 +66,14 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	private HashSet interestingDependencies = new HashSet();
 	private Color disabledColor = null;
 	protected BundleDescription pinnedNode = null;
-	private StaticGraphViewer viewer;
+	private GraphViewer viewer;
 
 	/**
 	 * Create a new Abstract Visualization Label Provider
 	 * 
 	 * @param viewer
 	 */
-	public AbstractVisualizationLabelProvider(StaticGraphViewer viewer) {
+	public AbstractVisualizationLabelProvider(GraphViewer viewer) {
 		this.viewer = viewer;
 	}
 
