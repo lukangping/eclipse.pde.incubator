@@ -7,7 +7,10 @@ Bundle-Activator: org.eclipse.pde.visualization.dependency.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.pde.ui,
- org.eclipse.ui.forms
+ org.eclipse.ui.forms,
+ org.eclipse.mylar.zest.core,
+ org.eclipse.mylar.zest.layouts,
+ org.eclipse.draw2d
 Eclipse-LazyStart: true
 Bundle-ClassPath: .,
  org.eclipse.draw2d_3.2.2.200703221218.jar,

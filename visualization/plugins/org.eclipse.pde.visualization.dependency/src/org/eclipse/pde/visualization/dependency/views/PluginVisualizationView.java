@@ -23,7 +23,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylar.zest.core.ZestStyles;
+import org.eclipse.mylar.zest.core.widgets.ZestStyles;
 import org.eclipse.mylar.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.mylar.zest.core.viewers.GraphViewer;
 import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;

@@ -15,7 +15,7 @@ import java.util.Iterator;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.mylar.zest.core.ZestStyles;
+import org.eclipse.mylar.zest.core.widgets.ZestStyles;
 import org.eclipse.mylar.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylar.zest.core.viewers.GraphViewer;
 import org.eclipse.mylar.zest.core.viewers.IConnectionStyleProvider;
@@ -237,9 +237,14 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 			calculateInterestingDependencies(interestingRelationships, interestingDependencies);
 		}
 
+		Object[] connections = viewer.getConnectionElements();
 		for (Iterator iter = interestingRelationships.iterator(); iter.hasNext();) {
 			Object entityConnectionData = iter.next();
 			viewer.reveal(entityConnectionData);
+		}
+
+		for (int i = 0; i < connections.length; i++) {
+			viewer.update(connections[i], null);
 		}
 
 	}

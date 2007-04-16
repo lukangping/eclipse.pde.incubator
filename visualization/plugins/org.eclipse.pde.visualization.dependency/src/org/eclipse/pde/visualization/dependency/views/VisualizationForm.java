@@ -120,7 +120,8 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		section.setLayout(new FillLayout());
 		Composite composite = this.toolkit.createComposite(section, SWT.NONE);
 		composite.setLayout(new FillLayout());
-		viewer = new GraphViewer(composite, SWT.BORDER);
+		//viewer = new GraphViewer(composite, SWT.BORDER);
+		viewer = new GraphViewer(composite, SWT.NONE);
 		section.setClient(composite);
 	}
 
