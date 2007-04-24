@@ -215,9 +215,6 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			if ( node.getLocation().x <= 1 && node.getLocation().y <= 1) {
 				node.setLocation(centre.width, centre.height);
 			}
-			else { 
-				System.out.println("Location: " + node.getLocation().x + " : " + node.getLocation().y );
-			}
 		}
 		if (currentNode != null && recordHistory && currentNode != bundle) {
 			historyStack.push(currentNode);
