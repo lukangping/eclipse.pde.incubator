@@ -130,9 +130,9 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 
 	public int getLineWidth(Object rel) {
 		if (interestingRelationships.contains(rel)) {
-			return 3;
+			return 1;
 		}
-		return 0;
+		return 1;
 	}
 
 	public Color getAdjacentEntityHighlightColor(Object entity) {

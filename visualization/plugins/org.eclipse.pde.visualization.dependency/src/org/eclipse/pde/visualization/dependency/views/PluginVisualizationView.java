@@ -10,8 +10,10 @@
  ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
+import java.util.Iterator;
 import java.util.Stack;
 
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -23,12 +25,14 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylar.zest.core.widgets.ZestStyles;
 import org.eclipse.mylar.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.mylar.zest.core.viewers.GraphViewer;
 import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
 import org.eclipse.mylar.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.mylar.zest.core.viewers.ZoomContributionViewItem;
+import org.eclipse.mylar.zest.core.widgets.Graph;
+import org.eclipse.mylar.zest.core.widgets.GraphNode;
+import org.eclipse.mylar.zest.core.widgets.ZestStyles;
 import org.eclipse.mylar.zest.layouts.LayoutAlgorithm;
 import org.eclipse.mylar.zest.layouts.LayoutStyles;
 import org.eclipse.mylar.zest.layouts.algorithms.CompositeLayoutAlgorithm;
@@ -200,13 +204,29 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 * @param recordHistory
 	 */
 	private void focusOn(BundleDescription bundle, boolean recordHistory) {
+		viewer.setSelection(new StructuredSelection());
+		this.selectionChanged(null);
 		viewer.setInput(bundle);
+		Iterator nodes = viewer.getGraphControl().getNodes().iterator();
+		Graph graph = viewer.getGraphControl();
+		Dimension centre = new Dimension(graph.getBounds().width/2, graph.getBounds().height/2);
+		while ( nodes.hasNext() ) {
+			GraphNode node = (GraphNode) nodes.next();
+			if ( node.getLocation().x <= 1 && node.getLocation().y <= 1) {
+				node.setLocation(centre.width, centre.height);
+			}
+			else { 
+				System.out.println("Location: " + node.getLocation().x + " : " + node.getLocation().y );
+			}
+		}
 		if (currentNode != null && recordHistory && currentNode != bundle) {
 			historyStack.push(currentNode);
 			historyAction.setEnabled(true);
 		}
 		currentNode = bundle;
 		viewer.setSelection(new StructuredSelection(bundle));
+		this.selectionChanged(bundle);
+		
 		// When we load a new model, remove any pinnedNode;
 		this.currentLabelProvider.setPinnedNode(null);
 		this.pinnedNode = null;
