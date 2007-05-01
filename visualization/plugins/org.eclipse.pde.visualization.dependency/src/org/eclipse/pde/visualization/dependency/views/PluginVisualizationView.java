@@ -133,6 +133,12 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			return;
 		}
 
+		StructuredSelection selection =  ((StructuredSelection)viewer.getSelection()); 
+		if ( selection != null ) {
+			viewer.setSelection(new StructuredSelection());
+			this.selectionChanged(null);
+		}
+		
 		if (dependencyPath) {
 			// If dependencyPath is set to true set the
 			// ShortestPathDependencyAnalyis label provider
@@ -154,14 +160,20 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			viewer.setLabelProvider(this.currentLabelProvider);
 
 		}
+		
+		if ( selection != null ) {
+			viewer.setSelection(selection);
+		}
 
 		// Set the pinned node in case we have one from the previous content
 		// provdier
 		this.currentLabelProvider.setPinnedNode((BundleDescription) pinnedNode);
 		if (viewer.getSelection() != null) {
 			viewer.setSelection(viewer.getSelection());
-			this.currentLabelProvider.setCurrentSelection(currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
+			this.selectionChanged(((IStructuredSelection) viewer.getSelection()).getFirstElement());
+		//	this.currentLabelProvider.setCurrentSelection(currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
 		}
+		
 	}
 
 	/**
