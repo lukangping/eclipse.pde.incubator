@@ -43,8 +43,8 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet
             category="org.eclipse.browser.cheatsheets.category"
-            contentFile="cheatsheets/Part_I/view-extension.xml"
-            id="org.eclipse.browser.cheatsheets.view"
+            contentFile="cheatsheets/Part_IV/custom-extension.xml"
+            id="org.eclipse.browser.cheatsheets.custom"
             name="Part IV: Extending the Eclipse Browser RCP Application">
          <description>
             This cheat sheet helps you to create and deploy a plug-in that extends the Eclipse Browser RCP application.
