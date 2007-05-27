@@ -2,81 +2,90 @@
 <cheatsheet title="Create the Eclipse Browser view">
    <intro>
       <description>
-         This cheat sheet will demonstrate how to import, modify and test the Eclipse Browser plug-in.
-<br/>
-<br/>
-To learn more about using cheat sheets, click the help button in the top right corner (?).
+         This cheat sheet will demonstrate how to create and deploy a plug-in that extends the Eclipse Browser product.
       </description>
    </intro>
-   <item title="Open the Plug-in Development perspective" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/views/views.htm">
+   <item title="Create a new plug-in project" dialog="true" skip="false">
       <description>
-         To open the plug-in development perspective, select <b>Window-&gt;Open Perspective-&gt;Other...</b> and choose <b>Plug-in Development</b>.
-<br/>
-<br/>
-Alternatively, click the following button to perform the task:
+         To create a new plug-in project, perform the following steps:
       </description>
-      <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.eclipse.pde.ui.PDEPerspective)" confirm="false">
-      </command>
+      <subitem label="Select &quot;File-&gt;New-&gt;Project...&quot; from the main menu to bring up the &quot;New Project&quot; wizard.  Expand the &quot;Plug-in Development&quot; category, choose &quot;Plug-in Project&quot; and press &quot;Next&quot;." skip="false">
+      </subitem>
+      <subitem label="Input &quot;com.example.xyz&quot; into the &quot;Project Name&quot; text box.  Accept all defaults and press &quot;Next&quot;." skip="false">
+      </subitem>
+      <subitem label="Accept all default values on the &quot;Plug-in Content&quot; page and press &quot;Finish&quot;.  A new plug-in project will be created and the plug-in manifest editor will open automatically." skip="false">
+      </subitem>
    </item>
-   <item title="Import the Eclipse Browser plug-in" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/import_wizards/import_plugins.htm">
+   <item title="Add an HTML Browser extension" dialog="true" skip="false">
       <description>
-         To import the sample plug-in for this tutorial, perform the following steps:
+         To add an HTML Browser extension, perform the following steps:
       </description>
-      <subitem label="Select &quot;File-&gt;Import...&quot; from the main menu to bring up the Import wizard.  Expand the &quot;Plug-in Development&quot; category, and choose &quot;Plug-ins and Fragments&quot;.  Press &quot;Next&quot;." skip="true">
-         <command serialization="org.eclipse.ui.file.import(importWizardId=org.eclipse.pde.ui.PluginImportWizard)" confirm="false">
+      <subitem label="Open the com.example.xyz/plugin.xml file." skip="true">
+         <command serialization="org.eclipse.ui.navigate.openResource(filePath=org.eclipse.browser/plugin.xml)" confirm="false">
          </command>
       </subitem>
-      <subitem label="Select the &quot;Projects with source folders&quot; radio button in the &quot;Import As&quot; section towards the bottom of the page.  Press &quot;Next&quot;." skip="false">
-      </subitem>
-      <subitem label="Select the &quot;org.eclipse.browser&quot; plug-in in the &quot;Plug-ins and Fragments found&quot; table.  Click the &quot;Add--&gt;&quot; button to move it to the table on the right .  Press &quot;Finish&quot;." skip="false">
-      </subitem>
-   </item>
-   <item title="Open the plug-in manifest editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
-      <description>
-         Expand the <b>org.eclipse.browser</b> project in the <b>Package Explorer</b> view and double-click on the <b>plugin.xml</b> file.
-         <br/>
-         <br/>
-Alternatively, click the following button to perform the task:
-      </description>
-      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipse.browser/plugin.xml)" confirm="false">
-      </command>
-   </item>
-   <item title="Define a view extension" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
-      <description>
-         To define a view extension, perform the following steps:
-      </description>
       <subitem label="On the &quot;Extensions&quot; page of the plug-in manifest editor, press the &quot;Add...&quot; button to open the &quot;New Extension&quot; wizard." skip="false">
       </subitem>
-      <subitem label="Select &quot;org.eclipse.ui.views&quot; from the &quot;Extension Points&quot; list box and press &quot;Finish&quot;." skip="false">
+      <subitem label="Deselect the checkbox labeled &quot;Show only extension points from the required plug-ins&quot;." skip="false">
       </subitem>
-      <subitem label="Right-click on the &quot;org.eclipse.ui.views&quot; node and select &quot;New-&gt;view&quot; from the context menu." skip="false">
+      <subitem label="Select &quot;org.eclipse.browser.htmlBrowsers&quot; from the &quot;Extension Points&quot; list box and press &quot;Finish&quot;." skip="false">
       </subitem>
-      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipse.browser.view&quot;." skip="false">
+      <subitem label="Choose &quot;Yes&quot; when prompted &quot;Do you want to add plug-in org.eclipsecon.browser, declaring the htmlBrowsers extension point, to the list of plug-in dependencies?&quot;." skip="false">
       </subitem>
-      <subitem label="Replace the content of the &quot;name&quot; text box with &quot;Eclipse Browser&quot;." skip="false">
+      <subitem label="(Eclipse 3.2 Only) Right-click on the &quot;org.eclipse.browser.htmlBrowsers&quot; node and select &quot;New-&gt;browser&quot; from the context menu." skip="true">
       </subitem>
-      <subitem label="Replace the content of the &quot;class&quot; text box with &quot;org.eclipse.browser.view.ui.EclipseBrowserView&quot;." skip="false">
+      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;com.example.xyz.externalBrowser&quot;." skip="false">
       </subitem>
-      <subitem label="Replace the content of the &quot;icon&quot; text box with &quot;icons/eclipse_icon.gif&quot;." skip="false">
+      <subitem label="Replace the content of the &quot;name&quot; text box under &quot;Extension Element Details&quot; with &quot;External Browser&quot;." skip="false">
       </subitem>
-      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu." skip="false">
+      <subitem label="Replace the content of the &quot;class&quot; text box under &quot;Extension Element Details&quot; with &quot;com.example.xyz.ExternalBrowser&quot;." skip="false">
+      </subitem>
+      <subitem label="Save the file via &quot;File &gt; Save&quot; from the main menu." skip="false">
       </subitem>
    </item>
-   <item title="Test the plug-in" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/launchers/eclipse_application_launcher.htm">
+   <item title="Implement the browser extension" dialog="true" skip="false">
       <description>
-         To test your plug-in, perform the following steps:
+         To implement the browser extension, perform the following steps:
       </description>
-      <subitem label="On the &quot;Overview&quot; page of the plug-in manifest editor, click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading to launch a second instance of Eclipse." skip="false">
+      <subitem label="Click on the &quot;class&quot; link in the &quot;Extension Element Details&quot; section to bring up the &quot;New Java Class&quot; wizard." skip="false">
       </subitem>
-      <subitem label="In the second Eclipse instance, dismiss the Intro by clicking on the &quot;Go to the Workbench&quot; image.  Select &quot;Window-&gt;Show View-&gt;Other...&quot; from the top level menu." skip="false">
+      <subitem label="Accept all defaults in the wizard, and press Finish.  This will create and open an ExternalBrowser.java file." skip="false">
       </subitem>
-      <subitem label="Under the &quot;Other&quot; category, select the &quot;Eclipse Browser&quot; view and press OK.  This will open the Eclipse Browser view at the bottom right." skip="false">
+      <subitem label="In the ExternalBrowser.java file, implement the body of the run() method as follows:  try { 	IWorkbenchBrowserSupport support = 			PlatformUI.getWorkbench().getBrowserSupport(); IWebBrowser browser = support.getExternalBrowser(); browser.openURL(url); } catch (PartInitException e) { }" skip="false">
       </subitem>
-      <subitem label="Drag the Eclipse Browser view and stack it over the Outline view on the left of the workbench window." skip="false">
+      <subitem label="Save the ExternalBrowser.java file via &quot;File &gt; Save&quot; from the main menu." skip="false">
       </subitem>
-      <subitem label="Explore the various sections of the view depicting the structure of the Eclipse Project.  Double-click on links and nodes to open the associated web pages in an embedded browser." skip="false">
+   </item>
+   <item title="Export the plug-in" dialog="true" skip="false">
+      <description>
+         To export the plug-in, perform the following steps:
+      </description>
+      <subitem label="Select File &gt; Export...&gt; Plug-in Development &gt; Deployable plug-ins and fragments from the main menu." skip="false">
       </subitem>
-      <subitem label="Select &quot;File-&gt;Exit&quot; from the main menu to close the second Eclipse instance." skip="false">
+      <subitem label="Select the &quot;com.example.xyz&quot; plug-in." skip="false">
+      </subitem>
+      <subitem label="On the &quot;Destination&quot; tab, make sure the &quot;Directory option is selected." skip="true">
+      </subitem>
+      <subitem label="Input the location of the root directory of the Eclipse Browser product, e.g. &quot;C:\destination\browser&quot;." skip="false">
+      </subitem>
+      <subitem label="Press Finish." skip="false">
+      </subitem>
+   </item>
+   <item title="Launch the product" dialog="true" skip="false">
+      <description>
+         To launch the product and observe the new plug-in in action, perform the following steps:
+      </description>
+      <subitem label="Navigate to the Eclipse Browser product root directory, and double-click on the browser executable." skip="false">
+      </subitem>
+      <subitem label="When the application starts, note how the Browser view now has a drop down menu." skip="false">
+      </subitem>
+      <subitem label="Press the view&apos;s drop down arrow to see the content of the drop down menu." skip="false">
+      </subitem>
+      <subitem label="Observe how it contains two items:  &quot;External Browser&quot; (contributed by the com.example.xyz plug-in) and &quot;Internal Browser&quot; contributed by the org.eclipse.browser plug-in." skip="false">
+      </subitem>
+      <subitem label="Toggle back and forth between the two browser options, and observe how the browser setting is honored when you double-click on a node in the tree to open the website." skip="false">
+      </subitem>
+      <subitem label="Close the application via &quot;File &gt; Exit&quot; from the main menu." skip="false">
       </subitem>
    </item>
 </cheatsheet>
