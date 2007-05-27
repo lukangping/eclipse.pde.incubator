@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="org.eclipse.browser.cheatsheets.category"
+            contentFile="cheatsheets/view-extension.xml"
+            id="org.eclipse.browser.cheatsheets.view"
+            name="Part I: Creating the Eclipse Browser Plug-in">
+         <description>
+            This cheat sheet helps you to create a plug-in that contributes an Eclipse Browser view to the Eclipse SDK.
+         </description>
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="org.eclipse.browser.cheatsheets.category"
+            contentFile="cheatsheets/extension-point.xml"
+            id="org.eclipse.browser.cheatsheets.enabler"
+            name="Part II: Becoming an Enabler">
+         <description>
+            This cheat sheet helps you to create an extension point to enable clients to extend the Eclipse Browser view.
+         </description>
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+       <cheatsheet
+            category="org.eclipse.browser.cheatsheets.category"
+            composite="true"
+            contentFile="cheatsheets/rcpapp-composite.xml"
+            id="org.eclipse.browser.cheatsheets.rcp"
+            name="Part III: Creating the Eclipse Browser RCP Application">
+          <description>
+             This cheat sheet helps you to create a standalone, fully-branded Eclipse Browser rich client application.
+          </description>
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="org.eclipse.browser.cheatsheets.category"
+            contentFile="cheatsheets/view-extension.xml"
+            id="org.eclipse.browser.cheatsheets.view"
+            name="Part IV: Extending the Eclipse Browser RCP Application">
+         <description>
+            This cheat sheet helps you to create and deploy a plug-in that extends the Eclipse Browser RCP application.
+         </description>
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <category
+            id="org.eclipse.browser.cheatsheets.category"
+            name="Fundamentals of Plug-in and RCP Development">
+      </category>
+   </extension>
+
+</plugin>
