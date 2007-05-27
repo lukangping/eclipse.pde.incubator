@@ -8,7 +8,7 @@
       <onCompletion>
          Congratulations!  You have just enabled your Eclipse Browser view to be extended by other plug-ins.
       </onCompletion>
-      <task kind="cheatsheet" name="Create an Extension point" skip="false">
+      <task kind="cheatsheet" name="Create an Extension Point" skip="false">
          <intro>
             This cheat sheet will demonstrate how to create an extension point.
          </intro>
@@ -28,7 +28,7 @@
          <param name="path" value="schema-definition.xml">
          </param>
       </task>
-      <task kind="cheatsheet" name="Making the Eclipse Browser view extensible" skip="false">
+      <task kind="cheatsheet" name="Make the Eclipse Browser view extensible" skip="false">
          <intro>
             This tutorial will show you how to make the list of browsers used in the Eclipse Browser view extensible.
          </intro>

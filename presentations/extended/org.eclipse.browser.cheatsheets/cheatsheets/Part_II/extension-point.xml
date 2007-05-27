@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="Becoming an Enabler">
+<cheatsheet title="Create an Extension Point">
    <intro>
       <description>
          This cheat sheet will demonstrate how to create an extension point to enable clients to customize the behavior of the Eclipse Browser view.
