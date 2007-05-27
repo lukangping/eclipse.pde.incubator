@@ -22,7 +22,7 @@ Alternatively, click the following button to perform the task:
       <description>
          To import the sample plug-in for this tutorial, perform the following steps:
       </description>
-      <subitem label="Select &quot;File-&gt;Import...&quot; from the main menu to bring up the Import wizard.  Expand the &quot;Plug-in Development&quot; category, and choose &quot;Plug-ins and Fragments&quot;.  Press &quot;Next&quot;." skip="false">
+      <subitem label="Select &quot;File-&gt;Import...&quot; from the main menu to bring up the Import wizard.  Expand the &quot;Plug-in Development&quot; category, and choose &quot;Plug-ins and Fragments&quot;.  Press &quot;Next&quot;." skip="true">
          <command serialization="org.eclipse.ui.file.import(importWizardId=org.eclipse.pde.ui.PluginImportWizard)" confirm="false">
          </command>
       </subitem>
@@ -31,7 +31,7 @@ Alternatively, click the following button to perform the task:
       <subitem label="Select the &quot;org.eclipse.browser&quot; plug-in in the &quot;Plug-ins and Fragments found&quot; table.  Click the &quot;Add--&gt;&quot; button to move it to the table on the right .  Press &quot;Finish&quot;." skip="false">
       </subitem>
    </item>
-   <item title="Open the plug-in manifest editor" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
+   <item title="Open the plug-in manifest editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
       <description>
          Expand the <b>org.eclipse.browser</b> project in the <b>Package Explorer</b> view and double-click on the <b>plugin.xml</b> file.
          <br/>
@@ -68,7 +68,7 @@ Alternatively, click the following button to perform the task:
       </description>
       <subitem label="On the &quot;Overview&quot; page of the plug-in manifest editor, click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading to launch a second instance of Eclipse." skip="false">
       </subitem>
-      <subitem label="In the second Eclipse instance, dismiss the Intro by clicking on the &quot;Go to Workbench&quot; image.  Select &quot;Window-&gt;Show View-&gt;Other...&quot; from the top level menu." skip="false">
+      <subitem label="In the second Eclipse instance, dismiss the Intro by clicking on the &quot;Go to the Workbench&quot; image.  Select &quot;Window-&gt;Show View-&gt;Other...&quot; from the top level menu." skip="false">
       </subitem>
       <subitem label="Under the &quot;Other&quot; category, select the &quot;Eclipse Browser&quot; view and press OK.  This will open the Eclipse Browser view at the bottom right." skip="false">
       </subitem>
