@@ -5,7 +5,7 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet
             category="org.eclipse.browser.cheatsheets.category"
-            contentFile="cheatsheets/view-extension.xml"
+            contentFile="cheatsheets/Part_I/view-extension.xml"
             id="org.eclipse.browser.cheatsheets.view"
             name="Part I: Creating the Eclipse Browser Plug-in">
          <description>
@@ -17,7 +17,8 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet
             category="org.eclipse.browser.cheatsheets.category"
-            contentFile="cheatsheets/extension-point.xml"
+            composite="true"
+            contentFile="cheatsheets/Part_II/enabler.xml"
             id="org.eclipse.browser.cheatsheets.enabler"
             name="Part II: Becoming an Enabler">
          <description>
@@ -30,7 +31,7 @@
        <cheatsheet
             category="org.eclipse.browser.cheatsheets.category"
             composite="true"
-            contentFile="cheatsheets/rcpapp-composite.xml"
+            contentFile="cheatsheets/Part_III/rcpapp-composite.xml"
             id="org.eclipse.browser.cheatsheets.rcp"
             name="Part III: Creating the Eclipse Browser RCP Application">
           <description>
@@ -42,7 +43,7 @@
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <cheatsheet
             category="org.eclipse.browser.cheatsheets.category"
-            contentFile="cheatsheets/view-extension.xml"
+            contentFile="cheatsheets/Part_I/view-extension.xml"
             id="org.eclipse.browser.cheatsheets.view"
             name="Part IV: Extending the Eclipse Browser RCP Application">
          <description>

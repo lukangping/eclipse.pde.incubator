@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<compositeCheatsheet name="Becoming an Enabler">
+   <taskGroup kind="set" name="Becoming an Enabler" skip="false">
+      <intro>
+         This cheat sheet will guide you through the individual steps to make the Eclipse Browser extensible allowing downstream clients to plug in their own browser.
+<br/>
+      </intro>
+      <onCompletion>
+         Congratulations!  You have just enabled your Eclipse Browser view to be extended by other plug-ins.
+      </onCompletion>
+      <task kind="cheatsheet" name="Create an Extension point" skip="false">
+         <intro>
+            This cheat sheet will demonstrate how to create an extension point.
+         </intro>
+         <onCompletion>
+            Congratulations!  You just created a new extension point.
+         </onCompletion>
+         <param name="path" value="extension-point.xml">
+         </param>
+      </task>
+      <task kind="cheatsheet" name="Define the Extension Point Schema" skip="false">
+         <intro>
+            This tutorial will demonstrate how to define and preview an extension point schema.
+         </intro>
+         <onCompletion>
+            Congratulations!  You created an extension point schema, a contract that your clients have to adhere to when they want to plug in their own browser into the Eclipse Browser view.
+         </onCompletion>
+         <param name="path" value="schema-definition.xml">
+         </param>
+      </task>
+      <task kind="cheatsheet" name="Making the Eclipse Browser view extensible" skip="false">
+         <intro>
+            This tutorial will show you how to make the list of browsers used in the Eclipse Browser view extensible.
+         </intro>
+         <onCompletion>
+            Congratulations!  The list of browsers used in the Eclipse Browser view is now extensible by clients.
+         </onCompletion>
+         <param name="path" value="extension-processing.xml">
+         </param>
+      </task>
+   </taskGroup>
+</compositeCheatsheet>

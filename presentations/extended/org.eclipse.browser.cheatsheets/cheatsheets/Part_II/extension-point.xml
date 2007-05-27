@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Becoming an Enabler">
+   <intro>
+      <description>
+         This cheat sheet will demonstrate how to create an extension point to enable clients to customize the behavior of the Eclipse Browser view.
+<br/>
+      </description>
+   </intro>
+   <item title="Create a new extension point" dialog="true" skip="false">
+      <description>
+         To create a new extension point, perform the following steps:
+      </description>
+      <subitem label="On the &quot;Extension Points&quot; page of the plug-in manifest editor, press the &quot;Add...&quot; button in the &quot;All Extension Points&quot; section to open the &quot;New Extension Point&quot; wizard." skip="true">
+      </subitem>
+      <subitem label="Input &quot;htmlBrowsers&quot; into the &quot;Extension Point ID&quot; text box." skip="false">
+      </subitem>
+      <subitem label="Input &quot;HTML Browsers&quot; into the &quot;Extension Point Name&quot; text box." skip="false">
+      </subitem>
+      <subitem label="Press Finish.  This will add a new extension point to the list and open its schema in the Extension Point Schema editor." skip="false">
+      </subitem>
+   </item>
+   <item title="Save the file" dialog="true" skip="false">
+      <description>
+         Select &quot;File &gt; Save&quot; from the main menu to save the file.
+      </description>
+   </item>
+</cheatsheet>

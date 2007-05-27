@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Define the Extension Point Schema">
+   <intro>
+      <description>
+         This tutorial will demonstrate how to define and preview an extension point schema.
+      </description>
+   </intro>
+   <item title="Open the schema file" dialog="true" skip="true">
+      <description>
+         Double-click on the &quot;schema/htmlBrowsers.exsd&quot; file to open it.
+      </description>
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=org.eclipse.browser/schema/htmlBrowsers.exsd)" confirm="false">
+      </command>
+   </item>
+   <item title="Add the &quot;browser&quot; element" dialog="true" skip="false">
+      <description>
+         On the &quot;Definition&quot; page of the schema editor, press &quot;New Element&quot; in the &quot;Extension Point Elements&quot; section.
+      </description>
+      <subitem label="In the &quot;Element Details&quot; section, replace the content of the &quot;Name&quot; field with &quot;browser&quot;." skip="false">
+      </subitem>
+      <subitem label="Select the &quot;extension&quot; element and choose &quot;New &gt; Sequence&quot; from its context menu." skip="false">
+      </subitem>
+      <subitem label="From the context menu of the &quot;Sequence&quot; node, choose &quot;New &gt; Reference &gt; browser&quot;." skip="false">
+      </subitem>
+      <subitem label="Make sure the &apos;browser&apos; element reference is selected." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Element Reference Details&quot; section of &apos;browser&apos;, set the &quot;Max Occurrences&quot; to &quot;unbounded&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Add the &quot;id&quot; attribute" dialog="true" skip="false">
+      <description>
+         In the &quot;Extension Point Elements&quot; section, make sure the &quot;browser&quot; element is selected, and press &quot;New Attribute&quot;.
+      </description>
+      <subitem label="In the &quot;Attribute Details&quot; section, replace the content of the &quot;Name&quot; field with &quot;id&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Attribute Details&quot; section, change the value of &quot;Use&quot; from &quot;optional&quot; to &quot;required&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Description&quot; section, input &quot;a unique identifier for the browser.&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Add the &quot;name&quot; attribute" dialog="true" skip="false">
+      <description>
+         In the &quot;Extension Point Elements&quot; section, make sure the &quot;browser&quot; element is selected, and press &quot;New Attribute&quot;.
+      </description>
+      <subitem label="In the &quot;Attribute Details&quot; section, replace the content of the &quot;Name&quot; field with &quot;name&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Attribute Details&quot; section, change the value of &quot;Use&quot; from &quot;optional&quot; to &quot;required&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Attribute Details&quot; section, change the value of &quot;Translatable&quot; from &quot;false&quot; to &quot;true&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Description&quot; section, input &quot;a human-readable name for the browser&quot;." skip="false">
+      </subitem>
+   </item>
+   <item title="Add the &quot;class&quot; attribute" dialog="true" skip="false">
+      <description>
+         In the &quot;Extension Point Elements&quot; section, make sure the &quot;browser&quot; element is selected, and press &quot;New Attribute&quot;.
+      </description>
+      <subitem label="In the &quot;Attribute Details&quot; section, replace the content of the &quot;Name&quot; field with &quot;class&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Attribute Details&quot; section, change the value of &quot;Use&quot; from &quot;optional&quot; to &quot;required&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Attribute Details&quot; section, change the value of &quot;Type&quot; from &quot;string&quot; to &quot;java&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Attribute Details&quot; section, set the value of the &quot;Implements&quot; field to &quot;org.eclipse.browser.view.ui.actions.IHTMLBrowser&quot;." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Description&quot; section, input (without the quotes): &quot;This class is invoked to open a given URL.  The class must implement &lt;code&gt;org.eclipse.browser.view.ui.actions.IHTMLBrowser&lt;/code&gt;.&quot;" skip="false">
+      </subitem>
+   </item>
+   <item title="Add documentation" dialog="true" skip="false">
+      <description>
+         Select the <b>Overview</b> page of the schema editor and perform the following steps in the <b>Documentation</b> section:
+      </description>
+      <subitem label="Replace the content of the &quot;Description&quot; tab with: &quot;This extension point is used to register different types of browsers that can be used to open the HTML documents in the Eclipse Browser view.&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;Since&quot; tab with: &quot;1.0&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;Examples&quot; section with: &quot;&lt;p&gt; The following is an example of the extension point: &lt;pre&gt;    &lt;extension          point=&quot;org.eclipse.browser.htmlBrowsers&quot;&gt;       &lt;browser            id=&quot;org.eclipse.browser.builtin&quot;            name=&quot;Internal Browser&quot;             class=&quot;org.eclipse.browser.view.ui.actions.InternalBrowser&quot;/&gt;    &lt;/extension&gt; &lt;/pre&gt; &lt;/p&gt; &quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;API Information&quot; section with: &quot;Each browser must provide a class that implements the &lt;code&gt;org.eclipse.browser.view.ui.actions.IHTMLBrowser&lt;/code&gt; interface.&quot;" skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;Supplied Documentation&quot; section with &quot;The default implementation is to open the HTML documents with the internal browser.&quot;." skip="false">
+      </subitem>
+   </item>
+   <item title="Save the Schema" dialog="true" skip="false">
+      <description>
+         Select &quot;File &gt; Save&quot; from the main menu to save the schema.
+      </description>
+   </item>
+   <item title="Preview the schema" dialog="true" skip="false">
+      <description>
+         Right-click anywhere inside the schema editor and choose &quot;Preview Reference Document&quot; from the context menu.  This will open transform the schema into an HTML document and open it into an internal browser.
+      </description>
+   </item>
+</cheatsheet>

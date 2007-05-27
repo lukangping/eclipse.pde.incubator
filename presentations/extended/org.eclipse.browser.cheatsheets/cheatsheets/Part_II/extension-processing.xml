@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Title">
+   <intro>
+      <description>
+         This tutorial will show you how to make the list of browsers used in the Eclipse Browser view extensible.
+      </description>
+   </intro>
+   <item title="Change the Open Link implementation" dialog="true" skip="false">
+      <description>
+         In order to change the implementation of the Open Link action in the Eclipse Browser view, perform the following steps:
+      </description>
+      <subitem label="Bring up the &quot;Open Type&quot; dialog via &quot;Navigate &gt; Open Type...&quot; from the main menu." skip="false">
+      </subitem>
+      <subitem label="Open the EclipseBrowserView class." skip="false">
+      </subitem>
+      <subitem label="Replace line 74 with the following:  private OpenLinkAction fOpenLinkAction = new ExtensibleOpenLinkAction();" skip="false">
+      </subitem>
+      <subitem label="Save the file via &quot;File &gt; Save&quot; from the main menu." skip="false">
+      </subitem>
+   </item>
+   <item title="Add an HTML Browser extension" dialog="true" skip="false">
+      <description>
+         To add an HTML Browser extension, perform the following steps:
+      </description>
+      <subitem label="Open the org.eclipse.browser/plugin.xml file." skip="true">
+         <command serialization="org.eclipse.ui.navigate.openResource(filePath=org.eclipse.browser/plugin.xml)" confirm="false">
+         </command>
+      </subitem>
+      <subitem label="On the &quot;Extensions&quot; page of the plug-in manifest editor, press the &quot;Add...&quot; button to open the &quot;New Extension&quot; wizard." skip="false">
+      </subitem>
+      <subitem label="Select &quot;org.eclipse.browser.htmlBrowsers&quot; from the &quot;Extension Points&quot; list box and press &quot;Finish&quot;." skip="false">
+      </subitem>
+      <subitem label="(Eclipse 3.2 Only) Right-click on the &quot;org.eclipse.browser.htmlBrowsers&quot; node and select &quot;New-&gt;browser&quot; from the context menu." skip="true">
+      </subitem>
+      <subitem label="Replace the content of the &quot;id&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipse.browser.builtin&quot;." skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;name&quot; text box under &quot;Extension Element Details&quot; with &quot;Internal Browser&quot;." skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;class&quot; text box under &quot;Extension Element Details&quot; with &quot;org.eclipse.browser.view.ui.actions.InternalBrowser&quot;." skip="false">
+      </subitem>
+      <subitem label="Save the file via &quot;File &gt; Save&quot; from the main menu." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>
