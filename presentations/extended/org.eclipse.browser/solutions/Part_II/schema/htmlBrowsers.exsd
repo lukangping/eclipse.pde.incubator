@@ -3,19 +3,17 @@
 <schema targetNamespace="org.eclipse.browser">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.eclipse.browser" id="usefulLinks" name="Useful Links"/>
+         <meta.schema plugin="org.eclipse.browser" id="htmlBrowsers" name="HTML Browsers"/>
       </appInfo>
       <documentation>
-         &lt;p&gt;
-This extension point is used to add additional links to the Useful Links section of the Links view.
-&lt;/p&gt;
+         This extension point is used to register different types of browsers that can be used to open the HTML documentations in the Eclipse Browser view.
       </documentation>
    </annotation>
 
    <element name="extension">
       <complexType>
-         <sequence minOccurs="1" maxOccurs="unbounded">
-            <element ref="linkObject"/>
+         <sequence>
+            <element ref="browser" minOccurs="1" maxOccurs="unbounded"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -44,34 +42,32 @@ This extension point is used to add additional links to the Useful Links section
       </complexType>
    </element>
 
-   <element name="linkObject">
+   <element name="browser">
       <complexType>
-         <sequence>
-         </sequence>
+         <attribute name="id" type="string" use="required">
+            <annotation>
+               <documentation>
+                  a unique identifier for the browser.
+               </documentation>
+            </annotation>
+         </attribute>
          <attribute name="name" type="string" use="required">
             <annotation>
                <documentation>
-                  a translatable name to be displayed in the Links View.
+                  a human-readable name for the browser.
                </documentation>
                <appInfo>
                   <meta.attribute translatable="true"/>
                </appInfo>
             </annotation>
          </attribute>
-         <attribute name="link" type="string" use="required">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
-                  URL of the link
-               </documentation>
-            </annotation>
-         </attribute>
-         <attribute name="description" type="string" use="required">
-            <annotation>
-               <documentation>
-                  A description of the link.
+                  This class is invoked to open a given URL.  The class must implement &lt;code&gt;org.eclipse.browser.view.ui.actions.IHTMLBrowser&lt;/code&gt;.
                </documentation>
                <appInfo>
-                  <meta.attribute translatable="true"/>
+                  <meta.attribute kind="java" basedOn=":org.eclipse.browser.view.ui.actions.IHTMLBrowser"/>
                </appInfo>
             </annotation>
          </attribute>
@@ -83,7 +79,7 @@ This extension point is used to add additional links to the Useful Links section
          <meta.section type="since"/>
       </appInfo>
       <documentation>
-         1.0.0
+         1.0
       </documentation>
    </annotation>
 
@@ -96,16 +92,14 @@ This extension point is used to add additional links to the Useful Links section
 The following is an example of the extension point:
 &lt;pre&gt;
    &lt;extension
-         point=&quot;org.eclipse.browser.usefulLinks&quot;&gt;
-      &lt;linkObject
-            link=&quot;http://www.eclipse.org/downloads/&quot;
-            name=&quot;Eclipse Downloads&quot;&gt;
-         &lt;description&gt;
-            Web site for downloading Eclipse distributions, SDKs and bundles
-         &lt;/description&gt;
-      &lt;/linkObject&gt;
+         point=&quot;org.eclipse.browser.htmlBrowsers&quot;&gt;
+      &lt;browser
+           id=&quot;org.eclipse.browser.builtin&quot;
+           name=&quot;Internal Browser&quot; 
+           class=&quot;org.eclipse.browser.view.ui.actions.InternalBrowser&quot;/&gt;
    &lt;/extension&gt;
 &lt;/pre&gt;
+&lt;/p&gt;
       </documentation>
    </annotation>
 
@@ -114,7 +108,7 @@ The following is an example of the extension point:
          <meta.section type="apiInfo"/>
       </appInfo>
       <documentation>
-         
+         Each browser must provide a class that implements the &lt;code&gt;org.eclipse.browser.view.ui.actions.IHTMLBrowser&lt;/code&gt; interface.
       </documentation>
    </annotation>
 
@@ -123,9 +117,7 @@ The following is an example of the extension point:
          <meta.section type="implementation"/>
       </appInfo>
       <documentation>
-         &lt;p&gt;
-The Browser plug-in&apos;s plugin.xml includes two usefulLinks extensions.
-&lt;/p&gt;
+         The default implementation is to open the HTML documents with the internal browser.
       </documentation>
    </annotation>
 
@@ -134,12 +126,7 @@ The Browser plug-in&apos;s plugin.xml includes two usefulLinks extensions.
          <meta.section type="copyright"/>
       </appInfo>
       <documentation>
-         Copyright (c) 2007 IBM Corporation and others.
-&lt;br&gt;
-All rights reserved. This program and the accompanying materials are made 
-available under the terms of the Eclipse Public License v1.0 which 
-accompanies this distribution, and is available at 
-&lt;a href=&quot;http://www.eclipse.org/legal/epl-v10.html&quot;&gt;http://www.eclipse.org/legal/epl-v10.html&lt;/a&gt;.
+         
       </documentation>
    </annotation>
 

@@ -17,6 +17,7 @@ import org.eclipse.browser.view.BrowserMessages;
 import org.eclipse.browser.view.BrowserPlugin;
 import org.eclipse.browser.view.BrowserPluginImages;
 import org.eclipse.browser.view.model.LinkModel;
+import org.eclipse.browser.view.ui.actions.ExtensibleOpenLinkAction;
 import org.eclipse.browser.view.ui.actions.IExtensibleAction;
 import org.eclipse.browser.view.ui.actions.OpenLinkAction;
 import org.eclipse.browser.view.ui.listeners.FormTextHyperlinkListener;
@@ -69,7 +70,7 @@ public class EclipseBrowserView extends ViewPart {
 
 	private Composite fBaseComposite;
 	
-	private OpenLinkAction fOpenLinkAction = new OpenLinkAction();
+	private OpenLinkAction fOpenLinkAction = new ExtensibleOpenLinkAction();
 
 	private SashForm fSashForm;
 	

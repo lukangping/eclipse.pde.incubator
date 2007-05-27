@@ -4,9 +4,18 @@ Bundle-Name: %bundle.name
 Bundle-SymbolicName: org.eclipse.browser;singleton:=true
 Bundle-Version: 1.0.0
 Bundle-Activator: org.eclipse.browser.view.BrowserPlugin
-Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime,
- org.eclipse.ui.forms
-Eclipse-LazyStart: true
 Bundle-Localization: plugin
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.ui.forms
 Bundle-RequiredExecutionEnvironment: J2SE-1.4
+Created-By: 1.6.0_01-b06 (Sun Microsystems Inc.)
+Ant-Version: Apache Ant 1.7.0
+Eclipse-LazyStart: true
+Export-Package: org.eclipse.browser.application,
+ org.eclipse.browser.view,
+ org.eclipse.browser.view.model,
+ org.eclipse.browser.view.ui,
+ org.eclipse.browser.view.ui.actions,
+ org.eclipse.browser.view.ui.listeners,
+ org.eclipse.browser.view.ui.providers,
+ org.eclipse.browser.view.ui.sections,
+ org.eclipse.browser.view.util

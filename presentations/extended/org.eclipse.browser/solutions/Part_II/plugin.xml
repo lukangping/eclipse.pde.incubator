@@ -2,6 +2,7 @@
 <?eclipse version="3.2"?>
 <plugin>
    <extension-point id="usefulLinks" name="%usefulLink.extPoint" schema="schema/usefulLinks.exsd"/>
+   <extension-point id="htmlBrowsers" name="HTML Browsers" schema="schema/htmlBrowsers.exsd"/>
    <extension
          point="org.eclipse.browser.usefulLinks">
       <linkObject
@@ -35,48 +36,22 @@
             name="%perspective.name">
       </perspective>
    </extension>
-
    <extension
          point="org.eclipse.ui.views">
       <view
             class="org.eclipse.browser.view.ui.EclipseBrowserView"
             icon="icons/eclipse_icon.gif"
             id="org.eclipse.browser.view"
-            name="%view.name">
+            name="Eclipse Browser">
       </view>
    </extension>
    <extension
-         id="application"
-         point="org.eclipse.core.runtime.applications">
-      <application>
-         <run
-               class="org.eclipse.browser.application.Application">
-         </run>
-      </application>
+         point="org.eclipse.browser.htmlBrowsers">
+      <browser
+            class="org.eclipse.browser.view.ui.actions.InternalBrowser"
+            id="org.eclipse.browser.builtin"
+            name="Internal Browser">
+      </browser>
    </extension>
-   <extension
-         id="product"
-         point="org.eclipse.core.runtime.products">
-      <product
-            application="org.eclipse.browser.application"
-            name="Eclipse Browser Product">
-         <property
-               name="appName"
-               value="Eclipse Browser Product">
-         </property>
-         <property
-               name="aboutImage"
-               value="branding/world_about.gif">
-         </property>
-         <property
-               name="aboutText"
-               value="This is a blurb about my product.">
-         </property>
-         <property
-               name="windowImages"
-               value="branding/world_16-16_windows.gif,branding/world_32-32_windows.gif">
-         </property>
-      </product>
-   </extension>
-
+ 
 </plugin>
