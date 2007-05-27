@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<cheatsheet title="Making the Eclipse Brower Extensible">
+<cheatsheet title="Make the Eclipse Brower Extensible">
    <intro>
       <description>
          This tutorial will show you how to make the list of browsers used in the Eclipse Browser view extensible.

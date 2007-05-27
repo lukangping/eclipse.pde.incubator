@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<compositeCheatsheet name="Becoming an Enabler">
-   <taskGroup kind="set" name="Becoming an Enabler" skip="false">
+<compositeCheatsheet name="Become an Enabler">
+   <taskGroup kind="set" name="Become an Enabler" skip="false">
       <intro>
          This cheat sheet will guide you through the individual steps to make the Eclipse Browser extensible allowing downstream clients to plug in their own browser.
 <br/>
