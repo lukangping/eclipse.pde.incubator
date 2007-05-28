@@ -21,7 +21,7 @@
    </item>
    <item title="Save the file" dialog="true" skip="false">
       <description>
-         Select &quot;File &gt; Save&quot; from the main menu to save the file.
+         Switch back to the plug-in manifest editor and save the file via &quot;File &gt; Save&quot; from the main menu.
       </description>
    </item>
 </cheatsheet>

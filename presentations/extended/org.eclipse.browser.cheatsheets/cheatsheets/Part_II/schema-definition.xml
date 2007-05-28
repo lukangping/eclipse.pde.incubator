@@ -18,7 +18,7 @@
       </description>
       <subitem label="In the &quot;Element Details&quot; section, replace the content of the &quot;Name&quot; field with &quot;browser&quot;." skip="false">
       </subitem>
-      <subitem label="Select the &quot;extension&quot; element and choose &quot;New &gt; Sequence&quot; from its context menu." skip="false">
+      <subitem label="Select the &quot;extension&quot; element and choose &quot;New &gt; Compositor &gt; Sequence&quot; from its context menu." skip="false">
       </subitem>
       <subitem label="From the context menu of the &quot;Sequence&quot; node, choose &quot;New &gt; Reference &gt; browser&quot;." skip="false">
       </subitem>
