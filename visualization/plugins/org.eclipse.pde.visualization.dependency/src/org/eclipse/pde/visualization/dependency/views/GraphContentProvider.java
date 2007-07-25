@@ -11,7 +11,7 @@
 package org.eclipse.pde.visualization.dependency.views;
 
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
+import org.eclipse.mylyn.zest.core.viewers.IGraphEntityContentProvider;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**

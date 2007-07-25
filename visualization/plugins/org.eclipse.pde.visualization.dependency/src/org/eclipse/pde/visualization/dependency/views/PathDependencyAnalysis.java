@@ -13,8 +13,8 @@ package org.eclipse.pde.visualization.dependency.views;
 import java.util.Arrays;
 import java.util.HashSet;
 
-import org.eclipse.mylar.zest.core.viewers.EntityConnectionData;
-import org.eclipse.mylar.zest.core.viewers.GraphViewer;
+import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
+import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**

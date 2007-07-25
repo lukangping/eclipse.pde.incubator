@@ -10,7 +10,7 @@
  ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
-import org.eclipse.mylar.zest.core.viewers.GraphViewer;
+import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;

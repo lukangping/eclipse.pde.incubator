@@ -25,19 +25,19 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
-import org.eclipse.mylar.zest.core.viewers.AbstractZoomableViewer;
-import org.eclipse.mylar.zest.core.viewers.GraphViewer;
-import org.eclipse.mylar.zest.core.viewers.IGraphEntityContentProvider;
-import org.eclipse.mylar.zest.core.viewers.IZoomableWorkbenchPart;
-import org.eclipse.mylar.zest.core.viewers.ZoomContributionViewItem;
-import org.eclipse.mylar.zest.core.widgets.Graph;
-import org.eclipse.mylar.zest.core.widgets.GraphNode;
-import org.eclipse.mylar.zest.core.widgets.ZestStyles;
-import org.eclipse.mylar.zest.layouts.LayoutAlgorithm;
-import org.eclipse.mylar.zest.layouts.LayoutStyles;
-import org.eclipse.mylar.zest.layouts.algorithms.CompositeLayoutAlgorithm;
-import org.eclipse.mylar.zest.layouts.algorithms.HorizontalShift;
-import org.eclipse.mylar.zest.layouts.algorithms.TreeLayoutAlgorithm;
+import org.eclipse.mylyn.zest.core.viewers.AbstractZoomableViewer;
+import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
+import org.eclipse.mylyn.zest.core.viewers.IGraphEntityContentProvider;
+import org.eclipse.mylyn.zest.core.viewers.IZoomableWorkbenchPart;
+import org.eclipse.mylyn.zest.core.viewers.ZoomContributionViewItem;
+import org.eclipse.mylyn.zest.core.widgets.Graph;
+import org.eclipse.mylyn.zest.core.widgets.GraphNode;
+import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
+import org.eclipse.mylyn.zest.layouts.LayoutAlgorithm;
+import org.eclipse.mylyn.zest.layouts.LayoutStyles;
+import org.eclipse.mylyn.zest.layouts.algorithms.CompositeLayoutAlgorithm;
+import org.eclipse.mylyn.zest.layouts.algorithms.HorizontalShift;
+import org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
@@ -154,6 +154,9 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			}
 
 			viewer.setLabelProvider(this.currentLabelProvider);
+			//viewer.refresh();
+			//viewer.setInput(this.currentBundle);
+			
 
 		} else if (!dependencyPath && !(currentLabelProvider instanceof HighlightDependencyLableProvider)) {
 			this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer);
@@ -166,7 +169,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		}
 
 		// Set the pinned node in case we have one from the previous content
-		// provdier
+		// provider
 		this.currentLabelProvider.setPinnedNode((BundleDescription) pinnedNode);
 		if (viewer.getSelection() != null) {
 			viewer.setSelection(viewer.getSelection());

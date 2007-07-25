@@ -15,11 +15,11 @@ import java.util.Iterator;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.mylar.zest.core.widgets.ZestStyles;
-import org.eclipse.mylar.zest.core.viewers.EntityConnectionData;
-import org.eclipse.mylar.zest.core.viewers.GraphViewer;
-import org.eclipse.mylar.zest.core.viewers.IConnectionStyleProvider;
-import org.eclipse.mylar.zest.core.viewers.IEntityStyleProvider;
+import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
+import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
+import org.eclipse.mylyn.zest.core.viewers.IConnectionStyleProvider;
+import org.eclipse.mylyn.zest.core.viewers.IEntityStyleProvider;
+import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
