@@ -26,6 +26,7 @@ import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.zest.core.viewers.AbstractZoomableViewer;
+import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
 import org.eclipse.mylyn.zest.core.viewers.IGraphEntityContentProvider;
 import org.eclipse.mylyn.zest.core.viewers.IZoomableWorkbenchPart;
@@ -110,7 +111,11 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
-				PluginVisualizationView.this.selectionChanged(((IStructuredSelection) event.getSelection()).getFirstElement());
+				Object selectedElement = ((IStructuredSelection) event.getSelection()).getFirstElement();
+				if ( selectedElement instanceof EntityConnectionData ) {
+					return;
+				}
+				PluginVisualizationView.this.selectionChanged(selectedElement);
 			}
 		});
 		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
