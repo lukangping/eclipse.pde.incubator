@@ -138,6 +138,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				Object selectedElement = selection.getFirstElement();
 				if ( selectedElement instanceof BundleDescription) {
 					focusOn((BundleDescription) selectedElement, true);
+					// When a new plug-in is selected, disable the forward action.
+					// The forward action only stores history when the back button was used (much like a browser)
 					forwardStack.clear();
 					forwardAction.setEnabled(false);
 				}
@@ -288,6 +290,9 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				if (dialog.open() == Window.OK) {
 					IPluginModelBase pluginModelBase = (IPluginModelBase) dialog.getFirstResult();
 					focusOn(pluginModelBase.getBundleDescription(), true);
+					
+					// When a new plug-in is selected, disable the forward action			
+					// The forward action only stores history when the back button was used (much like a browser)
 					forwardStack.clear();
 					forwardAction.setEnabled(false);
 				}
@@ -343,6 +348,9 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		focusAction = new Action() {
 			public void run() {
 				focusOn((BundleDescription) objectToFocusOn, true);
+				
+				// When a new plug-in is selected, disable the forward action
+				// The forward action only stores history when the back button was used (much like a browser)
 				forwardStack.clear();
 				forwardAction.setEnabled(false);
 			}
