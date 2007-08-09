@@ -15,6 +15,7 @@ import java.net.URL;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.pde.internal.ui.PDEPluginImages;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 import org.eclipse.core.runtime.Path;
@@ -28,6 +29,8 @@ public class Activator extends AbstractUIPlugin {
 	
 	public static final String FORWARD_ENABLED = "icons/obj16/forward_enabled.gif";
 	public static final String BACKWARD_ENABLED = "icons/obj16/backward_enabled.gif";
+	
+	public static final String PLUGIN_OBJ = "plugin_obj";
 
 	// The shared instance
 	private static Activator plugin;
@@ -47,6 +50,7 @@ public class Activator extends AbstractUIPlugin {
 		plugin = this;
 		addImage(FORWARD_ENABLED);
 		addImage(BACKWARD_ENABLED);
+		this.getImageRegistry().put(PLUGIN_OBJ, PDEPluginImages.DESC_PLUGIN_OBJ);
 	}
 	
 	private void addImage(String imagePath) {
@@ -64,7 +68,6 @@ public class Activator extends AbstractUIPlugin {
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
-		getImageRegistry().dispose();
 	}
 
 	/**

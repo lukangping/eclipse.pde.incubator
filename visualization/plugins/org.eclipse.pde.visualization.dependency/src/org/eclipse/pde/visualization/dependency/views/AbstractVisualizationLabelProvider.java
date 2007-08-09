@@ -21,6 +21,7 @@ import org.eclipse.mylyn.zest.core.viewers.IConnectionStyleProvider;
 import org.eclipse.mylyn.zest.core.viewers.IEntityStyleProvider;
 import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
@@ -83,7 +84,10 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		 * PDEPlugin.getDefault().getLabelProvider(); return
 		 * fSharedProvider.get(PDEPluginImages.DESC_PLUGIN_OBJ, 0);
 		 */
-		return null;
+		if (element.getClass() == EntityConnectionData.class ) {
+			return null;
+		}
+		return Activator.getDefault().getImageRegistry().get(Activator.PLUGIN_OBJ);
 	}
 
 	public String getText(Object element) {
