@@ -20,6 +20,8 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
@@ -117,6 +119,25 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				}
 				PluginVisualizationView.this.selectionChanged(selectedElement);
 			}
+		});
+		
+		viewer.addDoubleClickListener(new IDoubleClickListener() {
+
+			public void doubleClick(DoubleClickEvent event) {
+				// On a double click we now focus on that node.
+				// See bug: 172627: [pde viz] double-clicking on a node should implicitly focus on it.
+				//    https://bugs.eclipse.org/bugs/show_bug.cgi?id=172627
+				
+				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
+				if ( selection.size() < 1 ) {
+					return;
+				}
+				Object selectedElement = selection.getFirstElement();
+				if ( selectedElement instanceof BundleDescription) {
+					focusOn((BundleDescription) selectedElement, true);
+				}
+			}
+			
 		});
 		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
 		contextZoomContributionViewItem = new ZoomContributionViewItem(this);
