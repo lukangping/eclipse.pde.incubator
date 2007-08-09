@@ -11,9 +11,13 @@
  *******************************************************************************/
 package org.eclipse.pde.visualization.dependency;
 
+import java.net.URL;
+
+import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
-
+import org.eclipse.core.runtime.Path;
 /**
  * The activator class controls the plug-in life cycle
  */
@@ -21,6 +25,9 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.pde.visualization.dependency";
+	
+	public static final String FORWARD_ENABLED = "icons/obj16/forward_enabled.gif";
+	public static final String BACKWARD_ENABLED = "icons/obj16/backward_enabled.gif";
 
 	// The shared instance
 	private static Activator plugin;
@@ -38,6 +45,16 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
+		addImage(FORWARD_ENABLED);
+		addImage(BACKWARD_ENABLED);
+	}
+	
+	private void addImage(String imagePath) {
+		String path = "$nl$/" + imagePath; //$NON-NLS-1$
+		URL url = FileLocator.find(this.getBundle(), new Path(path), null);
+		ImageDescriptor imageDescriptor = ImageDescriptor.createFromURL(url);
+		getImageRegistry().put(imagePath, imageDescriptor);
+		
 	}
 
 	/*
@@ -47,6 +64,7 @@ public class Activator extends AbstractUIPlugin {
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+		getImageRegistry().dispose();
 	}
 
 	/**

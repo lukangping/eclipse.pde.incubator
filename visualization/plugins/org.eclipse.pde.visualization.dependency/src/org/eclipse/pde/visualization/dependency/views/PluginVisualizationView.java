@@ -44,6 +44,7 @@ import org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
+import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.ui.IActionBars;
@@ -319,6 +320,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		historyAction.setText("Back");
 		historyAction.setToolTipText("Previous plugin");
 		historyAction.setEnabled(false);
+		historyAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.BACKWARD_ENABLED));
 		
 		forwardAction = new Action() {
 			public void run() {
@@ -335,6 +337,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		forwardAction.setText("Forward");
 		forwardAction.setToolTipText("Go forward one plugin");
 		forwardAction.setEnabled(false);
+		forwardAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.FORWARD_ENABLED));
 		
 	}
 
