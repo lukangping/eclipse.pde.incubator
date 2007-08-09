@@ -76,7 +76,9 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private Action pinAction;
 	private Action unPinAction;
 	private Action historyAction;
+	private Action forwardAction;
 	private Stack historyStack;
+	private Stack forwardStack;
 	private Object currentNode = null;
 	private VisualizationLabelProvider currentLabelProvider;
 	private IGraphEntityContentProvider contentProvider;
@@ -89,6 +91,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	public PluginVisualizationView() {
 		historyStack = new Stack();
+		forwardStack = new Stack();
 	}
 
 	/**
@@ -135,6 +138,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				Object selectedElement = selection.getFirstElement();
 				if ( selectedElement instanceof BundleDescription) {
 					focusOn((BundleDescription) selectedElement, true);
+					forwardStack.clear();
+					forwardAction.setEnabled(false);
 				}
 			}
 			
@@ -234,6 +239,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	private void fillLocalToolBar(IToolBarManager toolBarManager) {
 		toolBarManager.add(historyAction);
+		toolBarManager.add(forwardAction);
 	}
 
 	/**
@@ -282,6 +288,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				if (dialog.open() == Window.OK) {
 					IPluginModelBase pluginModelBase = (IPluginModelBase) dialog.getFirstResult();
 					focusOn(pluginModelBase.getBundleDescription(), true);
+					forwardStack.clear();
+					forwardAction.setEnabled(false);
 				}
 			}
 		};
@@ -293,6 +301,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			public void run() {
 				if (historyStack.size() > 0) {
 					Object o = historyStack.pop();
+					forwardStack.push(currentNode);
+					forwardAction.setEnabled(true);
 					focusOn((BundleDescription) o, false);
 					if (historyStack.size() <= 0) {
 						historyAction.setEnabled(false);
@@ -302,8 +312,25 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		};
 		// @tag action : History action
 		historyAction.setText("Back");
-		historyAction.setToolTipText("Previous Plugin");
+		historyAction.setToolTipText("Previous plugin");
 		historyAction.setEnabled(false);
+		
+		forwardAction = new Action() {
+			public void run() {
+				if ( forwardStack.size() > 0 ) {
+					Object o = forwardStack.pop();
+					focusOn((BundleDescription) o, true);
+					if ( forwardStack.size() <= 0 ) {
+						forwardAction.setEnabled(false);
+					}
+				}
+			}
+		};
+		
+		forwardAction.setText("Forward");
+		forwardAction.setToolTipText("Go forward one plugin");
+		forwardAction.setEnabled(false);
+		
 	}
 
 	/**
@@ -316,6 +343,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		focusAction = new Action() {
 			public void run() {
 				focusOn((BundleDescription) objectToFocusOn, true);
+				forwardStack.clear();
+				forwardAction.setEnabled(false);
 			}
 		};
 		focusAction.setText("Focus On \'" + ((BundleDescription) objectToFocusOn).getName() + "\'");
@@ -402,6 +431,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(historyAction);
+		manager.add(forwardAction);
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(contextZoomContributionViewItem);
 	}
