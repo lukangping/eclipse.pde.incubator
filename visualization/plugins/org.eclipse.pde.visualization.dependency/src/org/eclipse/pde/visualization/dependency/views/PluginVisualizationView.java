@@ -13,7 +13,9 @@ package org.eclipse.pde.visualization.dependency.views;
 import java.util.Iterator;
 import java.util.Stack;
 
+import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Dimension;
+import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -45,8 +47,18 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.forms.widgets.Form;
@@ -78,6 +90,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private Action unPinAction;
 	private Action historyAction;
 	private Action forwardAction;
+	private Action screenshotAction;
 	private Stack historyStack;
 	private Stack forwardStack;
 	private Object currentNode = null;
@@ -236,13 +249,14 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	}
 
 	/**
-	 * Add the actions to the tool bart
+	 * Add the actions to the tool bar
 	 * 
 	 * @param toolBarManager
 	 */
 	private void fillLocalToolBar(IToolBarManager toolBarManager) {
 		toolBarManager.add(historyAction);
 		toolBarManager.add(forwardAction);
+		toolBarManager.add(screenshotAction);
 	}
 
 	/**
@@ -338,6 +352,48 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		forwardAction.setToolTipText("Go forward one plugin");
 		forwardAction.setEnabled(false);
 		forwardAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.FORWARD_ENABLED));
+		
+		screenshotAction = new Action() {
+			public void run() {
+		
+				Shell shell = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell();
+				Graph g = (Graph) viewer.getControl();
+				Rectangle bounds = g.getContents().getBounds();
+				Point size = new Point(g.getContents().getSize().width, g.getContents().getSize().height);
+				org.eclipse.draw2d.geometry.Point viewLocation = g.getViewport().getViewLocation();
+				final Image image = new Image(null, size.x, size.y);
+				GC gc = new GC(image);
+				SWTGraphics swtGraphics = new SWTGraphics(gc);
+				
+				swtGraphics.translate(-1 * bounds.x + viewLocation.x, -1 * bounds.y + viewLocation.y);
+				g.getViewport().paint(swtGraphics);
+				gc.copyArea(image,0,0);
+				gc.dispose();
+
+				Shell popup = new Shell(shell);
+				popup.setText("Image");
+				popup.addListener(SWT.Close, new Listener() {
+					public void handleEvent(Event e) {
+						image.dispose();
+					}
+				});
+
+				Canvas canvas = new Canvas(popup, SWT.NONE);
+				canvas.setBounds(10, 10, size.x + 10, size.y + 10);
+				canvas.addPaintListener(new PaintListener() {
+					public void paintControl(PaintEvent e) {
+						e.gc.drawImage(image, 0, 0);
+					}
+				});
+				popup.pack();
+				popup.open();
+				
+			}
+		};
+		
+		screenshotAction.setText("Take screenshot");
+		screenshotAction.setToolTipText("Take screenshot");
+		screenshotAction.setEnabled(true);
 		
 	}
 
@@ -443,6 +499,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(historyAction);
 		manager.add(forwardAction);
+		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(screenshotAction);
 		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
 		manager.add(contextZoomContributionViewItem);
 	}
