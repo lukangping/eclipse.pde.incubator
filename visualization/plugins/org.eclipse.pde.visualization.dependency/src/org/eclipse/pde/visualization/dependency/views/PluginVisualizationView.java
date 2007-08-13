@@ -47,16 +47,10 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Canvas;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
@@ -369,7 +363,13 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				g.getViewport().paint(swtGraphics);
 				gc.copyArea(image,0,0);
 				gc.dispose();
+				
+				ImagePreviewPane previewPane = new ImagePreviewPane(shell);
+				previewPane.setText("Image Preview");
+				previewPane.open(image, size);
 
+				
+				/*
 				Shell popup = new Shell(shell);
 				popup.setText("Image");
 				popup.addListener(SWT.Close, new Listener() {
@@ -387,6 +387,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				});
 				popup.pack();
 				popup.open();
+				*/
 				
 			}
 		};
