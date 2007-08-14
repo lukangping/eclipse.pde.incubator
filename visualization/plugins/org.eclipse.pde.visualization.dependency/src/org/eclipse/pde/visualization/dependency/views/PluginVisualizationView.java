@@ -367,32 +367,10 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				ImagePreviewPane previewPane = new ImagePreviewPane(shell);
 				previewPane.setText("Image Preview");
 				previewPane.open(image, size);
-
-				
-				/*
-				Shell popup = new Shell(shell);
-				popup.setText("Image");
-				popup.addListener(SWT.Close, new Listener() {
-					public void handleEvent(Event e) {
-						image.dispose();
-					}
-				});
-
-				Canvas canvas = new Canvas(popup, SWT.NONE);
-				canvas.setBounds(10, 10, size.x + 10, size.y + 10);
-				canvas.addPaintListener(new PaintListener() {
-					public void paintControl(PaintEvent e) {
-						e.gc.drawImage(image, 0, 0);
-					}
-				});
-				popup.pack();
-				popup.open();
-				*/
-				
 			}
 		};
 		
-		screenshotAction.setText("Take screenshot");
+		screenshotAction.setText("Take A Screenshot");
 		screenshotAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.SNAPSHOT));
 		screenshotAction.setToolTipText("Take screenshot");
 		screenshotAction.setEnabled(true);
