@@ -393,6 +393,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		};
 		
 		screenshotAction.setText("Take screenshot");
+		screenshotAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.SNAPSHOT));
 		screenshotAction.setToolTipText("Take screenshot");
 		screenshotAction.setEnabled(true);
 		

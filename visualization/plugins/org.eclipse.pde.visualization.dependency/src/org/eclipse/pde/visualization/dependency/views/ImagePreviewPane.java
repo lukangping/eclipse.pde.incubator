@@ -72,7 +72,7 @@ public class ImagePreviewPane extends Dialog {
 				FileDialog dialog = new FileDialog (shell, SWT.SAVE);
 				dialog.setFilterNames (new String [] {"Image Files", "All Files (*.*)"});
 				dialog.setFilterExtensions (new String [] {"*.png", "*.*"}); //Windows wild cards
-				dialog.setFilterPath ("c:\\"); //Windows path
+				//dialog.setFilterPath ("c:\\"); //Windows path
 				dialog.setFileName ("dependencies.png");
 				String fileName = dialog.open();
 				ImageLoader loader = new ImageLoader();
