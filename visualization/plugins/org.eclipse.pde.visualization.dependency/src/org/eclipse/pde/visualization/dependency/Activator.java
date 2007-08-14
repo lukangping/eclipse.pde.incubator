@@ -30,6 +30,7 @@ public class Activator extends AbstractUIPlugin {
 	public static final String FORWARD_ENABLED = "icons/obj16/forward_enabled.gif";
 	public static final String BACKWARD_ENABLED = "icons/obj16/backward_enabled.gif";
 	public static final String SNAPSHOT = "icons/obj16/snapshot.gif";
+	public static final String SAVEEDIT = "icons/obj16/save_edit.gif";
 	
 	public static final String PLUGIN_OBJ = "plugin_obj";
 
@@ -52,6 +53,7 @@ public class Activator extends AbstractUIPlugin {
 		addImage(FORWARD_ENABLED);
 		addImage(BACKWARD_ENABLED);
 		addImage(SNAPSHOT);
+		addImage(SAVEEDIT);
 		this.getImageRegistry().put(PLUGIN_OBJ, PDEPluginImages.DESC_PLUGIN_OBJ);
 	}
 	

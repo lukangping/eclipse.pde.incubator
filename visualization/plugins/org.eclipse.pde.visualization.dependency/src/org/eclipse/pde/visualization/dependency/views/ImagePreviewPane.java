@@ -61,7 +61,7 @@ public class ImagePreviewPane extends Dialog {
 		toolBar.setLayoutData(data);
 		
 		ToolItem saveItem = new ToolItem(toolBar, SWT.NONE);
-		saveItem.setText("Save Image");
+		saveItem.setImage(Activator.getDefault().getImageRegistry().get(Activator.SAVEEDIT));
 		saveItem.addSelectionListener(new SelectionListener() {
 
 			public void widgetDefaultSelected(SelectionEvent e) {
