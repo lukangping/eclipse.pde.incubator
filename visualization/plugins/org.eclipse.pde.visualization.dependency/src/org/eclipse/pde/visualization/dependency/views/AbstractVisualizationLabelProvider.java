@@ -68,14 +68,21 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	private Color disabledColor = null;
 	protected BundleDescription pinnedNode = null;
 	private GraphViewer viewer;
+	private boolean showVersionNumber = false;
 
 	/**
 	 * Create a new Abstract Visualization Label Provider
 	 * 
 	 * @param viewer
+	 * @param currentLabelProvider
+	 *            The current label provider (or null if none is present). This
+	 *            is used to maintain state between the old one and the new one.
 	 */
-	public AbstractVisualizationLabelProvider(GraphViewer viewer) {
+	public AbstractVisualizationLabelProvider(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
 		this.viewer = viewer;
+		if (currentLabelProvider != null) {
+			this.showVersionNumber = currentLabelProvider.showVersionNumber;
+		}
 	}
 
 	public Image getImage(Object element) {
@@ -84,7 +91,7 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		 * PDEPlugin.getDefault().getLabelProvider(); return
 		 * fSharedProvider.get(PDEPluginImages.DESC_PLUGIN_OBJ, 0);
 		 */
-		if (element.getClass() == EntityConnectionData.class ) {
+		if (element.getClass() == EntityConnectionData.class) {
 			return null;
 		}
 		return Activator.getDefault().getImageRegistry().get(Activator.PLUGIN_OBJ);
@@ -92,7 +99,12 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 
 	public String getText(Object element) {
 		if (element instanceof BundleDescription) {
-			return ((BundleDescription) element).getName();
+
+			BundleDescription bundleDescription = ((BundleDescription) element);
+			if (showVersionNumber) {
+				return bundleDescription.getName() + " (" + bundleDescription.getVersion() + ")";
+			}
+			return bundleDescription.getName();
 		}
 		return "";
 	}
@@ -299,6 +311,10 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	public IFigure getNodeFigure(Object entity) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void showVersionNumber(boolean show) {
+		this.showVersionNumber = show;
 	}
 
 }

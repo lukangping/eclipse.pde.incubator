@@ -34,8 +34,8 @@ public class SmartPathDependencyAnalysis extends AbstractVisualizationLabelProvi
 	 * @param viewer
 	 *            The GraphViewer
 	 */
-	public SmartPathDependencyAnalysis(GraphViewer viewer) {
-		super(viewer);
+	public SmartPathDependencyAnalysis(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
+		super(viewer, currentLabelProvider);
 	}
 
 	/*

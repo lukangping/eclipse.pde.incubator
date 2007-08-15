@@ -24,7 +24,7 @@ import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.osgi.service.resolver.ExportPackageDescription;
 
 /**
- * 
+ * General utility classes for dealing with bundle dependencies.
  * @author Ian Bull
  * 
  */
@@ -141,6 +141,7 @@ public class AnalysisUtil {
 		return descriptionList;
 	}
 
+	
 	public static BundleDescription[] getDependencies(BundleDescription bundle) {
 
 		if (bundle == null) {
@@ -166,7 +167,8 @@ public class AnalysisUtil {
 		BundleDescription[] dependencies = getDependencies(bundle);
 		for (int i = 0; i < dependencies.length; i++) {
 			if (dependencies[i] == null) {
-				//@tag PDE bug : I guess null in my array of dependencies
+				//@tag PDE bug : I get null in my array of dependencies
+				//               This means that a supplier could not be found (constraint invalid)
 				continue;
 			}
 			addPrerequisites(dependencies[i], reachable);

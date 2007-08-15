@@ -23,8 +23,8 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  */
 class HighlightDependencyLableProvider extends AbstractVisualizationLabelProvider {
 
-	public HighlightDependencyLableProvider(GraphViewer viewer) {
-		super(viewer);
+	public HighlightDependencyLableProvider(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
+		super(viewer, currentLabelProvider);
 	}
 
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {

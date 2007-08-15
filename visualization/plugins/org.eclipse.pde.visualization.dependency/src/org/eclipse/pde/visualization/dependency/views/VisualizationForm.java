@@ -45,6 +45,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private static String Show_Dependency_Path = "Show Dependency Path";
 	private static String Filter_Enanled_Plugins = "Filter Enabled Plug-ins";
 	private static String Exeuction_Environment = "Execution Environment";
+	private static String Version_Number = "Show Bundle Version Numbers";
 	private static String Execution_Environment_Instructions = "Show bunldes with execution environment:";
 	private static String Java6 = "Java 6.0 and above";
 	private static String Java5 = "Java 5.0 and above";
@@ -75,6 +76,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private Button showShortestPath = null;
 	private Button showAllPaths = null;
 	private Button dependencyAnalysis = null;
+	private Button showVersionNumber = null;
 
 	private String currentPathAnalysis = null;
 
@@ -163,6 +165,15 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		controls.setText(Controls);
 		Composite controlComposite = this.toolkit.createComposite(controls);
 		controlComposite.setLayout(new GridLayout());
+		
+		showVersionNumber = this.toolkit.createButton(controlComposite, Version_Number, SWT.CHECK);
+		showVersionNumber.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		showVersionNumber.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				view.showVersionNumber(showVersionNumber.getSelection());
+			}
+		});
+		
 		dependencyAnalysis = this.toolkit.createButton(controlComposite, Show_Dependency_Path, SWT.CHECK);
 		dependencyAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
 		dependencyAnalysis.addSelectionListener(new SelectionAdapter() {
@@ -210,6 +221,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 		Button filterEnabled = this.toolkit.createButton(controlComposite, Filter_Enanled_Plugins, SWT.CHECK);
 		filterEnabled.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		
 		createEEAnalysisSection(controlComposite);
 		controls.setClient(controlComposite);
 	}

@@ -23,8 +23,8 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  */
 public class ShortestPathDependencyAnalysis extends AbstractVisualizationLabelProvider {
 
-	public ShortestPathDependencyAnalysis(GraphViewer viewer) {
-		super(viewer);
+	public ShortestPathDependencyAnalysis(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
+		super(viewer,currentLabelProvider );
 	}
 
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {

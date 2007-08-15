@@ -114,7 +114,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		form = visualizationForm.getForm();
 
 		this.contentProvider = new GraphContentProvider();
-		this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer);
+		this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer, null);
 		viewer.setContentProvider(this.contentProvider);
 		viewer.setLabelProvider(this.currentLabelProvider);
 		viewer.setInput(null);
@@ -163,6 +163,17 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	}
 
 	/**
+	 * If true, the version number of the bundles will be displayed at the end
+	 * the name. If false, this information will be hidden
+	 * @param enable
+	 */
+	void showVersionNumber(boolean enable) {
+		this.currentLabelProvider.showVersionNumber(enable);
+		viewer.update(contentProvider.getElements(currentNode), null);
+		viewer.applyLayout();
+	}
+
+	/**
 	 * Enable dependency path in the view. This will highlight all the nodes
 	 * from the selected node to the root.
 	 * 
@@ -185,13 +196,13 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			// ShortestPathDependencyAnalyis label provider
 
 			if (dependencyPathType == VisualizationForm.Show_Smart_Path) {
-				this.currentLabelProvider = new SmartPathDependencyAnalysis(this.viewer);
+				this.currentLabelProvider = new SmartPathDependencyAnalysis(this.viewer, (AbstractVisualizationLabelProvider) this.currentLabelProvider);
 			}
 			if (dependencyPathType == VisualizationForm.Show_All_Paths) {
-				this.currentLabelProvider = new PathDependencyAnalysis(this.viewer);
+				this.currentLabelProvider = new PathDependencyAnalysis(this.viewer, (AbstractVisualizationLabelProvider) this.currentLabelProvider);
 			}
 			if (dependencyPathType == VisualizationForm.Show_Shortest_Path) {
-				this.currentLabelProvider = new ShortestPathDependencyAnalysis(this.viewer);
+				this.currentLabelProvider = new ShortestPathDependencyAnalysis(this.viewer, (AbstractVisualizationLabelProvider) this.currentLabelProvider);
 			}
 
 			viewer.setLabelProvider(this.currentLabelProvider);
@@ -200,7 +211,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			
 
 		} else if (!dependencyPath && !(currentLabelProvider instanceof HighlightDependencyLableProvider)) {
-			this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer);
+			this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer, (AbstractVisualizationLabelProvider) this.currentLabelProvider);
 			viewer.setLabelProvider(this.currentLabelProvider);
 
 		}

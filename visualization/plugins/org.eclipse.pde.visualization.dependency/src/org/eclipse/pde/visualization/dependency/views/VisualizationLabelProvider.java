@@ -40,4 +40,11 @@ public interface VisualizationLabelProvider extends ILabelProvider {
 	 * @param pinnedNode
 	 */
 	public void setPinnedNode(BundleDescription pinnedNode);
+
+	/**
+	 * If true, shows the version number after the name of the plug-in.  If false,
+	 * this information is hidden.   
+	 * @param show
+	 */
+	public void showVersionNumber(boolean show);
 }

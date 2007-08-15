@@ -24,8 +24,8 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  */
 public class PathDependencyAnalysis extends AbstractVisualizationLabelProvider {
 
-	public PathDependencyAnalysis(GraphViewer viewer) {
-		super(viewer);
+	public PathDependencyAnalysis(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
+		super(viewer, currentLabelProvider);
 	}
 
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {
