@@ -94,9 +94,13 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		this.view = view;
 		form = this.toolkit.createScrolledForm(parent);
 		managedForm = new ManagedForm(this.toolkit, this.form);
-		form.getBody().setLayout(new FillLayout());
+		FillLayout layout = new FillLayout();
+		layout.marginHeight = 10;
+		layout.marginWidth = 4;
+		form.getBody().setLayout(layout);
 		form.setText(Plugin_Dependency_Analysis);
 		form.setImage(Activator.getDefault().getImageRegistry().get(Activator.REQ_PLUGIN_OBJ));
+		this.toolkit.decorateFormHeading(this.form.getForm());
 		createSash(form.getBody());
 	}
 	
@@ -107,7 +111,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 */
 	private void createSash(Composite parent) {
 		SashForm sash = new SashForm(parent, SWT.NONE);
-		sash.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
+		//sash.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		this.toolkit.paintBordersFor(parent);
 
 		sash.setLayout(new GridLayout());
