@@ -102,14 +102,6 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		if ( element instanceof BundleDescription || element instanceof BundleSpecification) {
 			return pdeLabelProvider.getImage(element);
 		}
-		/*
-		if ( element instanceof BundleDescription ) {
-			return pdeLabelProvider.getImage(PluginRegistry.findModel((BundleDescription)element));
-		}
-		else if ( element instanceof BundleSpecification) {
-			return pdeLabelProvider.getImage(element);
-		}
-		*/
 		return Activator.getDefault().getImageRegistry().get(Activator.PLUGIN_OBJ);
 	}
 
