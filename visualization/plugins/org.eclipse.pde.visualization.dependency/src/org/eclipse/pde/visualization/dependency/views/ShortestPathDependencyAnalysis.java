@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * 
@@ -30,7 +29,7 @@ public class ShortestPathDependencyAnalysis extends AbstractVisualizationLabelPr
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {
 
 		if (this.getSelected() != null) {
-			BundleDescription[] descriptions = AnalysisUtil.getPath(this.rootNode, this.getSelected());
+			Object[] descriptions = AnalysisUtil.getPath(this.rootNode, this.getSelected());
 
 			for (int i = 0; i < descriptions.length; i++) {
 				for (int j = 0; j < descriptions.length; j++) {

@@ -30,24 +30,24 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
  */
 public class AnalysisUtil {
 
-	public static BundleDescription[] getPath(Object root, Object bundle) {
+	public static Object[] getPath(Object root, Object bundle) {
 		LinkedList q = new LinkedList();
 		Set orderedSet = new HashSet();
 		LinkedList orderedList = new LinkedList();
 		q.add(root);
 		while (!q.isEmpty()) {
-			BundleDescription head = (BundleDescription) q.remove(0);
+			Object head = q.remove(0);
 			if (!orderedSet.contains(head)) {
 				orderedSet.add(head);
 				orderedList.add(head);
 				buildQueue(head, q);
 			}
 		}
-		BundleDescription[] path = modifiedDijkstra(orderedList, root, bundle);
+		Object[] path = modifiedDijkstra(orderedList, root, bundle);
 		return path;
 	}
 
-	private static void buildQueue(BundleDescription root, LinkedList q) {
+	private static void buildQueue(Object root, LinkedList q) {
 		Object[] descriptions = getDependencies(root);
 		if (descriptions == null || descriptions.length == 0) {
 			return;
@@ -57,7 +57,7 @@ public class AnalysisUtil {
 		}
 	}
 
-	public static BundleDescription[] modifiedDijkstra(LinkedList q, Object s, Object t) {
+	public static Object[] modifiedDijkstra(LinkedList q, Object s, Object t) {
 		HashMap previous = new HashMap();
 		HashMap dValues = new HashMap();
 		for (Iterator iter = q.iterator(); iter.hasNext();) {
@@ -87,7 +87,7 @@ public class AnalysisUtil {
 			currentNode = previous.get(currentNode);
 		}
 		path.add(currentNode);
-		return (BundleDescription[]) path.toArray(new BundleDescription[path.size()]);
+		return path.toArray(new Object[path.size()]);
 	}
 
 	public static BundleDescription[] getCallers(BundleDescription bundle, BundleDescription[] bundles) {
@@ -107,7 +107,7 @@ public class AnalysisUtil {
 	 * 
 	 * @return
 	 */
-	public static BundleDescription[] getAllCallers(BundleDescription bundle, Object[] bundles) {
+	public static Object[] getAllCallers(Object bundle, Object[] bundles) {
 		HashSet callers = new HashSet();
 		for (int i = 0; i < bundles.length; i++) {
 			HashSet hashSet = new HashSet();
@@ -116,7 +116,7 @@ public class AnalysisUtil {
 				callers.add(bundles[i]);
 			}
 		}
-		return (BundleDescription[]) callers.toArray(new BundleDescription[callers.size()]);
+		return callers.toArray(new Object[callers.size()]);
 	}
 
 	public static Object[] getPrerequisites(Object[] bundles) {
@@ -145,7 +145,7 @@ public class AnalysisUtil {
 	public static Object[] getDependencies(Object bundle) {
 
 		if (bundle == null || bundle instanceof BundleSpecification) {
-			return null;
+			return new Object[0];
 		}
 		BundleDescription bundleDescription = (BundleDescription) bundle;
 

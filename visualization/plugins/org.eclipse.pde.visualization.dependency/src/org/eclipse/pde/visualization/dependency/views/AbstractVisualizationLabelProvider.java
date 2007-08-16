@@ -63,12 +63,12 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	public Color EDGE_HIGHLIGHT = new Color(Display.getDefault(), 192, 32, 32);
 	public Color DISABLED = new Color(Display.getDefault(), 230, 240, 250);
 
-	private BundleDescription selected = null;
-	protected BundleDescription rootNode = null;
+	private Object selected = null;
+	protected Object rootNode = null;
 	private HashSet interestingRelationships = new HashSet();
 	private HashSet interestingDependencies = new HashSet();
 	private Color disabledColor = null;
-	protected BundleDescription pinnedNode = null;
+	protected Object pinnedNode = null;
 	private GraphViewer viewer;
 	private boolean showVersionNumber = false;
 	private DependenciesLabelProvider pdeLabelProvider = null;
@@ -230,11 +230,11 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	 * 
 	 * @see org.eclipse.pde.visualization.views.VisualizationLabelProvider#setPinnedNode(org.eclipse.osgi.service.resolver.BundleDescription)
 	 */
-	public void setPinnedNode(BundleDescription pinnedNode) {
+	public void setPinnedNode(Object pinnedNode) {
 		this.pinnedNode = pinnedNode;
 	}
 
-	protected BundleDescription getSelected() {
+	protected Object getSelected() {
 		if (pinnedNode != null) {
 			return pinnedNode;
 		}
@@ -254,10 +254,10 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 			viewer.unReveal(entityConnectionData);
 		}
 
-		this.rootNode = (BundleDescription) root;
+		this.rootNode = root;
 		this.selected = null;
 
-		this.selected = (BundleDescription) currentSelection;
+		this.selected = currentSelection;
 
 		interestingRelationships = new HashSet();
 		interestingDependencies = new HashSet();

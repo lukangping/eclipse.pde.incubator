@@ -45,6 +45,7 @@ import org.eclipse.mylyn.zest.layouts.algorithms.CompositeLayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.algorithms.HorizontalShift;
 import org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.core.plugin.IPluginModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.core.plugin.PluginRegistry;
@@ -167,7 +168,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				}
 				Object selectedElement = selection.getFirstElement();
 				if (selectedElement instanceof BundleDescription) {
-					focusOn((BundleDescription) selectedElement, true);
+					focusOn(selectedElement, true);
 					// When a new plug-in is selected, disable the forward action.
 					// The forward action only stores history when the back button was used (much like a browser)
 					forwardStack.clear();
@@ -243,7 +244,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 		// Set the pinned node in case we have one from the previous content
 		// provider
-		this.currentLabelProvider.setPinnedNode((BundleDescription) pinnedNode);
+		this.currentLabelProvider.setPinnedNode(pinnedNode);
 		if (viewer.getSelection() != null) {
 			viewer.setSelection(viewer.getSelection());
 			this.selectionChanged(((IStructuredSelection) viewer.getSelection()).getFirstElement());
@@ -293,7 +294,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 * @param bundle
 	 * @param recordHistory
 	 */
-	private void focusOn(BundleDescription bundle, boolean recordHistory) {
+	private void focusOn(Object bundle, boolean recordHistory) {
 		viewer.setSelection(new StructuredSelection());
 		this.selectionChanged(null);
 		viewer.setInput(bundle);
@@ -374,7 +375,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 					Object o = historyStack.pop();
 					forwardStack.push(currentNode);
 					forwardAction.setEnabled(true);
-					focusOn((BundleDescription) o, false);
+					focusOn(o, false);
 					if (historyStack.size() <= 0) {
 						historyAction.setEnabled(false);
 					}
@@ -391,7 +392,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			public void run() {
 				if (forwardStack.size() > 0) {
 					Object o = forwardStack.pop();
-					focusOn((BundleDescription) o, true);
+					focusOn(o, true);
 					if (forwardStack.size() <= 0) {
 						forwardAction.setEnabled(false);
 					}
@@ -443,7 +444,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		// @tag action : Focus on Current Selection action
 		focusAction = new Action() {
 			public void run() {
-				focusOn((BundleDescription) objectToFocusOn, true);
+				focusOn(objectToFocusOn, true);
 
 				// When a new plug-in is selected, disable the forward action
 				// The forward action only stores history when the back button was used (much like a browser)
@@ -451,7 +452,12 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				forwardAction.setEnabled(false);
 			}
 		};
-		focusAction.setText("Focus On \'" + ((BundleDescription) objectToFocusOn).getName() + "\'");
+		if (objectToFocusOn instanceof BundleDescription) {
+			focusAction.setText("Focus On \'" + ((BundleDescription) objectToFocusOn).getName() + "\'");
+		} else if (objectToFocusOn instanceof BundleSpecification) {
+			focusAction.setText("Focus On \'" + ((BundleSpecification) objectToFocusOn).getName() + "\'");
+
+		}
 		focusAction.setToolTipText("Focus on a plugin");
 	}
 
@@ -466,13 +472,22 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		unPinAction.setChecked(true);
 	}
 
-	private void makePinAction(final BundleDescription objectToPin) {
+	private String getName(Object o ) {
+		if ( o instanceof BundleDescription ) {
+			return ((BundleDescription)o).getName();
+		}
+		else if ( o instanceof BundleSpecification ) {
+			return ((BundleSpecification)o).getName();
+		}
+		return null;
+	}
+	private void makePinAction(final Object objectToPin) {
 		pinAction = new Action() {
 			public void run() {
 				pinNode(objectToPin);
 			}
 		};
-		pinAction.setText("Pin selection of " + objectToPin.getName());
+		pinAction.setText("Pin selection of " + getName(objectToPin));
 		pinAction.setToolTipText("Toggle pin selected node");
 	}
 
@@ -481,7 +496,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	}
 
 	private void pinNode(Object objectToPin) {
-		this.currentLabelProvider.setPinnedNode((BundleDescription) objectToPin);
+		this.currentLabelProvider.setPinnedNode( objectToPin);
 		this.pinnedNode = objectToPin;
 		this.currentLabelProvider.setCurrentSelection(this.currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
 		this.viewer.update(contentProvider.getElements(currentNode), null);
@@ -529,7 +544,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			manager.add(unPinAction);
 		}
 		if (((IStructuredSelection) viewer.getSelection()).size() > 0) {
-			makePinAction((BundleDescription) ((IStructuredSelection) viewer.getSelection()).getFirstElement());
+			makePinAction(((IStructuredSelection) viewer.getSelection()).getFirstElement());
 			manager.add(pinAction);
 		}
 

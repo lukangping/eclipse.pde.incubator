@@ -12,7 +12,6 @@
 package org.eclipse.pde.visualization.dependency.views;
 
 import org.eclipse.jface.viewers.ILabelProvider;
-import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * A content provider to represent the different types of label providers we have in pde.visualization
@@ -39,7 +38,7 @@ public interface VisualizationLabelProvider extends ILabelProvider {
 	 * Sets a node to be pinned on this viewer
 	 * @param pinnedNode
 	 */
-	public void setPinnedNode(BundleDescription pinnedNode);
+	public void setPinnedNode(Object pinnedNode);
 
 	/**
 	 * If true, shows the version number after the name of the plug-in.  If false,

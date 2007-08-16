@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * 
@@ -31,7 +30,7 @@ public class PathDependencyAnalysis extends AbstractVisualizationLabelProvider {
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {
 
 		if (this.getSelected() != null) {
-			BundleDescription[] descriptions = AnalysisUtil.getAllCallers(this.getSelected(), AnalysisUtil.getPrerequisites(new BundleDescription[] { this.rootNode }));
+			Object[] descriptions = AnalysisUtil.getAllCallers(this.getSelected(), AnalysisUtil.getPrerequisites(new Object[] { this.rootNode }));
 			for (int i = 0; i < descriptions.length; i++) {
 				for (int j = 0; j < descriptions.length; j++) {
 					EntityConnectionData entityConnectionData = new EntityConnectionData(descriptions[i], descriptions[j]);

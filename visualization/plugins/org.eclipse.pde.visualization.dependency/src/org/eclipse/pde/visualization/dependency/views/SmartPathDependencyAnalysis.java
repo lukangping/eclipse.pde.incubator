@@ -15,7 +15,6 @@ import java.util.HashSet;
 
 import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * 
@@ -54,7 +53,7 @@ public class SmartPathDependencyAnalysis extends AbstractVisualizationLabelProvi
 				// For each dependency of the root node, compute the shortest path
 				// to the selected node.  add each of these to to the list of nodes.
 				EntityConnectionData entityConnectionData = new EntityConnectionData(this.rootNode, descriptions[i]);
-				BundleDescription[] path = AnalysisUtil.getPath(descriptions[i], this.getSelected());
+				Object[] path = AnalysisUtil.getPath(descriptions[i], this.getSelected());
 				if (path.length > 1) {
 					for (int j = 0; j < path.length; j++) {
 						for (int k = 0; k < path.length; k++) {
@@ -67,7 +66,7 @@ public class SmartPathDependencyAnalysis extends AbstractVisualizationLabelProvi
 					interestingRels.add(entityConnectionData);
 				}
 			}
-			BundleDescription[] path = AnalysisUtil.getPath(this.rootNode, this.getSelected());
+			Object[] path = AnalysisUtil.getPath(this.rootNode, this.getSelected());
 			if (path.length > 1) {
 				for (int j = 0; j < path.length; j++) {
 					for (int k = 0; k < path.length; k++) {

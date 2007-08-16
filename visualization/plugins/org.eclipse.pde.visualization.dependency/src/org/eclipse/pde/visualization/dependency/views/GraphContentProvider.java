@@ -21,11 +21,11 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
  */
 class GraphContentProvider implements IGraphEntityContentProvider {
 
-	BundleDescription currentBundle = null;
+	Object currentBundle = null;
 
-	private Object[] getDependencies(BundleDescription bundle) {
+	private Object[] getDependencies(Object bundle) {
 		if (bundle != null) {
-			return AnalysisUtil.getPrerequisites(new BundleDescription[] { currentBundle });
+			return AnalysisUtil.getPrerequisites(new Object[] { currentBundle });
 		}
 		return new BundleDescription[0];
 	}
@@ -35,7 +35,7 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 	}
 
 	public Object[] getElements(Object inputElement) {
-		return getDependencies((BundleDescription) inputElement);
+		return getDependencies(inputElement);
 
 	}
 
@@ -49,7 +49,7 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 	}
 
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
-		currentBundle = (BundleDescription) newInput;
+		currentBundle = newInput;
 
 	}
 
