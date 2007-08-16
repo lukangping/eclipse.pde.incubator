@@ -22,6 +22,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -44,9 +45,14 @@ import org.eclipse.mylyn.zest.layouts.algorithms.CompositeLayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.algorithms.HorizontalShift;
 import org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.osgi.service.resolver.BundleDescription;
+import org.eclipse.pde.core.plugin.IPluginModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
+import org.eclipse.pde.core.plugin.PluginRegistry;
+import org.eclipse.pde.internal.core.builders.DependencyLoop;
+import org.eclipse.pde.internal.core.builders.DependencyLoopFinder;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
@@ -55,8 +61,11 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.forms.widgets.Form;
+import org.eclipse.ui.forms.IFormColors;
+import org.eclipse.ui.forms.IMessage;
+import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
 
 /**
@@ -76,7 +85,8 @@ import org.eclipse.ui.part.ViewPart;
 public class PluginVisualizationView extends ViewPart implements IZoomableWorkbenchPart {
 
 	private FormToolkit toolKit = null;
-	private Form form = null;
+	private ScrolledForm form = null;
+	private ManagedForm managedForm = null;
 	private GraphViewer viewer;
 	private Action focusDialogAction;
 	private Action focusAction;
@@ -108,10 +118,21 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	public void createPartControl(Composite parent) {
 
-		toolKit = new FormToolkit(parent.getDisplay());
+		toolKit = new FormToolkit(parent.getDisplay()) {
+			public ScrolledForm createScrolledForm(Composite parent) {
+				ScrolledForm form = new ScrolledForm(parent, SWT.NONE);
+				form.setExpandHorizontal(true);
+				form.setExpandVertical(true);
+				form.setBackground(getColors().getBackground());
+				form.setForeground(getColors().getColor(IFormColors.TITLE));
+				form.setFont(JFaceResources.getHeaderFont());
+				return form;
+			}
+		};
 		VisualizationForm visualizationForm = new VisualizationForm(parent, toolKit, this);
 		viewer = visualizationForm.getGraphViewer();
 		form = visualizationForm.getForm();
+		managedForm = visualizationForm.getManagedForm();
 
 		this.contentProvider = new GraphContentProvider();
 		this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer, null);
@@ -120,31 +141,32 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setInput(null);
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
+		//viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new DirectedGraphLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
 				Object selectedElement = ((IStructuredSelection) event.getSelection()).getFirstElement();
-				if ( selectedElement instanceof EntityConnectionData ) {
+				if (selectedElement instanceof EntityConnectionData) {
 					return;
 				}
 				PluginVisualizationView.this.selectionChanged(selectedElement);
 			}
 		});
-		
+
 		viewer.addDoubleClickListener(new IDoubleClickListener() {
 
 			public void doubleClick(DoubleClickEvent event) {
 				// On a double click we now focus on that node.
 				// See bug: 172627: [pde viz] double-clicking on a node should implicitly focus on it.
 				//    https://bugs.eclipse.org/bugs/show_bug.cgi?id=172627
-				
+
 				IStructuredSelection selection = (IStructuredSelection) event.getSelection();
-				if ( selection.size() < 1 ) {
+				if (selection.size() < 1) {
 					return;
 				}
 				Object selectedElement = selection.getFirstElement();
-				if ( selectedElement instanceof BundleDescription) {
+				if (selectedElement instanceof BundleDescription) {
 					focusOn((BundleDescription) selectedElement, true);
 					// When a new plug-in is selected, disable the forward action.
 					// The forward action only stores history when the back button was used (much like a browser)
@@ -152,7 +174,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 					forwardAction.setEnabled(false);
 				}
 			}
-			
+
 		});
 		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
 		contextZoomContributionViewItem = new ZoomContributionViewItem(this);
@@ -185,12 +207,12 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			return;
 		}
 
-		StructuredSelection selection =  ((StructuredSelection)viewer.getSelection()); 
-		if ( selection != null ) {
+		StructuredSelection selection = ((StructuredSelection) viewer.getSelection());
+		if (selection != null) {
 			viewer.setSelection(new StructuredSelection());
 			this.selectionChanged(null);
 		}
-		
+
 		if (dependencyPath) {
 			// If dependencyPath is set to true set the
 			// ShortestPathDependencyAnalyis label provider
@@ -208,15 +230,14 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			viewer.setLabelProvider(this.currentLabelProvider);
 			//viewer.refresh();
 			//viewer.setInput(this.currentBundle);
-			
 
 		} else if (!dependencyPath && !(currentLabelProvider instanceof HighlightDependencyLableProvider)) {
 			this.currentLabelProvider = new HighlightDependencyLableProvider(this.viewer, (AbstractVisualizationLabelProvider) this.currentLabelProvider);
 			viewer.setLabelProvider(this.currentLabelProvider);
 
 		}
-		
-		if ( selection != null ) {
+
+		if (selection != null) {
 			viewer.setSelection(selection);
 		}
 
@@ -226,9 +247,9 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		if (viewer.getSelection() != null) {
 			viewer.setSelection(viewer.getSelection());
 			this.selectionChanged(((IStructuredSelection) viewer.getSelection()).getFirstElement());
-		//	this.currentLabelProvider.setCurrentSelection(currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
+			//	this.currentLabelProvider.setCurrentSelection(currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
 		}
-		
+
 	}
 
 	/**
@@ -278,10 +299,10 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setInput(bundle);
 		Iterator nodes = viewer.getGraphControl().getNodes().iterator();
 		Graph graph = viewer.getGraphControl();
-		Dimension centre = new Dimension(graph.getBounds().width/2, graph.getBounds().height/2);
-		while ( nodes.hasNext() ) {
+		Dimension centre = new Dimension(graph.getBounds().width / 2, graph.getBounds().height / 2);
+		while (nodes.hasNext()) {
 			GraphNode node = (GraphNode) nodes.next();
-			if ( node.getLocation().x <= 1 && node.getLocation().y <= 1) {
+			if (node.getLocation().x <= 1 && node.getLocation().y <= 1) {
 				node.setLocation(centre.width, centre.height);
 			}
 		}
@@ -292,10 +313,35 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		currentNode = bundle;
 		viewer.setSelection(new StructuredSelection(bundle));
 		this.selectionChanged(bundle);
-		
+
 		// When we load a new model, remove any pinnedNode;
 		this.currentLabelProvider.setPinnedNode(null);
 		this.pinnedNode = null;
+
+		// Check for cycles in the graph
+		Object[] elements = contentProvider.getElements(currentNode);
+
+		boolean loopsFound = false;
+		int counter = 0;
+		for (int i = 0; i < elements.length; i++) {
+			if (elements[i] instanceof BundleDescription) {
+				BundleDescription bundleDescription = (BundleDescription) elements[i];
+				IPluginModelBase model = PluginRegistry.findModel(bundleDescription);
+				DependencyLoop[] loops = DependencyLoopFinder.findLoops(((IPluginModel) model).getPlugin());
+				if (loops.length > 0) {
+					counter += loops.length;
+					loopsFound = true;
+				}
+			} else {
+				// We don't need to worry about looking for cycles in BundleSpecifications (they are not resolved)
+				continue;
+			}
+		}
+		managedForm.getMessageManager().removeAllMessages();
+		if (loopsFound) {
+			managedForm.getMessageManager().addMessage(new Object(), counter + " Cycles Found", new Object(), IMessage.ERROR);
+			//form.sIetMessage(counter + " Cycles found in Graph");
+		}
 	}
 
 	/**
@@ -310,7 +356,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				if (dialog.open() == Window.OK) {
 					IPluginModelBase pluginModelBase = (IPluginModelBase) dialog.getFirstResult();
 					focusOn(pluginModelBase.getBundleDescription(), true);
-					
+
 					// When a new plug-in is selected, disable the forward action			
 					// The forward action only stores history when the back button was used (much like a browser)
 					forwardStack.clear();
@@ -340,27 +386,27 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		historyAction.setToolTipText("Previous plugin");
 		historyAction.setEnabled(false);
 		historyAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.BACKWARD_ENABLED));
-		
+
 		forwardAction = new Action() {
 			public void run() {
-				if ( forwardStack.size() > 0 ) {
+				if (forwardStack.size() > 0) {
 					Object o = forwardStack.pop();
 					focusOn((BundleDescription) o, true);
-					if ( forwardStack.size() <= 0 ) {
+					if (forwardStack.size() <= 0) {
 						forwardAction.setEnabled(false);
 					}
 				}
 			}
 		};
-		
+
 		forwardAction.setText("Forward");
 		forwardAction.setToolTipText("Go forward one plugin");
 		forwardAction.setEnabled(false);
 		forwardAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.FORWARD_ENABLED));
-		
+
 		screenshotAction = new Action() {
 			public void run() {
-		
+
 				Shell shell = Activator.getDefault().getWorkbench().getActiveWorkbenchWindow().getShell();
 				Graph g = (Graph) viewer.getControl();
 				Rectangle bounds = g.getContents().getBounds();
@@ -369,23 +415,23 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				final Image image = new Image(null, size.x, size.y);
 				GC gc = new GC(image);
 				SWTGraphics swtGraphics = new SWTGraphics(gc);
-				
+
 				swtGraphics.translate(-1 * bounds.x + viewLocation.x, -1 * bounds.y + viewLocation.y);
 				g.getViewport().paint(swtGraphics);
-				gc.copyArea(image,0,0);
+				gc.copyArea(image, 0, 0);
 				gc.dispose();
-				
+
 				ImagePreviewPane previewPane = new ImagePreviewPane(shell);
 				previewPane.setText("Image Preview");
 				previewPane.open(image, size);
 			}
 		};
-		
+
 		screenshotAction.setText("Take A Screenshot");
 		screenshotAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.SNAPSHOT));
 		screenshotAction.setToolTipText("Take screenshot");
 		screenshotAction.setEnabled(true);
-		
+
 	}
 
 	/**
@@ -398,7 +444,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		focusAction = new Action() {
 			public void run() {
 				focusOn((BundleDescription) objectToFocusOn, true);
-				
+
 				// When a new plug-in is selected, disable the forward action
 				// The forward action only stores history when the back button was used (much like a browser)
 				forwardStack.clear();

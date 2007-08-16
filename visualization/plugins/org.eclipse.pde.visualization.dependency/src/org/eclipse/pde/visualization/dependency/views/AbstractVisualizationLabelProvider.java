@@ -21,8 +21,8 @@ import org.eclipse.mylyn.zest.core.viewers.IConnectionStyleProvider;
 import org.eclipse.mylyn.zest.core.viewers.IEntityStyleProvider;
 import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
 import org.eclipse.osgi.service.resolver.BundleDescription;
-import org.eclipse.pde.core.plugin.PluginRegistry;
-import org.eclipse.pde.internal.ui.PDELabelProvider;
+import org.eclipse.osgi.service.resolver.BundleSpecification;
+import org.eclipse.pde.internal.ui.views.dependencies.DependenciesLabelProvider;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -71,7 +71,7 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	protected BundleDescription pinnedNode = null;
 	private GraphViewer viewer;
 	private boolean showVersionNumber = false;
-	private PDELabelProvider pdeLabelProvider = null;
+	private DependenciesLabelProvider pdeLabelProvider = null;
 
 	/**
 	 * Create a new Abstract Visualization Label Provider
@@ -82,7 +82,7 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	 *            is used to maintain state between the old one and the new one.
 	 */
 	public AbstractVisualizationLabelProvider(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
-		this.pdeLabelProvider = new PDELabelProvider();
+		this.pdeLabelProvider = new DependenciesLabelProvider(true);
 		this.viewer = viewer;
 		if (currentLabelProvider != null) {
 			this.showVersionNumber = currentLabelProvider.showVersionNumber;
@@ -98,9 +98,18 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		if (element.getClass() == EntityConnectionData.class) {
 			return null;
 		}
+		
+		if ( element instanceof BundleDescription || element instanceof BundleSpecification) {
+			return pdeLabelProvider.getImage(element);
+		}
+		/*
 		if ( element instanceof BundleDescription ) {
 			return pdeLabelProvider.getImage(PluginRegistry.findModel((BundleDescription)element));
 		}
+		else if ( element instanceof BundleSpecification) {
+			return pdeLabelProvider.getImage(element);
+		}
+		*/
 		return Activator.getDefault().getImageRegistry().get(Activator.PLUGIN_OBJ);
 	}
 
@@ -112,6 +121,10 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 				return bundleDescription.getName() + " (" + bundleDescription.getVersion() + ")";
 			}
 			return bundleDescription.getName();
+		}
+		else if  ( element instanceof BundleSpecification ) {
+			BundleSpecification bundleSpecification = (BundleSpecification) element;
+			return bundleSpecification.getName();
 		}
 		return "";
 	}

@@ -14,7 +14,6 @@ import java.util.HashSet;
 
 import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.osgi.service.resolver.BundleDescription;
 
 /**
  * 
@@ -30,7 +29,7 @@ class HighlightDependencyLableProvider extends AbstractVisualizationLabelProvide
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {
 
 		if (getSelected() != null) {
-			BundleDescription[] descriptions = AnalysisUtil.getDependencies(this.getSelected());
+			Object[] descriptions = AnalysisUtil.getDependencies(this.getSelected());
 			for (int i = 0; i < descriptions.length; i++) {
 				EntityConnectionData entityConnectionData = new EntityConnectionData(this.getSelected(), descriptions[i]);
 				interestingRels.add(entityConnectionData);

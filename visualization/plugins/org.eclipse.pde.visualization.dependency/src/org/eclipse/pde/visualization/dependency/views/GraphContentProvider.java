@@ -23,7 +23,7 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 
 	BundleDescription currentBundle = null;
 
-	private BundleDescription[] getDependencies(BundleDescription bundle) {
+	private Object[] getDependencies(BundleDescription bundle) {
 		if (bundle != null) {
 			return AnalysisUtil.getPrerequisites(new BundleDescription[] { currentBundle });
 		}
@@ -31,8 +31,7 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 	}
 
 	public Object[] getConnectedTo(Object entity) {
-		BundleDescription e = (BundleDescription) entity;
-		return AnalysisUtil.getDependencies(e);
+		return AnalysisUtil.getDependencies(entity);
 	}
 
 	public Object[] getElements(Object inputElement) {

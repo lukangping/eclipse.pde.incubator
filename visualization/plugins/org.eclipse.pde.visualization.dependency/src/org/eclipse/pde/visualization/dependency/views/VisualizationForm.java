@@ -11,6 +11,7 @@
 package org.eclipse.pde.visualization.dependency.views;
 
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
+import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -20,9 +21,10 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
-import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
@@ -64,8 +66,9 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	/*
 	 * Some parts of the form we may need access to
 	 */
-	private Form form;
+	private ScrolledForm form;
 	private FormToolkit toolkit;
+	private ManagedForm managedForm;
 	private GraphViewer viewer;
 	private PluginVisualizationView view;
 
@@ -89,12 +92,14 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	VisualizationForm(Composite parent, FormToolkit toolkit, PluginVisualizationView view) {
 		this.toolkit = toolkit;
 		this.view = view;
-		form = this.toolkit.createForm(parent);
+		form = this.toolkit.createScrolledForm(parent);
+		managedForm = new ManagedForm(this.toolkit, this.form);
 		form.getBody().setLayout(new FillLayout());
 		form.setText(Plugin_Dependency_Analysis);
+		form.setImage(Activator.getDefault().getImageRegistry().get(Activator.REQ_PLUGIN_OBJ));
 		createSash(form.getBody());
 	}
-
+	
 	/**
 	 * Creates the sashform to seperate the graph from the controls.
 	 * 
@@ -117,6 +122,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 * @param parent
 	 */
 	private void createGraphSection(Composite parent) {
+		
 		Section section = this.toolkit.createSection(parent, Section.EXPANDED | Section.TITLE_BAR);
 		section.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
 		section.setLayout(new FillLayout());
@@ -265,8 +271,12 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	/**
 	 * Gets the form we created.
 	 */
-	public Form getForm() {
+	public ScrolledForm getForm() {
 		return form;
+	}
+	
+	public ManagedForm getManagedForm() {
+		return managedForm;
 	}
 
 }

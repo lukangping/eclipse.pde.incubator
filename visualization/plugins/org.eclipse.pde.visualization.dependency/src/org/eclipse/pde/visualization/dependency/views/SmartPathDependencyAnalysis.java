@@ -49,7 +49,7 @@ public class SmartPathDependencyAnalysis extends AbstractVisualizationLabelProvi
 		// Calculates the smart path.
 		if (this.getSelected() != null) {
 			// Get all the dependencies of the root node
-			BundleDescription[] descriptions = AnalysisUtil.getDependencies(this.rootNode);
+			Object[] descriptions = AnalysisUtil.getDependencies(this.rootNode);
 			for (int i = 0; i < descriptions.length; i++) {
 				// For each dependency of the root node, compute the shortest path
 				// to the selected node.  add each of these to to the list of nodes.

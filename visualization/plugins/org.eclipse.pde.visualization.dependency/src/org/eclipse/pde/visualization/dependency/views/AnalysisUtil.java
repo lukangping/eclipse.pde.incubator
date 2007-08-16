@@ -30,7 +30,7 @@ import org.eclipse.osgi.service.resolver.ExportPackageDescription;
  */
 public class AnalysisUtil {
 
-	public static BundleDescription[] getPath(BundleDescription root, BundleDescription bundle) {
+	public static BundleDescription[] getPath(Object root, Object bundle) {
 		LinkedList q = new LinkedList();
 		Set orderedSet = new HashSet();
 		LinkedList orderedList = new LinkedList();
@@ -48,7 +48,7 @@ public class AnalysisUtil {
 	}
 
 	private static void buildQueue(BundleDescription root, LinkedList q) {
-		BundleDescription[] descriptions = getDependencies(root);
+		Object[] descriptions = getDependencies(root);
 		if (descriptions == null || descriptions.length == 0) {
 			return;
 		}
@@ -57,7 +57,7 @@ public class AnalysisUtil {
 		}
 	}
 
-	public static BundleDescription[] modifiedDijkstra(LinkedList q, BundleDescription s, BundleDescription t) {
+	public static BundleDescription[] modifiedDijkstra(LinkedList q, Object s, Object t) {
 		HashMap previous = new HashMap();
 		HashMap dValues = new HashMap();
 		for (Iterator iter = q.iterator(); iter.hasNext();) {
@@ -66,14 +66,14 @@ public class AnalysisUtil {
 		dValues.put(s, new Integer(0));
 
 		while (!q.isEmpty()) {
-			BundleDescription head = (BundleDescription) q.remove(0);
-			BundleDescription[] outgoing = getDependencies(head);
+			Object head = q.remove(0);
+			Object[] outgoing = getDependencies(head);
 			if (outgoing == null) {
-				// @tag PDE bug : I guess null in my array of dependencies 
+				// @tag PDE bug : I get null in my array of dependencies 
 				continue;
 			}
 			for (int i = 0; i < outgoing.length; i++) {
-				BundleDescription v = outgoing[i];
+				Object v = outgoing[i];
 				if (((Integer) dValues.get(head)).intValue() + 1 < ((Integer) dValues.get(v)).intValue()) {
 					previous.put(v, head);
 					dValues.put(v, new Integer(((Integer) dValues.get(head)).intValue() + 1));
@@ -81,10 +81,10 @@ public class AnalysisUtil {
 			}
 		}
 		LinkedList path = new LinkedList();
-		BundleDescription currentNode = t;
+		Object currentNode = t;
 		while (previous.containsKey(currentNode)) {
 			path.add(currentNode);
-			currentNode = (BundleDescription) previous.get(currentNode);
+			currentNode = previous.get(currentNode);
 		}
 		path.add(currentNode);
 		return (BundleDescription[]) path.toArray(new BundleDescription[path.size()]);
@@ -107,11 +107,11 @@ public class AnalysisUtil {
 	 * 
 	 * @return
 	 */
-	public static BundleDescription[] getAllCallers(BundleDescription bundle, BundleDescription[] bundles) {
+	public static BundleDescription[] getAllCallers(BundleDescription bundle, Object[] bundles) {
 		HashSet callers = new HashSet();
 		for (int i = 0; i < bundles.length; i++) {
 			HashSet hashSet = new HashSet();
-			hashSet.addAll(Arrays.asList(getPrerequisites(new BundleDescription[] { bundles[i] })));
+			hashSet.addAll(Arrays.asList(getPrerequisites(new Object[] { bundles[i] })));
 			if (hashSet.contains(bundle)) {
 				callers.add(bundles[i]);
 			}
@@ -119,7 +119,7 @@ public class AnalysisUtil {
 		return (BundleDescription[]) callers.toArray(new BundleDescription[callers.size()]);
 	}
 
-	public static BundleDescription[] getPrerequisites(BundleDescription[] bundles) {
+	public static Object[] getPrerequisites(Object[] bundles) {
 		if (bundles == null || bundles.length == 0) {
 			return new BundleDescription[0];
 		}
@@ -127,7 +127,7 @@ public class AnalysisUtil {
 		for (int i = 0; i < bundles.length; i++) {
 			addPrerequisites(bundles[i], reachable);
 		}
-		return (BundleDescription[]) reachable.toArray(new BundleDescription[reachable.size()]);
+		return reachable.toArray(new Object[reachable.size()]);
 	}
 
 	private static Collection getExportedDescription(BundleDescription element, ExportPackageDescription[] exportedPackages) {
@@ -142,36 +142,37 @@ public class AnalysisUtil {
 	}
 
 	
-	public static BundleDescription[] getDependencies(BundleDescription bundle) {
+	public static Object[] getDependencies(Object bundle) {
 
-		if (bundle == null) {
+		if (bundle == null || bundle instanceof BundleSpecification) {
 			return null;
 		}
+		BundleDescription bundleDescription = (BundleDescription) bundle;
 
-		Collection c = AnalysisUtil.getDescription(bundle.getRequiredBundles());
-		c.addAll(getExportedDescription(bundle, bundle.getResolvedImports()));
+		Collection c = AnalysisUtil.getDescription(bundleDescription.getRequiredBundles());
+		c.addAll(getExportedDescription(bundleDescription, bundleDescription.getResolvedImports()));
 		/*
 		 * Iterator iterator = c.iterator(); while (iterator.hasNext() ) { if (
 		 * iterator.next() == null ) iterator.remove(); }
 		 */
 
-		return (BundleDescription[]) c.toArray(new BundleDescription[c.size()]);
+		return c.toArray(new Object[c.size()]);
 	}
 
-	private static void addPrerequisites(BundleDescription bundle, Set reachable) {
+	private static void addPrerequisites(Object bundle, Set reachable) {
 		if (reachable.contains(bundle)) {
 			return;
 		}
 		reachable.add(bundle);
 
-		BundleDescription[] dependencies = getDependencies(bundle);
+		Object[] dependencies = getDependencies(bundle);
 		for (int i = 0; i < dependencies.length; i++) {
-			if (dependencies[i] == null) {
-				//@tag PDE bug : I get null in my array of dependencies
-				//               This means that a supplier could not be found (constraint invalid)
-				continue;
+			if (dependencies[i] instanceof BundleSpecification ) {
+				reachable.add(dependencies[i]);
 			}
-			addPrerequisites(dependencies[i], reachable);
+			else {
+				addPrerequisites(dependencies[i], reachable);
+			}
 		}
 	}
 
@@ -179,7 +180,13 @@ public class AnalysisUtil {
 		ArrayList descriptionList = new ArrayList();
 		for (int i = 0; i < specifications.length; i++) {
 			BundleSpecification specification = specifications[i];
-			descriptionList.add(specification.getSupplier());
+			if ( specification.getSupplier() == null ) {
+				// We can't get a description, so just keep the bundle specification
+				descriptionList.add(specification);
+			}
+			else {
+				descriptionList.add(specification.getSupplier());
+			}
 		}
 		return descriptionList;
 	}
