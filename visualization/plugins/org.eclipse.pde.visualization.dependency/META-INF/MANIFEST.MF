@@ -9,10 +9,10 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.pde.ui,
  org.eclipse.ui.forms,
  org.eclipse.equinox.launcher,
- org.eclipse.core.resources,
- org.eclipse.mylyn.zest.core,
- org.eclipse.mylyn.zest.layouts,
- org.eclipse.draw2d
+ org.eclipse.core.resources
 Eclipse-LazyStart: true
-Bundle-ClassPath: .
+Bundle-ClassPath: .,
+ org.eclipse.draw2d_3.2.100.200708141030.jar,
+ org.eclipse.mylyn.zest.core_0.5.0.200708141030.jar,
+ org.eclipse.mylyn.zest.layouts_0.5.0.200708141030.jar
 Bundle-RequiredExecutionEnvironment: J2SE-1.4

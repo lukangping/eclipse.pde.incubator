@@ -43,7 +43,6 @@ import org.eclipse.mylyn.zest.layouts.LayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.LayoutStyles;
 import org.eclipse.mylyn.zest.layouts.algorithms.CompositeLayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.algorithms.HorizontalShift;
-import org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.core.plugin.IPluginModel;
@@ -68,6 +67,8 @@ import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
+
+import bin.org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
