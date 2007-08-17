@@ -42,6 +42,7 @@ import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
 import org.eclipse.mylyn.zest.layouts.LayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.LayoutStyles;
 import org.eclipse.mylyn.zest.layouts.algorithms.CompositeLayoutAlgorithm;
+import org.eclipse.mylyn.zest.layouts.algorithms.DirectedGraphLayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.algorithms.HorizontalShift;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
@@ -67,8 +68,6 @@ import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
-
-import bin.org.eclipse.mylyn.zest.layouts.algorithms.TreeLayoutAlgorithm;
 
 /**
  * This sample class demonstrates how to plug-in a new workbench view. The view
@@ -142,8 +141,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setLabelProvider(this.currentLabelProvider);
 		viewer.setInput(null);
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
-		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new TreeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
-		//viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new DirectedGraphLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
+		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new DirectedGraphLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
 
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
