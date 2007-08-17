@@ -104,6 +104,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private Object pinnedNode = null;
 	private ZoomContributionViewItem contextZoomContributionViewItem;
 	private ZoomContributionViewItem toolbarZoomContributionViewItem;
+	private VisualizationForm visualizationForm;
 
 	/**
 	 * The constructor.
@@ -130,7 +131,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				return form;
 			}
 		};
-		VisualizationForm visualizationForm = new VisualizationForm(parent, toolKit, this);
+		visualizationForm = new VisualizationForm(parent, toolKit, this);
 		viewer = visualizationForm.getGraphViewer();
 		form = visualizationForm.getForm();
 		managedForm = visualizationForm.getManagedForm();
@@ -166,7 +167,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 					return;
 				}
 				Object selectedElement = selection.getFirstElement();
-				if (selectedElement instanceof BundleDescription) {
+				if (selectedElement instanceof BundleDescription || selectedElement instanceof BundleSpecification) {
 					focusOn(selectedElement, true);
 					// When a new plug-in is selected, disable the forward action.
 					// The forward action only stores history when the back button was used (much like a browser)
@@ -297,6 +298,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setSelection(new StructuredSelection());
 		this.selectionChanged(null);
 		viewer.setInput(bundle);
+		visualizationForm.setFocusedNodeName(getName(bundle));
 		Iterator nodes = viewer.getGraphControl().getNodes().iterator();
 		Graph graph = viewer.getGraphControl();
 		Dimension centre = new Dimension(graph.getBounds().width / 2, graph.getBounds().height / 2);

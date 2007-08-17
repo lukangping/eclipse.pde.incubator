@@ -104,6 +104,11 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		createSash(form.getBody());
 	}
 	
+	public void setFocusedNodeName(String nodeName) {
+		form.setText(Plugin_Dependency_Analysis+ ": " + nodeName);
+		form.reflow(true);
+	}
+	
 	/**
 	 * Creates the sashform to seperate the graph from the controls.
 	 * 

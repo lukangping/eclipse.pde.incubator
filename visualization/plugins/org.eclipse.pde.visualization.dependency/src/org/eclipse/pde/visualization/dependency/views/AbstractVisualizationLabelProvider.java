@@ -72,6 +72,9 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	private GraphViewer viewer;
 	private boolean showVersionNumber = false;
 	private DependenciesLabelProvider pdeLabelProvider = null;
+	
+	private Color rootColor = null;
+	private Color rootSelectedColor = null;
 
 	/**
 	 * Create a new Abstract Visualization Label Provider
@@ -199,6 +202,12 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 
 	public Color getBackgroundColour(Object entity) {
 
+		if ( entity == this.rootNode ) {
+			if ( rootColor == null ) {
+				rootColor = LIGHT_GREEN;
+			}
+			return rootColor;
+		}
 		if (entity == this.selected || this.pinnedNode == entity) {
 			return viewer.getGraphControl().DEFAULT_NODE_COLOR;
 		} else if (interestingDependencies.contains(entity)) {
@@ -317,6 +326,14 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		if (this.disabledColor != null) {
 			this.disabledColor.dispose();
 			this.disabledColor = null;
+		}
+		if ( this.rootColor != null) {
+			this.rootColor.dispose();
+			this.rootColor = null;
+		}
+		if ( this.rootSelectedColor != null) {
+			this.rootSelectedColor.dispose();
+			this.rootSelectedColor = null;
 		}
 	}
 
