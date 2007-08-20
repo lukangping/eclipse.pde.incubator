@@ -23,6 +23,8 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -85,6 +87,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 	private String currentPathAnalysis = null;
 	private SashForm sash;
+	private Text searchBox;
 
 	/**
 	 * Creates the form.
@@ -97,6 +100,23 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		this.view = view;
 		form = this.toolkit.createScrolledForm(parent);
 		managedForm = new ManagedForm(this.toolkit, this.form);
+		
+		Composite headClient = new Composite(form.getForm().getHead(),
+				SWT.NULL);
+		GridLayout glayout = new GridLayout();
+		glayout.marginWidth = glayout.marginHeight = 0;
+		glayout.numColumns = 2;
+		headClient.setLayout(glayout);
+		headClient.setBackgroundMode(SWT.INHERIT_DEFAULT);
+		Label searchLabel = new Label(headClient, SWT.NONE);
+		searchLabel.setText("Search:");
+		searchBox = new Text(headClient, toolkit.getBorderStyle() | SWT.SEARCH | SWT.CANCEL);
+		GridData data = new GridData();
+		data.widthHint = 300;
+		searchBox.setLayoutData(data);
+		toolkit.paintBordersFor(headClient);
+		form.setHeadClient(headClient);
+		
 		FillLayout layout = new FillLayout();
 		layout.marginHeight = 10;
 		layout.marginWidth = 4;
@@ -303,6 +323,10 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	
 	public ManagedForm getManagedForm() {
 		return managedForm;
+	}
+	
+	public Text getSearchBox() {
+		return this.searchBox;
 	}
 
 }

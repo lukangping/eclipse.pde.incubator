@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -57,16 +56,13 @@ import org.eclipse.pde.internal.core.builders.DependencyLoopFinder;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.KeyAdapter;
-import org.eclipse.swt.events.KeyEvent;
-import org.eclipse.swt.events.PaintEvent;
-import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
@@ -121,7 +117,6 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private ZoomContributionViewItem contextZoomContributionViewItem;
 	private ZoomContributionViewItem toolbarZoomContributionViewItem;
 	private VisualizationForm visualizationForm;
-	private StringBuffer stringBuffer;
 	private Font searchFont;
 
 	/**
@@ -166,7 +161,6 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		
 		FontData fontData = Display.getCurrent().getSystemFont().getFontData()[0];
 		fontData.height = 42;
-		stringBuffer = new StringBuffer();
 
 		searchFont = new Font(Display.getCurrent(), fontData);
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
@@ -203,19 +197,10 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 		});
 		
-		viewer.getGraphControl().addKeyListener(new KeyAdapter() {
+		visualizationForm.getSearchBox().addModifyListener(new ModifyListener() {
 
-			public void keyPressed(KeyEvent e) {
-				boolean complete = false;
-				if (e.keyCode == BACKSPACE) {
-					if (stringBuffer.length() > 0) {
-						stringBuffer.deleteCharAt(stringBuffer.length() - 1);
-					}
-				} else if (e.keyCode == ENTER) {
-					complete = true;
-				} else if ((e.character >= 'a' && e.character <= 'z') || (e.character >= 'A' && e.character <= 'Z') || (e.character == '.') || (e.character >= '0' && e.character <= '9')) {
-					stringBuffer.append(e.character);
-				}
+			public void modifyText(ModifyEvent e) {
+				String textString = visualizationForm.getSearchBox().getText();
 	
 				HashMap figureListing = new HashMap();
 				ArrayList list = new ArrayList();
@@ -225,35 +210,19 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 					figureListing.put(item.getText(), item);
 				}
 				iterator = figureListing.keySet().iterator();
-				if (stringBuffer.length() > 0) {
+				if (textString.length() > 0) {
 					while (iterator.hasNext()) {
 						String string = (String) iterator.next();
-						if (string.toLowerCase().indexOf(stringBuffer.toString().toLowerCase()) >= 0) {
+						if (string.toLowerCase().indexOf(textString.toLowerCase()) >= 0) {
 							list.add(figureListing.get(string));
 						}
 					}
 				}
 				viewer.getGraphControl().setSelection((GraphItem[]) list.toArray(new GraphItem[list.size()]));
-				if (complete && stringBuffer.length() > 0) {
-					stringBuffer.delete(0, stringBuffer.length());
-				}
-
-				viewer.getGraphControl().redraw();
 			}
 
 		});
-		viewer.getGraphControl().addPaintListener(new PaintListener() {
-			private int x;
-
-			public void paintControl(PaintEvent e) {
-				e.gc.setFont(searchFont);
-				e.gc.setClipping((Region) null);
-				e.gc.setForeground(ColorConstants.darkGray);
-				x = viewer.getGraphControl().getSize().x;
-				int textWidth = e.gc.textExtent(stringBuffer.toString()).x;
-				e.gc.drawText(stringBuffer.toString(), (x / 2) - (textWidth / 2), 50, true);
-			}
-		});
+		
 		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
 		contextZoomContributionViewItem = new ZoomContributionViewItem(this);
 
