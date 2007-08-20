@@ -11,6 +11,7 @@
 package org.eclipse.pde.visualization.dependency.views;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
@@ -30,11 +31,12 @@ import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.window.Window;
 import org.eclipse.mylyn.zest.core.viewers.AbstractZoomableViewer;
 import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.mylyn.zest.core.viewers.IGraphEntityContentProvider;
 import org.eclipse.mylyn.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.mylyn.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.mylyn.zest.core.widgets.Graph;
@@ -48,14 +50,11 @@ import org.eclipse.mylyn.zest.layouts.algorithms.DirectedGraphLayoutAlgorithm;
 import org.eclipse.mylyn.zest.layouts.algorithms.HorizontalShift;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
-import org.eclipse.pde.core.plugin.IPluginModel;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.core.plugin.PluginRegistry;
-import org.eclipse.pde.internal.core.builders.DependencyLoop;
-import org.eclipse.pde.internal.core.builders.DependencyLoopFinder;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
-import org.eclipse.swt.SWT;
+import org.eclipse.pde.visualization.dependency.analysis.ErrorReporting;
+import org.eclipse.pde.visualization.dependency.analysis.UnresolvedError;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Font;
@@ -69,12 +68,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.ManagedForm;
-import org.eclipse.ui.forms.events.HyperlinkAdapter;
-import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
 
@@ -96,7 +91,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 	public static final int BACKSPACE = 8;
 	public static final int ENTER = 13;
-	
+
 	private FormToolkit toolKit = null;
 	private ScrolledForm form = null;
 	private ManagedForm managedForm = null;
@@ -112,7 +107,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private Stack forwardStack;
 	private Object currentNode = null;
 	private VisualizationLabelProvider currentLabelProvider;
-	private IGraphEntityContentProvider contentProvider;
+	private GraphContentProvider contentProvider;
 	private Object pinnedNode = null;
 	private ZoomContributionViewItem contextZoomContributionViewItem;
 	private ZoomContributionViewItem toolbarZoomContributionViewItem;
@@ -158,7 +153,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setInput(null);
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new DirectedGraphLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
-		
+
 		FontData fontData = Display.getCurrent().getSystemFont().getFontData()[0];
 		fontData.height = 42;
 
@@ -187,7 +182,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				}
 				Object selectedElement = selection.getFirstElement();
 				if (selectedElement instanceof BundleDescription || selectedElement instanceof BundleSpecification) {
-					focusOn(selectedElement, true);
+					focusOn(selectedElement, true, null);
 					// When a new plug-in is selected, disable the forward action.
 					// The forward action only stores history when the back button was used (much like a browser)
 					forwardStack.clear();
@@ -196,16 +191,16 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			}
 
 		});
-		
+
 		visualizationForm.getSearchBox().addModifyListener(new ModifyListener() {
 
 			public void modifyText(ModifyEvent e) {
 				String textString = visualizationForm.getSearchBox().getText();
-	
+
 				HashMap figureListing = new HashMap();
 				ArrayList list = new ArrayList();
 				Iterator iterator = viewer.getGraphControl().getNodes().iterator();
-				while(iterator.hasNext()) {
+				while (iterator.hasNext()) {
 					GraphItem item = (GraphItem) iterator.next();
 					figureListing.put(item.getText(), item);
 				}
@@ -222,7 +217,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			}
 
 		});
-		
+
 		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
 		contextZoomContributionViewItem = new ZoomContributionViewItem(this);
 
@@ -340,16 +335,35 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 * @param bundle
 	 * @param recordHistory
 	 */
-	private void focusOn(Object bundle, boolean recordHistory) {
+	private void focusOn(Object bundle, boolean recordHistory, final ErrorReporting errorReporting) {
 		viewer.setSelection(new StructuredSelection());
 		this.selectionChanged(null);
+		viewer.setFilters(new ViewerFilter[] {});
+
+		if (errorReporting != null) {
+			if (errorReporting.getClass() == UnresolvedError.class) {
+				viewer.addFilter(new ViewerFilter() {
+					public boolean select(Viewer viewer, Object parentElement, Object element) {
+						if (element instanceof EntityConnectionData) {
+							return true;
+						}
+						Object[] allCallers = AnalysisUtil.getAllCallers(errorReporting.getBundle(), contentProvider.getElements(currentNode));
+						if (Arrays.asList(allCallers).contains(element)) {
+							return true;
+						}
+						return false;
+					}
+				});
+			}
+			ErrorReporting.showCurrentError(this, errorReporting, managedForm.getMessageManager());
+		}
+		
 		viewer.setInput(bundle);
 		visualizationForm.setFocusedNodeName(getName(bundle));
 		Iterator nodes = viewer.getGraphControl().getNodes().iterator();
-		if ( viewer.getGraphControl().getNodes().size() > 0 ) {
+		if (viewer.getGraphControl().getNodes().size() > 0) {
 			visualizationForm.enableSearchBox(true);
-		}
-		else {
+		} else {
 			visualizationForm.enableSearchBox(false);
 		}
 		visualizationForm.enableSearchBox(true);
@@ -373,9 +387,14 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		this.currentLabelProvider.setPinnedNode(null);
 		this.pinnedNode = null;
 
-		// Check for cycles in the graph
+		// Check for errors in the graph
 		Object[] elements = contentProvider.getElements(currentNode);
+		if (errorReporting == null) {
+			// Don't report errors while error reporting
+			ErrorReporting.createErrorReports(elements, this, managedForm.getMessageManager());
+		}
 
+		/*
 		boolean loopsFound = false;
 		int counter = 0;
 		for (int i = 0; i < elements.length; i++) {
@@ -394,23 +413,18 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		}
 		managedForm.getMessageManager().removeAllMessages();
 		if (loopsFound) {
-			 Hyperlink link = toolKit.createHyperlink(form,  "Click here.", SWT.WRAP);
-					  link.addHyperlinkListener(new HyperlinkAdapter() {
-					   public void linkActivated(HyperlinkEvent e) {
-					    System.out.println("Link activated!");
-					   }});
-					  
-			 Hyperlink link2 = toolKit.createHyperlink(form,  "Click here.", SWT.WRAP);
-					  link.addHyperlinkListener(new HyperlinkAdapter() {
-					   public void linkActivated(HyperlinkEvent e) {
-					    System.out.println("Link activated!");
-					   }});
-					 
-					 
-			managedForm.getMessageManager().addMessage(link, "", link, IMessage.ERROR, link);
-			managedForm.getMessageManager().addMessage(link2, "", link2, IMessage.ERROR, link2);
-			//form.sIetMessage(counter + " Cycles found in Graph");
+			managedForm.getMessageManager().addMessage("first error", "first error", new UnresolvedError(this, null),  IMessage.ERROR);
+			managedForm.getMessageManager().addMessage("second error", "second error", new UnresolvedError(this, null), IMessage.ERROR);
 		}
+		*/
+	}
+
+	public void handleUnresolvedDependencyError(UnresolvedError unresolvedError) {
+		this.focusOn(currentNode, false, unresolvedError);
+	}
+	
+	public void handleSuppressError() {
+		this.focusOn(currentNode, false, null);
 	}
 
 	/**
@@ -424,7 +438,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				dialog.create();
 				if (dialog.open() == Window.OK) {
 					IPluginModelBase pluginModelBase = (IPluginModelBase) dialog.getFirstResult();
-					focusOn(pluginModelBase.getBundleDescription(), true);
+					focusOn(pluginModelBase.getBundleDescription(), true, null);
 
 					// When a new plug-in is selected, disable the forward action			
 					// The forward action only stores history when the back button was used (much like a browser)
@@ -443,7 +457,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 					Object o = historyStack.pop();
 					forwardStack.push(currentNode);
 					forwardAction.setEnabled(true);
-					focusOn(o, false);
+					focusOn(o, false, null);
 					if (historyStack.size() <= 0) {
 						historyAction.setEnabled(false);
 					}
@@ -460,7 +474,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			public void run() {
 				if (forwardStack.size() > 0) {
 					Object o = forwardStack.pop();
-					focusOn(o, true);
+					focusOn(o, true, null);
 					if (forwardStack.size() <= 0) {
 						forwardAction.setEnabled(false);
 					}
@@ -512,7 +526,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		// @tag action : Focus on Current Selection action
 		focusAction = new Action() {
 			public void run() {
-				focusOn(objectToFocusOn, true);
+				focusOn(objectToFocusOn, true, null);
 
 				// When a new plug-in is selected, disable the forward action
 				// The forward action only stores history when the back button was used (much like a browser)
