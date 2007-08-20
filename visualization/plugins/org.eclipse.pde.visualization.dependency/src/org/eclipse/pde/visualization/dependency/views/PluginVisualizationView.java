@@ -181,14 +181,6 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 					return;
 				}
 				Object selectedElement = selection.getFirstElement();
-				if ( selectedElement instanceof BundleDescription ) {
-					String[] executionEnvironments = ((BundleDescription)selectedElement).getExecutionEnvironments();
-					for (int i = 0; i < executionEnvironments.length; i++) {
-						System.out.println(executionEnvironments[i]);
-					}
-					System.out.println();
-					System.out.println();
-				}
 				if (selectedElement instanceof BundleDescription || selectedElement instanceof BundleSpecification) {
 					focusOn(selectedElement, true, null);
 					// When a new plug-in is selected, disable the forward action.
