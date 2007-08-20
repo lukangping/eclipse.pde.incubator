@@ -93,6 +93,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private SashForm sash;
 	private Text searchBox;
 	private ToolItem cancelIcon;
+	private Label searchLabel;
 
 	/**
 	 * Creates the form.
@@ -105,7 +106,28 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		this.view = view;
 		form = this.toolkit.createScrolledForm(parent);
 		managedForm = new ManagedForm(this.toolkit, this.form);
-		
+		createHeaderRegion(form);
+		FillLayout layout = new FillLayout();
+		layout.marginHeight = 10;
+		layout.marginWidth = 4;
+		form.getBody().setLayout(layout);
+
+		this.toolkit.decorateFormHeading(this.form.getForm());
+		createSash(form.getBody());
+	}
+	
+	public void setFocusedNodeName(String nodeName) {
+		form.setText(Plugin_Dependency_Analysis+ ": " + nodeName);
+		searchBox.setText("");
+		form.reflow(true);
+	}
+
+	/**
+	 * Creates the header region of the form, with the search dialog, background
+	 * and title.  It also sets up the error reporting
+	 * @param form
+	 */
+	private void createHeaderRegion(ScrolledForm form) {
 		Composite headClient = new Composite(form.getForm().getHead(),
 				SWT.NULL);
 		GridLayout glayout = new GridLayout();
@@ -113,7 +135,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		glayout.numColumns = 3;
 		headClient.setLayout(glayout);
 		headClient.setBackgroundMode(SWT.INHERIT_DEFAULT);
-		Label searchLabel = new Label(headClient, SWT.NONE);
+		searchLabel = new Label(headClient, SWT.NONE);
 		searchLabel.setText("Search:");
 		searchBox = new Text(headClient, toolkit.getBorderStyle() | SWT.SEARCH | SWT.CANCEL);
 		GridData data = new GridData();
@@ -121,7 +143,6 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		searchBox.setLayoutData(data);
 		ToolBar cancelBar = new ToolBar(headClient, SWT.NONE);
 		cancelIcon = new ToolItem(cancelBar, SWT.NONE);
-		//cancelIcon = new Button(headClient, SWT.NONE);
 		cancelIcon.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				searchBox.setText("");
@@ -143,25 +164,13 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		});
 		cancelIcon.setEnabled(false);
 		
-		
-		FillLayout layout = new FillLayout();
-		layout.marginHeight = 10;
-		layout.marginWidth = 4;
-		form.getBody().setLayout(layout);
 		form.setText(Plugin_Dependency_Analysis);
 		form.setImage(Activator.getDefault().getImageRegistry().get(Activator.REQ_PLUGIN_OBJ));
-		this.toolkit.decorateFormHeading(this.form.getForm());
-		createSash(form.getBody());
-	}
-	
-	public void setFocusedNodeName(String nodeName) {
-		form.setText(Plugin_Dependency_Analysis+ ": " + nodeName);
-		searchBox.setText("");
-		form.reflow(true);
+		enableSearchBox(false);
 	}
 	
 	/**
-	 * Creates the sashform to seperate the graph from the controls.
+	 * Creates the sashform to separate the graph from the controls.
 	 * 
 	 * @param parent
 	 */
@@ -355,6 +364,11 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	
 	public Text getSearchBox() {
 		return this.searchBox;
+	}
+	
+	public void enableSearchBox(boolean enable) {
+		this.searchLabel.setEnabled(enable);
+		this.searchBox.setEnabled(enable);
 	}
 
 }

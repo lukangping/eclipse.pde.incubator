@@ -346,6 +346,13 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setInput(bundle);
 		visualizationForm.setFocusedNodeName(getName(bundle));
 		Iterator nodes = viewer.getGraphControl().getNodes().iterator();
+		if ( viewer.getGraphControl().getNodes().size() > 0 ) {
+			visualizationForm.enableSearchBox(true);
+		}
+		else {
+			visualizationForm.enableSearchBox(false);
+		}
+		visualizationForm.enableSearchBox(true);
 		Graph graph = viewer.getGraphControl();
 		Dimension centre = new Dimension(graph.getBounds().width / 2, graph.getBounds().height / 2);
 		while (nodes.hasNext()) {
