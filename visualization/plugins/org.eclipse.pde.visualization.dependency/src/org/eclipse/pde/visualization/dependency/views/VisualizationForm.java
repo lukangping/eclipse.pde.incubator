@@ -11,11 +11,13 @@
 package org.eclipse.pde.visualization.dependency.views;
 
 import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
+import org.eclipse.mylyn.zest.core.widgets.Graph;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -82,6 +84,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private Button showVersionNumber = null;
 
 	private String currentPathAnalysis = null;
+	private SashForm sash;
 
 	/**
 	 * Creates the form.
@@ -115,16 +118,27 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 * @param parent
 	 */
 	private void createSash(Composite parent) {
-		SashForm sash = new SashForm(parent, SWT.NONE);
+		sash = new SashForm(parent, SWT.NONE);
 		//sash.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		this.toolkit.paintBordersFor(parent);
 
-		sash.setLayout(new GridLayout());
 		createGraphSection(sash);
 		createControlsSection(sash);
 		sash.setWeights(new int[] { 10, 3 });
 	}
 
+	private class MyGraphViewer extends GraphViewer {
+		public MyGraphViewer(Composite parent, int style) {
+			super(parent, style);
+			Graph graph = new Graph(parent, style) {
+				public Point computeSize(int hint, int hint2, boolean changed) {
+					return new Point(0,0);
+				}
+			};
+			setControl(graph);
+		}
+	}
+	
 	/**
 	 * Creates the section of the form where the graph is drawn
 	 * 
@@ -132,14 +146,13 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 */
 	private void createGraphSection(Composite parent) {
 		
-		Section section = this.toolkit.createSection(parent, Section.EXPANDED | Section.TITLE_BAR);
-		section.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		section.setLayout(new FillLayout());
-		Composite composite = this.toolkit.createComposite(section, SWT.NONE);
-		composite.setLayout(new FillLayout());
+		Section section = this.toolkit.createSection(parent, Section.TITLE_BAR);
+		//section.setLayout(new FillLayout());
+		//Composite composOIte = this.toolkit.createComposite(section, SWT.NONE);
+		//composite.setLayout(new FillLayout());
 		//viewer = new GraphViewer(composite, SWT.BORDER);
-		viewer = new GraphViewer(composite, SWT.NONE);
-		section.setClient(composite);
+		viewer = new MyGraphViewer(section, SWT.NONE);
+		section.setClient(viewer.getControl());
 	}
 
 	private void setDependencyPath(boolean enabled) {
@@ -176,9 +189,13 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 */
 	private void createControlsSection(Composite parent) {
 		Section controls = this.toolkit.createSection(parent, Section.TITLE_BAR | Section.EXPANDED);
-		controls.setLayout(new FillLayout());
 		controls.setText(Controls);
-		Composite controlComposite = this.toolkit.createComposite(controls);
+		Composite controlComposite = new Composite(controls, SWT.NONE) {
+			public Point computeSize(int hint, int hint2, boolean changed) {
+				return new Point(0,0);
+			}
+		};
+		this.toolkit.adapt(controlComposite);
 		controlComposite.setLayout(new GridLayout());
 		
 		showVersionNumber = this.toolkit.createButton(controlComposite, Version_Number, SWT.CHECK);

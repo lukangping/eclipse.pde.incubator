@@ -10,9 +10,12 @@
  ******************************************************************************/
 package org.eclipse.pde.visualization.dependency.views;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Stack;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.SWTGraphics;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
@@ -22,7 +25,6 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -37,6 +39,7 @@ import org.eclipse.mylyn.zest.core.viewers.IGraphEntityContentProvider;
 import org.eclipse.mylyn.zest.core.viewers.IZoomableWorkbenchPart;
 import org.eclipse.mylyn.zest.core.viewers.ZoomContributionViewItem;
 import org.eclipse.mylyn.zest.core.widgets.Graph;
+import org.eclipse.mylyn.zest.core.widgets.GraphItem;
 import org.eclipse.mylyn.zest.core.widgets.GraphNode;
 import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
 import org.eclipse.mylyn.zest.layouts.LayoutAlgorithm;
@@ -54,18 +57,28 @@ import org.eclipse.pde.internal.core.builders.DependencyLoopFinder;
 import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.KeyAdapter;
+import org.eclipse.swt.events.KeyEvent;
+import org.eclipse.swt.events.PaintEvent;
+import org.eclipse.swt.events.PaintListener;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Region;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IWorkbenchActionConstants;
-import org.eclipse.ui.forms.IFormColors;
 import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.ManagedForm;
+import org.eclipse.ui.forms.events.HyperlinkAdapter;
+import org.eclipse.ui.forms.events.HyperlinkEvent;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.forms.widgets.Hyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.part.ViewPart;
 
@@ -85,6 +98,9 @@ import org.eclipse.ui.part.ViewPart;
  */
 public class PluginVisualizationView extends ViewPart implements IZoomableWorkbenchPart {
 
+	public static final int BACKSPACE = 8;
+	public static final int ENTER = 13;
+	
 	private FormToolkit toolKit = null;
 	private ScrolledForm form = null;
 	private ManagedForm managedForm = null;
@@ -105,6 +121,8 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private ZoomContributionViewItem contextZoomContributionViewItem;
 	private ZoomContributionViewItem toolbarZoomContributionViewItem;
 	private VisualizationForm visualizationForm;
+	private StringBuffer stringBuffer;
+	private Font searchFont;
 
 	/**
 	 * The constructor.
@@ -121,6 +139,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	public void createPartControl(Composite parent) {
 
 		toolKit = new FormToolkit(parent.getDisplay()) {
+			/*
 			public ScrolledForm createScrolledForm(Composite parent) {
 				ScrolledForm form = new ScrolledForm(parent, SWT.NONE);
 				form.setExpandHorizontal(true);
@@ -130,6 +149,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				form.setFont(JFaceResources.getHeaderFont());
 				return form;
 			}
+			*/
 		};
 		visualizationForm = new VisualizationForm(parent, toolKit, this);
 		viewer = visualizationForm.getGraphViewer();
@@ -143,7 +163,12 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.setInput(null);
 		viewer.setConnectionStyle(ZestStyles.CONNECTIONS_DIRECTED);
 		viewer.setLayoutAlgorithm(new CompositeLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING, new LayoutAlgorithm[] { new DirectedGraphLayoutAlgorithm(LayoutStyles.NO_LAYOUT_NODE_RESIZING), new HorizontalShift(LayoutStyles.NO_LAYOUT_NODE_RESIZING) }));
+		
+		FontData fontData = Display.getCurrent().getSystemFont().getFontData()[0];
+		fontData.height = 42;
+		stringBuffer = new StringBuffer();
 
+		searchFont = new Font(Display.getCurrent(), fontData);
 		viewer.addSelectionChangedListener(new ISelectionChangedListener() {
 
 			public void selectionChanged(SelectionChangedEvent event) {
@@ -176,6 +201,58 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 				}
 			}
 
+		});
+		
+		viewer.getGraphControl().addKeyListener(new KeyAdapter() {
+
+			public void keyPressed(KeyEvent e) {
+				boolean complete = false;
+				if (e.keyCode == BACKSPACE) {
+					if (stringBuffer.length() > 0) {
+						stringBuffer.deleteCharAt(stringBuffer.length() - 1);
+					}
+				} else if (e.keyCode == ENTER) {
+					complete = true;
+				} else if ((e.character >= 'a' && e.character <= 'z') || (e.character >= 'A' && e.character <= 'Z') || (e.character == '.') || (e.character >= '0' && e.character <= '9')) {
+					stringBuffer.append(e.character);
+				}
+	
+				HashMap figureListing = new HashMap();
+				ArrayList list = new ArrayList();
+				Iterator iterator = viewer.getGraphControl().getNodes().iterator();
+				while(iterator.hasNext()) {
+					GraphItem item = (GraphItem) iterator.next();
+					figureListing.put(item.getText(), item);
+				}
+				iterator = figureListing.keySet().iterator();
+				if (stringBuffer.length() > 0) {
+					while (iterator.hasNext()) {
+						String string = (String) iterator.next();
+						if (string.toLowerCase().indexOf(stringBuffer.toString().toLowerCase()) >= 0) {
+							list.add(figureListing.get(string));
+						}
+					}
+				}
+				viewer.getGraphControl().setSelection((GraphItem[]) list.toArray(new GraphItem[list.size()]));
+				if (complete && stringBuffer.length() > 0) {
+					stringBuffer.delete(0, stringBuffer.length());
+				}
+
+				viewer.getGraphControl().redraw();
+			}
+
+		});
+		viewer.getGraphControl().addPaintListener(new PaintListener() {
+			private int x;
+
+			public void paintControl(PaintEvent e) {
+				e.gc.setFont(searchFont);
+				e.gc.setClipping((Region) null);
+				e.gc.setForeground(ColorConstants.darkGray);
+				x = viewer.getGraphControl().getSize().x;
+				int textWidth = e.gc.textExtent(stringBuffer.toString()).x;
+				e.gc.drawText(stringBuffer.toString(), (x / 2) - (textWidth / 2), 50, true);
+			}
 		});
 		toolbarZoomContributionViewItem = new ZoomContributionViewItem(this);
 		contextZoomContributionViewItem = new ZoomContributionViewItem(this);
@@ -341,7 +418,21 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		}
 		managedForm.getMessageManager().removeAllMessages();
 		if (loopsFound) {
-			managedForm.getMessageManager().addMessage(new Object(), counter + " Cycles Found", new Object(), IMessage.ERROR);
+			 Hyperlink link = toolKit.createHyperlink(form,  "Click here.", SWT.WRAP);
+					  link.addHyperlinkListener(new HyperlinkAdapter() {
+					   public void linkActivated(HyperlinkEvent e) {
+					    System.out.println("Link activated!");
+					   }});
+					  
+			 Hyperlink link2 = toolKit.createHyperlink(form,  "Click here.", SWT.WRAP);
+					  link.addHyperlinkListener(new HyperlinkAdapter() {
+					   public void linkActivated(HyperlinkEvent e) {
+					    System.out.println("Link activated!");
+					   }});
+					 
+					 
+			managedForm.getMessageManager().addMessage(link, "", link, IMessage.ERROR, link);
+			managedForm.getMessageManager().addMessage(link2, "", link2, IMessage.ERROR, link2);
 			//form.sIetMessage(counter + " Cycles found in Graph");
 		}
 	}
@@ -473,15 +564,15 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		unPinAction.setChecked(true);
 	}
 
-	private String getName(Object o ) {
-		if ( o instanceof BundleDescription ) {
-			return ((BundleDescription)o).getName();
-		}
-		else if ( o instanceof BundleSpecification ) {
-			return ((BundleSpecification)o).getName();
+	private String getName(Object o) {
+		if (o instanceof BundleDescription) {
+			return ((BundleDescription) o).getName();
+		} else if (o instanceof BundleSpecification) {
+			return ((BundleSpecification) o).getName();
 		}
 		return null;
 	}
+
 	private void makePinAction(final Object objectToPin) {
 		pinAction = new Action() {
 			public void run() {
@@ -497,7 +588,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	}
 
 	private void pinNode(Object objectToPin) {
-		this.currentLabelProvider.setPinnedNode( objectToPin);
+		this.currentLabelProvider.setPinnedNode(objectToPin);
 		this.pinnedNode = objectToPin;
 		this.currentLabelProvider.setCurrentSelection(this.currentNode, ((IStructuredSelection) viewer.getSelection()).getFirstElement());
 		this.viewer.update(contentProvider.getElements(currentNode), null);
@@ -570,6 +661,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	public void dispose() {
 		form.dispose();
+		searchFont.dispose();
 		super.dispose();
 	}
 
