@@ -32,6 +32,7 @@ public class Activator extends AbstractUIPlugin {
 	public static final String SNAPSHOT = "icons/obj16/snapshot.gif";
 	public static final String SAVEEDIT = "icons/obj16/save_edit.gif";
 	public static final String REQ_PLUGIN_OBJ ="icons/obj16/req_plugins_obj.gif";
+	public static final String SEARCH_CANCEL ="icons/obj16/progress_rem.gif";
 	
 	public static final String PLUGIN_OBJ = "plugin_obj";
 
@@ -56,6 +57,7 @@ public class Activator extends AbstractUIPlugin {
 		addImage(SNAPSHOT);
 		addImage(SAVEEDIT);
 		addImage(REQ_PLUGIN_OBJ);
+		addImage(SEARCH_CANCEL);
 		this.getImageRegistry().put(PLUGIN_OBJ, PDEPluginImages.DESC_PLUGIN_OBJ);
 	}
 	

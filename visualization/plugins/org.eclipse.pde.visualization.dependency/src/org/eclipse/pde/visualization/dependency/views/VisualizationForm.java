@@ -15,6 +15,8 @@ import org.eclipse.mylyn.zest.core.widgets.Graph;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
@@ -25,6 +27,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -88,6 +92,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private String currentPathAnalysis = null;
 	private SashForm sash;
 	private Text searchBox;
+	private ToolItem cancelIcon;
 
 	/**
 	 * Creates the form.
@@ -105,7 +110,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 				SWT.NULL);
 		GridLayout glayout = new GridLayout();
 		glayout.marginWidth = glayout.marginHeight = 0;
-		glayout.numColumns = 2;
+		glayout.numColumns = 3;
 		headClient.setLayout(glayout);
 		headClient.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		Label searchLabel = new Label(headClient, SWT.NONE);
@@ -114,8 +119,30 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		GridData data = new GridData();
 		data.widthHint = 300;
 		searchBox.setLayoutData(data);
+		ToolBar cancelBar = new ToolBar(headClient, SWT.NONE);
+		cancelIcon = new ToolItem(cancelBar, SWT.NONE);
+		//cancelIcon = new Button(headClient, SWT.NONE);
+		cancelIcon.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				searchBox.setText("");
+			}
+		});
+		cancelIcon.setImage(Activator.getDefault().getImageRegistry().get(Activator.SEARCH_CANCEL));
 		toolkit.paintBordersFor(headClient);
 		form.setHeadClient(headClient);
+		searchBox.addModifyListener(new ModifyListener() {
+
+			public void modifyText(ModifyEvent e) {
+				if ( searchBox.getText().length() > 0 ) {
+					cancelIcon.setEnabled(true);
+				}
+				else {
+					cancelIcon.setEnabled(false);
+				}
+			}
+		});
+		cancelIcon.setEnabled(false);
+		
 		
 		FillLayout layout = new FillLayout();
 		layout.marginHeight = 10;
@@ -129,6 +156,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	
 	public void setFocusedNodeName(String nodeName) {
 		form.setText(Plugin_Dependency_Analysis+ ": " + nodeName);
+		searchBox.setText("");
 		form.reflow(true);
 	}
 	
