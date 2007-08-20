@@ -46,7 +46,6 @@ import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.events.HyperlinkAdapter;
 import org.eclipse.ui.forms.events.HyperlinkEvent;
-import org.eclipse.ui.forms.widgets.ExpandableComposite;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormText;
 import org.eclipse.ui.forms.widgets.FormToolkit;
@@ -71,15 +70,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	private static String Plugin_Dependency_Analysis = "Plug-in Dependency Analysis";
 	private static String Controls = "Controls";
 	private static String Show_Dependency_Path = "Show Dependency Path";
-	private static String Exeuction_Environment = "Execution Environment";
 	private static String Version_Number = "Show Bundle Version Numbers";
-	private static String Execution_Environment_Instructions = "Show bunldes with execution environment:";
-	private static String Java6 = "Java 6.0 and above";
-	private static String Java5 = "Java 5.0 and above";
-	private static String Java4 = "Java 4.0 and above";
-	private static String Java3 = "Java 3.0 and above";
-	private static String Java2 = "Java 2.0 and above";
-	private static String Java1 = "Java 1.0 and above";
 
 	/*
 	 * These are strings and used to determine which radio button is selected
@@ -224,13 +215,12 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 					shell.setLocation(hl);
 					shell.pack();
 					shell.open();
-				}
-				else if ( href instanceof IMessage[] ){
-					IMessage oneMessage = ((IMessage[])href)[0];
+				} else if (href instanceof IMessage[]) {
+					IMessage oneMessage = ((IMessage[]) href)[0];
 					ErrorReporting error = (ErrorReporting) oneMessage.getData();
 					if (error != null) {
 						error.handleError();
-					}					
+					}
 				}
 			}
 		});
@@ -241,7 +231,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 			public void linkActivated(HyperlinkEvent e) {
 				String is = (String) e.getHref();
 				try {
-					((FormText)e.widget).getShell().dispose();
+					((FormText) e.widget).getShell().dispose();
 					int index = Integer.parseInt(is);
 					IMessage[] messages = form.getChildrenMessages();
 					IMessage message = messages[index];
@@ -429,36 +419,9 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		setDependencyPath(false);
 		dependencyOptions.setClient(dependencyOptionsComposite);
 
-		createEEAnalysisSection(controlComposite);
 		controls.setClient(controlComposite);
 	}
 
-	/**
-	 * Creates the section holding the Execution Environment Controls
-	 * 
-	 * @param parent
-	 */
-	private void createEEAnalysisSection(Composite parent) {
-		ExpandableComposite eeAnalysis = this.toolkit.createExpandableComposite(parent, Section.TITLE_BAR | Section.TWISTIE);
-		eeAnalysis.setText(Exeuction_Environment);
-		eeAnalysis.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
-		Composite eeAnalysisControls = this.toolkit.createComposite(eeAnalysis);
-		eeAnalysisControls.setLayout(new TableWrapLayout());
-		this.toolkit.createLabel(eeAnalysisControls, Execution_Environment_Instructions, SWT.WRAP);
-		Button ee6 = this.toolkit.createButton(eeAnalysisControls, Java6, SWT.RADIO);
-		ee6.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee5 = this.toolkit.createButton(eeAnalysisControls, Java5, SWT.RADIO);
-		ee5.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee4 = this.toolkit.createButton(eeAnalysisControls, Java4, SWT.RADIO);
-		ee4.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee3 = this.toolkit.createButton(eeAnalysisControls, Java3, SWT.RADIO);
-		ee3.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee2 = this.toolkit.createButton(eeAnalysisControls, Java2, SWT.RADIO);
-		ee2.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		Button ee1 = this.toolkit.createButton(eeAnalysisControls, Java1, SWT.RADIO);
-		ee1.setLayoutData(new TableWrapData(TableWrapData.FILL));
-		eeAnalysis.setClient(eeAnalysisControls);
-	}
 
 	/**
 	 * Gets the currentGraphViewern
