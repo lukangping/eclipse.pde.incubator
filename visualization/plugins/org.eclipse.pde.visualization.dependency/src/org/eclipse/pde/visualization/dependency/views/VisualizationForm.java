@@ -148,7 +148,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		GridData data = new GridData();
 		data.widthHint = 300;
 		searchBox.setLayoutData(data);
-		ToolBar cancelBar = new ToolBar(headClient, toolkit.getBorderStyle() | SWT.FLAT );
+		ToolBar cancelBar = new ToolBar(headClient, SWT.FLAT );
 		
 		cancelIcon = new ToolItem(cancelBar, SWT.NONE);
 		cancelIcon.addSelectionListener(new SelectionAdapter() {
