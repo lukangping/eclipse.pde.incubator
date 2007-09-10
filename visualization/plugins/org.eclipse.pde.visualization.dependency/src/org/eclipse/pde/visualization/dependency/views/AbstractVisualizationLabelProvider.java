@@ -250,6 +250,14 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		return selected;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see org.eclipse.mylyn.zest.core.viewers.IEntityStyleProvider#fisheyeNode(java.lang.Object)
+	 */
+	public boolean fisheyeNode(Object entity) {
+		return true;
+	}
+	
 	/**
 	 * Sets the current selection
 	 * 

@@ -65,7 +65,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 	/*
 	 * These are all the strings used in the form. These can probably be
-	 * abstracted for internationalization
+	 * abstracted for internationalisation
 	 */
 	private static String Plugin_Dependency_Analysis = "Plug-in Dependency Analysis";
 	private static String Controls = "Controls";
@@ -144,11 +144,12 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 		headClient.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		searchLabel = new Label(headClient, SWT.NONE);
 		searchLabel.setText("Search:");
-		searchBox = new Text(headClient, toolkit.getBorderStyle() | SWT.SEARCH | SWT.CANCEL);
+		searchBox = toolkit.createText(headClient, "");
 		GridData data = new GridData();
 		data.widthHint = 300;
 		searchBox.setLayoutData(data);
-		ToolBar cancelBar = new ToolBar(headClient, SWT.NONE);
+		ToolBar cancelBar = new ToolBar(headClient, toolkit.getBorderStyle() | SWT.FLAT );
+		
 		cancelIcon = new ToolItem(cancelBar, SWT.NONE);
 		cancelIcon.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
@@ -287,7 +288,6 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 */
 	private void createSash(Composite parent) {
 		sash = new SashForm(parent, SWT.NONE);
-		//sash.setData(FormToolkit.KEY_DRAW_BORDER, FormToolkit.TREE_BORDER);
 		this.toolkit.paintBordersFor(parent);
 
 		createGraphSection(sash);
@@ -313,12 +313,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 	 * @param parent
 	 */
 	private void createGraphSection(Composite parent) {
-
 		Section section = this.toolkit.createSection(parent, Section.TITLE_BAR);
-		//section.setLayout(new FillLayout());
-		//Composite composOIte = this.toolkit.createComposite(section, SWT.NONE);
-		//composite.setLayout(new FillLayout());
-		//viewer = new GraphViewer(composite, SWT.BORDER);
 		viewer = new MyGraphViewer(section, SWT.NONE);
 		section.setClient(viewer.getControl());
 	}

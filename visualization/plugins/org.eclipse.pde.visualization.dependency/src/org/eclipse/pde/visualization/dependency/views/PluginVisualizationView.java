@@ -128,19 +128,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 */
 	public void createPartControl(Composite parent) {
 
-		toolKit = new FormToolkit(parent.getDisplay()) {
-			/*
-			public ScrolledForm createScrolledForm(Composite parent) {
-				ScrolledForm form = new ScrolledForm(parent, SWT.NONE);
-				form.setExpandHorizontal(true);
-				form.setExpandVertical(true);
-				form.setBackground(getColors().getBackground());
-				form.setForeground(getColors().getColor(IFormColors.TITLE));
-				form.setFont(JFaceResources.getHeaderFont());
-				return form;
-			}
-			*/
-		};
+		toolKit = new FormToolkit(parent.getDisplay());
 		visualizationForm = new VisualizationForm(parent, toolKit, this);
 		viewer = visualizationForm.getGraphViewer();
 		form = visualizationForm.getForm();
@@ -393,30 +381,6 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			// Don't report errors while error reporting
 			ErrorReporting.createErrorReports(elements, this, managedForm.getMessageManager());
 		}
-
-		/*
-		boolean loopsFound = false;
-		int counter = 0;
-		for (int i = 0; i < elements.length; i++) {
-			if (elements[i] instanceof BundleDescription) {
-				BundleDescription bundleDescription = (BundleDescription) elements[i];
-				IPluginModelBase model = PluginRegistry.findModel(bundleDescription);
-				DependencyLoop[] loops = DependencyLoopFinder.findLoops(((IPluginModel) model).getPlugin());
-				if (loops.length > 0) {
-					counter += loops.length;
-					loopsFound = true;
-				}
-			} else {
-				// We don't need to worry about looking for cycles in BundleSpecifications (they are not resolved)
-				continue;
-			}
-		}
-		managedForm.getMessageManager().removeAllMessages();
-		if (loopsFound) {
-			managedForm.getMessageManager().addMessage("first error", "first error", new UnresolvedError(this, null),  IMessage.ERROR);
-			managedForm.getMessageManager().addMessage("second error", "second error", new UnresolvedError(this, null), IMessage.ERROR);
-		}
-		*/
 	}
 
 	public void handleUnresolvedDependencyError(UnresolvedError unresolvedError) {
