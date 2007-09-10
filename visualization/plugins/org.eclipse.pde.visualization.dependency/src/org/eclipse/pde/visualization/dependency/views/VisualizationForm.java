@@ -65,7 +65,7 @@ import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 	/*
 	 * These are all the strings used in the form. These can probably be
-	 * abstracted for internationalisation
+	 * abstracted for internationalization
 	 */
 	private static String Plugin_Dependency_Analysis = "Plug-in Dependency Analysis";
 	private static String Controls = "Controls";
