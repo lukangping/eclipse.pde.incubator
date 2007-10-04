@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/org.eclipse.pde.visualization.dependency_feature_0.1.0.20071004.jar" id="org.eclipse.pde.visualization.dependency_feature" version="0.1.0.20071004"/>
+</site>
