@@ -15,11 +15,6 @@ import java.util.Iterator;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.jface.viewers.ILabelProviderListener;
-import org.eclipse.mylyn.zest.core.viewers.EntityConnectionData;
-import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.mylyn.zest.core.viewers.IConnectionStyleProvider;
-import org.eclipse.mylyn.zest.core.viewers.IEntityStyleProvider;
-import org.eclipse.mylyn.zest.core.widgets.ZestStyles;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.internal.ui.views.dependencies.DependenciesLabelProvider;
@@ -28,6 +23,11 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.zest.core.viewers.EntityConnectionData;
+import org.eclipse.zest.core.viewers.GraphViewer;
+import org.eclipse.zest.core.viewers.IConnectionStyleProvider;
+import org.eclipse.zest.core.viewers.IEntityStyleProvider;
+import org.eclipse.zest.core.widgets.ZestStyles;
 
 /**
  * Computes the colour of the labels and connections. This is subclassed

@@ -14,8 +14,6 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.mylyn.zest.core.viewers.GraphViewer;
-import org.eclipse.mylyn.zest.core.widgets.Graph;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.pde.visualization.dependency.analysis.ErrorReporting;
 import org.eclipse.swt.SWT;
@@ -53,6 +51,8 @@ import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.forms.widgets.TableWrapData;
 import org.eclipse.ui.forms.widgets.TableWrapLayout;
+import org.eclipse.zest.core.viewers.GraphViewer;
+import org.eclipse.zest.core.widgets.Graph;
 
 /**
  * This class encapsulates the process of creating the form view in the PDE
