@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.pde.visualization.dependency_feature"
-      label="Plug-in Dependency Visualization"
-      version="0.1.0.20071004"
+      label="Plug-in Dependency Visualization (incubation)"
+      version="0.1.0.20071015"
       provider-name="the CHISEL group">
 
    <description url="http://www.eclipse.org/pde/incubator/dependency-visualization/index.php">
