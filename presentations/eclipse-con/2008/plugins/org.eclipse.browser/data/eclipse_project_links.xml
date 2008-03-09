@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- Link -->	  
+<project 
+   name="Eclipse Project" 
+   link="http://www.eclipse.org/eclipse/"
+   description="Open source industry platform for the development of highly integrated tools"
+   xsi:noNamespaceSchemaLocation="project_links.xsd"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+   <!-- Link -->	
+   <subproject 
+      name="Platform" 
+      link="http://www.eclipse.org/platform/"
+      description="Set of frameworks and common services">
+
+      <!-- Link -->		
+      <component 
+         name="Ant" 
+         link="http://dev.eclipse.org/viewcvs/index.cgi/platform-ant-home/main.html?view=co"
+         description="Platform Ant integration">
+      </component>		
+   		
+      <!-- Link -->		
+      <component 
+         name="Core" 
+         link="http://www.eclipse.org/eclipse/platform-core/"
+         description="Platform runtime and resource management">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="CVS" 
+         link="http://www.eclipse.org/eclipse/platform-cvs/"
+         description="Platform CVS integration">
+      </component>	
+      
+      <!-- Link -->		
+      <component 
+         name="Debug" 
+         link="http://www.eclipse.org/eclipse/debug/index.php"
+         description="Generic execution debug framework">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="Releng" 
+         link="http://www.eclipse.org/eclipse/platform-releng/index.html"
+         description="Release Engineering">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="Search" 
+         link="http://www.eclipse.org/eclipse/platform-search/"
+         description="Integrated search facility">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="SWT" 
+         link="http://www.eclipse.org/swt/"
+         description="Standard Widget Toolkit">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="Team/Compare" 
+         link="http://www.eclipse.org/eclipse/platform-team/"
+         description="Generic team and compare support frameworks">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="Text" 
+         link="http://www.eclipse.org/eclipse/platform-text/"
+         description="Text editor framework">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="User Assistance" 
+         link="http://www.eclipse.org/eclipse/platform-ua/main.html"
+         description="Help system, initial user experience, cheat sheets">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="UI" 
+         link="http://dev.eclipse.org/viewcvs/index.cgi/platform-ui-home/main.html?view=co"
+         description="Platform User Interface">
+      </component>	
+
+      <!-- Link -->		
+      <component 
+         name="Update" 
+         link="http://dev.eclipse.org/viewcvs/index.cgi/platform-update-home/main.html?view=co"
+         description="Dynamic update, install, and field service">
+      </component>	
+
+   </subproject>		
+
+   <!-- Link -->		
+   <subproject 
+      name="Equinox" 
+      link="http://www.eclipse.org/equinox/"
+      description="An OSGi framework for Eclipse">
+   </subproject>	
+   
+   <!-- Link -->		
+   <subproject 
+      name="JDT" 
+      link="http://www.eclipse.org/jdt/"
+      description="Java Development Tools">
+
+      <!-- Link -->		
+      <component 
+         name="APT" 
+         link="http://www.eclipse.org/jdt/apt/index.html"
+         description="Java 5.0 annotation processing infrastructure">
+      </component>
+
+      <!-- Link -->		
+      <component 
+         name="Core" 
+         link="http://www.eclipse.org/jdt/core/index.php"
+         description="Java IDE headless infrastructure">
+      </component>
+
+      <!-- Link -->		
+      <component 
+         name="Debug" 
+         link="http://www.eclipse.org/eclipse/debug/index.php"
+         description="Debug support for Java">
+      </component>
+
+      <!-- Link -->		
+      <component 
+         name="UI" 
+         link="http://www.eclipse.org/jdt/ui/index.php "
+         description="Java IDE User Interface">
+      </component>                  
+   
+   </subproject>	
+
+   <!-- Link -->		
+   <subproject 
+      name="PDE" 
+      link="http://www.eclipse.org/pde/"
+      description="Plug-in Development Environment">
+
+      <!-- Link -->		
+      <component 
+         name="Build" 
+         link="http://www.eclipse.org/pde/pde-build/"
+         description="PDE Build">
+      </component>
+
+      <!-- Link -->		
+      <component 
+         name="UI" 
+         link="http://www.eclipse.org/pde/pde-ui/"
+         description="PDE User Interface">
+      </component>
+   
+   </subproject>	      
+
+</project>
+
+
+
+
+	
+		

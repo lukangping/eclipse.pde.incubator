@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.7.0
+Created-By: 1.6.0_01-b06 (Sun Microsystems Inc.)
+Bundle-ManifestVersion: 2
+Bundle-Name: %Bundle-Name.0
+Bundle-SymbolicName: org.eclipse.browser.cheatsheets;singleton:=true
+Bundle-Version: 2.0.0
+Require-Bundle: org.eclipse.ui.cheatsheets
+Bundle-Vendor: %Bundle-Vendor.0
+Bundle-Localization: plugin
+

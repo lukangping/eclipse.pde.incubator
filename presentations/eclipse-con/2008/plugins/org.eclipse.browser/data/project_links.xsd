@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+   <xs:annotation>
+      <xs:documentation xml:lang="en">
+         Schema for specifying project and component link hierarchies
+      </xs:documentation>
+   </xs:annotation>
+
+   <!-- Attributes ///////////////////////////////////////////////////////// -->
+
+   <xs:attributeGroup name="link_attributes">
+      <xs:attribute ref="name" use="required"/>
+      <xs:attribute ref="link" use="required"/>
+      <xs:attribute ref="description" use="required"/>
+   </xs:attributeGroup>
+
+   <xs:attribute 
+      name="name" 
+      type="xs:normalizedString">
+      <xs:annotation>
+         <xs:documentation xml:lang="en">
+            Attribute for specifying the project or component name
+         </xs:documentation>
+      </xs:annotation>
+   </xs:attribute>
+
+   <xs:attribute 
+      name="link" 
+      type="xs:anyURI">
+      <xs:annotation>
+         <xs:documentation xml:lang="en">
+            Attribute for specifying the URI to a project or component web site
+         </xs:documentation>
+      </xs:annotation>
+   </xs:attribute>
+
+   <xs:attribute 
+      name="description" 
+      type="xs:normalizedString">
+      <xs:annotation>
+         <xs:documentation xml:lang="en">
+            Attribute for specifying the project or component description
+         </xs:documentation>
+      </xs:annotation>
+   </xs:attribute>
+
+   <!-- Elements /////////////////////////////////////////////////////////// -->
+
+   <xs:element 
+      name="link_element" 
+      abstract="true"/>
+
+   <xs:element 
+      name="project"
+      substitutionGroup="link_element">
+      <xs:annotation>
+         <xs:documentation xml:lang="en">
+            Element for specifying a project containing one or more sub-projects
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="subproject" minOccurs="0" maxOccurs="unbounded"/>
+         </xs:sequence>
+         <xs:attributeGroup ref="link_attributes"/>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:element 
+      name="subproject"
+      substitutionGroup="link_element">
+      <xs:annotation>
+         <xs:documentation xml:lang="en">
+            Element for specifying a sub-project containing one or more 
+            sub-projects or components
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="subproject" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="component" minOccurs="0" maxOccurs="unbounded"/>
+         </xs:sequence>
+         <xs:attributeGroup ref="link_attributes"/>
+      </xs:complexType>
+   </xs:element>
+
+   <xs:element 
+      name="component"
+      substitutionGroup="link_element">
+      <xs:annotation>
+         <xs:documentation xml:lang="en">
+            Element for specifying a component containing one or more components
+         </xs:documentation>
+      </xs:annotation>
+      <xs:complexType>
+         <xs:sequence>
+            <xs:element ref="component" minOccurs="0" maxOccurs="unbounded"/>
+         </xs:sequence>
+         <xs:attributeGroup ref="link_attributes"/>
+      </xs:complexType>
+   </xs:element>
+
+</xs:schema>

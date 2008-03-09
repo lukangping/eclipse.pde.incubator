@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Create an RCP application">
+   <intro>
+      <description>
+         This tutorial will demonstrate how to turn the Eclipse Browser plug-in into a minimal RCP application.
+<br/>
+<br/>
+To learn more about using cheat sheets, click the help button in the top right corner (?).
+      </description>
+   </intro>
+   <item title="Copy the Application class" dialog="true" skip="false">
+      <description>
+         The Application class is the entry point to the RCP application.  It has already been implemented for you.  To copy it, perform the following steps:
+      </description>
+      <subitem label="Expand the &quot;org.eclipse.browser/solutions/PartII&quot; folder and select the &apos;Application.java&apos; file inside that folder." skip="false">
+      </subitem>
+      <subitem label="Right-click on the Application.java file and select &apos;Copy&apos; from the context menu." skip="false">
+      </subitem>
+      <subitem label="Right-click on the &quot;org.eclipse.browser.application&quot; package under &apos;org.eclipse.browser/src&apos; and select &quot;Paste&quot; from the context menu." skip="false">
+      </subitem>
+   </item>
+   <item title="Open the plug-in manifest editor" dialog="false" skip="true" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/editor.htm">
+      <description>
+         To open the plug-in manifest editor (if it is not already open), expand the <b>org.eclipse.browser</b> tree in the <b>Package Explorer</b> view and double-click on the <b>plugin.xml</b> file.
+<br/>
+<br/>
+Alternatively, click the following button to perform the task:
+      </description>
+      <command serialization="org.eclipse.ui.navigate.openResource(filePath=/org.eclipse.browser/plugin.xml)" confirm="false">
+      </command>
+   </item>
+   <item title="Define an application extension" dialog="true" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/editors/manifest_editor/extensions.htm">
+      <description>
+         To define an application extension, perform the following steps:
+      </description>
+      <subitem label="On the &quot;Extensions&quot; page of the plug-in manifest editor, press the &quot;Add...&quot; button to open the &quot;New Extension&quot; wizard." skip="false">
+      </subitem>
+      <subitem label="Select &quot;org.eclipse.core.runtime.applications&quot; from the &quot;Extension Points&quot; list box and press &quot;Finish&quot;." skip="false">
+      </subitem>
+      <subitem label="Make sure the &apos;org.eclipse.core.runtime.applications&apos; node is selected in the &apos;All Extensions&apos; viewer." skip="false">
+      </subitem>
+      <subitem label="In the &quot;Extension Details&quot; section, set the contents of the &quot;ID&quot; field to &quot;application&quot;" skip="false">
+      </subitem>
+      <subitem label="Right-click on the &quot;(application)&quot; node in the &quot;All Extensions&quot; section and select &quot;New-&gt;run&quot; from the context menu." skip="false">
+      </subitem>
+      <subitem label="Replace the content of the &quot;class&quot; text box with &quot;org.eclipse.browser.application.Application&quot;." skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Save&quot; from the main menu." skip="false">
+      </subitem>
+   </item>
+   <item title="Run the application" dialog="false" skip="false" href="/org.eclipse.pde.doc.user/guide/tools/launchers/eclipse_application_launcher.htm">
+      <description>
+         To run the RCP application,  perform the following steps:
+      </description>
+      <subitem label="On the &quot;Overview&quot; page of the plug-in manifest editor, click the &quot;Launch an Eclipse application&quot; hyperlink under the &quot;Testing&quot; heading to launch the RCP application." skip="false">
+      </subitem>
+      <subitem label="Note the standalone window containing File and Help menus, and the Eclipse Browser view occupies the entire window area.  This is your minimal RCP application." skip="false">
+      </subitem>
+      <subitem label="Select &quot;File-&gt;Exit&quot; from the main menu to exit the application." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>
