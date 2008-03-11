@@ -31,10 +31,10 @@ import org.eclipse.jface.action.IAction;
 
 public class ExtensibleOpenLinkAction extends OpenLinkAction implements IExtensibleAction {
 	
-	private static String POINT_ID = "org.eclipse.browser.htmlBrowsers";
-	private static String ATT_ID = "id";
-	private static String ATT_NAME = "name";
-	private static String ATT_CLASS = "class";
+	private static String POINT_ID = "org.eclipse.browser.htmlBrowsers"; //$NON-NLS-1$
+	private static String ATT_ID = "id"; //$NON-NLS-1$
+	private static String ATT_NAME = "name"; //$NON-NLS-1$
+	private static String ATT_CLASS = "class"; //$NON-NLS-1$
 	
 	private Map fBrowserMap;
 	private String fCurrentBrowserId;
