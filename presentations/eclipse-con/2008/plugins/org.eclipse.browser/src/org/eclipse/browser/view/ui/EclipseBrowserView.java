@@ -227,7 +227,7 @@ public class EclipseBrowserView extends ViewPart {
 		if (url == null) {
 			String message = NLS.bind(
 					BrowserMessages.EclipseBrowserView_errorMissingModelFile, 
-					url.toString());
+					F_DEFAULT_MODEL_FILE);
 			BrowserPlugin.logException(BrowserMessages.EclipseBrowserView_errorModelLoad, message, new Exception(message));
 			return false;
 		}
