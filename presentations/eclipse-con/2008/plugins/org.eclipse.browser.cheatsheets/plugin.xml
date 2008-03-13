@@ -28,6 +28,19 @@
    </extension>
    <extension
          point="org.eclipse.ui.cheatsheets.cheatSheetContent">
+      <cheatsheet
+            category="org.eclipse.browser.cheatsheets.category"
+            composite="false"
+            contentFile="cheatsheets/Part_II/internationalization.xml"
+            id="org.eclipse.browser.cheatsheets.internationalization"
+            name="Part III: Internationalizing the Eclipse Browser Plug-in">
+         <description>
+            This cheat sheet helps you customize the Eclipse Browser plug-in for a specific locale.
+         </description>
+      </cheatsheet>
+   </extension>
+   <extension
+         point="org.eclipse.ui.cheatsheets.cheatSheetContent">
       <category
             id="org.eclipse.browser.cheatsheets.category"
             name="Fundamentals of Plug-in and RCP Development">

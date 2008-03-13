@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet
+      title="Title">
+   <intro>
+      <description>
+         his tutorial will demonstrate how to turn the Eclipse Browser plug-in into a internalizationalize plug-in.
+<br/>
+<br/>
+To learn more about using cheat sheets, click the help button in the top right corner (?).
+      </description>
+   </intro>
+   <item
+         title="Update Preferences"
+         dialog="true">
+      <description>
+         To internationalize a plug-in we first need to locate any possible string we expose.  To do this, preform the following steps.
+      </description>
+      <subitem
+            label="Open up your workspace preferences window.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.window.preferences"/>
+      </subitem>
+      <subitem
+            label="Navigate to &quot;Java-&gt;Compiler-&gt;Errors and Warnings&quot;.">
+      </subitem>
+      <subitem
+            label="Change the value of &quot;Non-externalized strings (missing/unused $NON_NLS$ tag)&quot; to Warning.">
+      </subitem>
+      <subitem
+            label="Navigate to &quot;Plug-in Development-&gt;Compilers&quot;.">
+      </subitem>
+      <subitem
+            label="Change the value of &quot;Usage of non-externalized strings&quot; to Warning.  Press &quot;OK&quot;.  When prompted about a rebuild, select &quot;Yes&quot;.">
+      </subitem>
+   </item>
+   <item
+         title="Externalize UI Strings in java code"
+         dialog="true">
+      <description>
+         To run your plug-in in different languages, you will need to store UI strings in a properties file.  This will allow you to load a different properties file for each language.  Follow the steps below to externalize your UI strings found in your java code:
+      </description>
+      <subitem
+            label="Right click on the &quot;org.eclipse.browser&quot; project and  select &quot;Source-&gt;Externalized Strings...&quot; from the context menu.">
+      </subitem>
+      <subitem
+            label="Double click on &quot;2 in /org.eclipse.browser/src/org/eclipse/browser/application/BrowserActionBarAdvisor.java&quot;">
+      </subitem>
+      <subitem
+            label="Click on the first entry in the Key column.  Type &quot;file&quot;. Click on the second entry in the Key column.  Type &quot;help&quot;.">
+      </subitem>
+      <subitem
+            label="Press &quot;Next&quot; to see the changes which will be made."
+            skip="true">
+      </subitem>
+      <subitem
+            label="Press &quot;Finish&quot;">
+      </subitem>
+   </item>
+   <item
+         title="Externalize UI Strings in Plug-in markup"
+         dialog="true">
+      <description>
+         To run your plug-in in different languages, you will need to store UI strings in a properties file.  This will allow you to load a different properties file for each language.  Follow the steps below to externalize your UI strings found in your plug-in markup:
+      </description>
+      <subitem
+            label="Right click on the plugin.xml file in the &quot;org.eclipse.browser&quot; project and  Select &quot;PDE Tools-&gt;Externalize Strings...&quot; from the context menu.">
+      </subitem>
+      <subitem
+            label="Select &quot;plugin.xml&quot; under &quot;org.eclipse.browser&quot; in the table on the left.  Notice the non-externalized key from your plugin.xml are displayed under &quot;Strings to externalize&quot;.  Press &quot;Next&quot; to see the changes which will be made."
+            skip="true">
+      </subitem>
+      <subitem
+            label="Press &quot;Finish&quot;">
+      </subitem>
+   </item>
+   <item
+         title="Enable different icons for different locales"
+         dialog="true">
+      <description>
+         To enable your plug-in to provide different icons for different locales, preform the following steps:
+      </description>
+      <subitem
+            label="Right click on the plugin.xml file in the &quot;org.eclipse.browser&quot; project and select &quot;PDE Tools-&gt;Oraganize Manifests...&quot;">
+      </subitem>
+      <subitem
+            label="Check the &quot;Prefix icon paths in the plug-in extensions with an $nl$ segement&quot;">
+      </subitem>
+      <subitem
+            label="Press &quot;Next&quot; to see the changes which will be performed."
+            skip="true">
+      </subitem>
+      <subitem
+            label="Press &quot;Finish&quot;">
+      </subitem>
+   </item>
+   <item
+         title="Create nl fragments for different locales"
+         dialog="true">
+      <description>
+         To create language fragments for different locales, perform the following steps:
+      </description>
+      <subitem
+            label="Select &quot;File-&gt;New-&gt;Project...&quot; from the main menu to bring up the Import wizard.  Expand the &quot;Plug-in Development&quot; category, and choose &quot;Fragment Project&quot;.  Press &quot;Next&quot;.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.pde.ui.NewFragmentWizard)"/>
+      </subitem>
+      <subitem
+            label="Type &quot;org.eclipse.browser.nl1&quot; for the Project name.  Uncheck &quot;Create a Java Project&quot; since this fragment will not contribute java code.  Press &quot;Next&quot;.">
+      </subitem>
+      <subitem
+            label="Enter &quot;Browser NL1 Fragment&quot; in the Fragment name.  Press the &quot;Browse&quot; button.  Select the &quot;org.eclipse.browser&quot; plug-in and select &quot;OK&quot;.  Press &quot;Finish&quot;.">
+      </subitem>
+   </item>
+   <item
+         title="Externalize Bundle-Name in fragment"
+         dialog="true">
+      <description>
+         Follow these steps to resolve the warnings  in the new fragment project:
+      </description>
+      <subitem
+            label="Right click on the MANIFEST.MF file in the &quot;org.eclipse.browser.nl1&quot; project and select &quot;PDE Tools-&gt;Externalize Strings...&quot; from the context menu.">
+      </subitem>
+      <subitem
+            label="Press &quot;Next&quot; to see the changes which will be made."
+            skip="true">
+      </subitem>
+      <subitem
+            label="Press &quot;Finish&quot;">
+      </subitem>
+   </item>
+   <item
+         title="Add language specific content"
+         dialog="true">
+      <description>
+         Properties files containing language specific strings must be created for each locale.  Perform the following steps to add language specific content
+      </description>
+      <subitem
+            label="Select &quot;File-&gt;New-&gt;Other...&quot; from the main menu to bring up the New wizard.  Expand the &quot;General&quot; category, and choose &quot;File&quot;.  Press &quot;Next&quot;.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.file)"/>
+      </subitem>
+      <subitem
+            label="In the &quot;New File wizard&quot;, select the &quot;org.eclipse.browser.nl1&quot; project as the parent folder, then input &quot;plugin_es.properties&quot; into the &quot;File name&quot; text box.  Press &quot;Finish&quot;.">
+      </subitem>
+      <subitem
+            label="Enter &quot;view.name.0 = Spanish Eclipse Browser&quot; into the file.">
+      </subitem>
+      <subitem
+            label="Select &quot;File-&gt;Save&quot; from the main menu.">
+      </subitem>
+      <subitem
+            label="Select &quot;File-&gt;New-&gt;Other...&quot; from the main menu to bring up the New wizard.  Expand the &quot;General&quot; category, and choose &quot;Folder&quot;.  Press &quot;Next&quot;.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.folder)"/>
+      </subitem>
+      <subitem
+            label="In the &quot;New Folder wizard&quot;, select the &quot;org.eclipse.browser.nl1&quot; project as the parent folder, then input &quot;org/eclipse/browser/application/&quot; into the &quot;Folder name&quot; text box.  Press &quot;Finish&quot;.">
+      </subitem>
+      <subitem
+            label="Select &quot;File-&gt;New-&gt;Other...&quot; from the main menu to bring up the New wizard.  Expand the &quot;General&quot; category, and choose &quot;File&quot;.  Press &quot;Next&quot;.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.newWizard(newWizardId=org.eclipse.ui.wizards.new.file)"/>
+      </subitem>
+      <subitem
+            label="In the &quot;New File wizard&quot;, select the &quot;org.eclipse.browser.nl1/org/eclipse/browser/application/&quot; folder as the parent folder, then input &quot;messages_es.properties&quot; into the &quot;File name&quot; text box.  Press &quot;Finish&quot;.">
+      </subitem>
+      <subitem
+            label="Enter the following two lines:&#x0D;&quot;BrowserActionBarAdvisor.file=&amp;Archivo&#x0D;BrowserActionBarAdvisor.help=A&amp;yuda&quot; into the file.">
+      </subitem>
+      <subitem
+            label="Select &quot;File-&gt;Save&quot; from the main menu.">
+      </subitem>
+   </item>
+   <item
+         title="Launch plug-in with a different language"
+         dialog="true">
+      <description>
+         Perform the following steps to lauch the Browser plug-in and nl fragment with a different language:
+      </description>
+      <subitem
+            label="Open up your workspace preferences window.  Navigate to Plug-in Development &gt; Target Platform.">
+         <command
+               required="false"
+               serialization="org.eclipse.ui.window.preferences(preferencePageId=org.eclipse.pde.ui.TargetPlatformPreferencePage)"/>
+      </subitem>
+      <subitem
+            label="Select the &quot;Environment&quot; tab.  Change the Locale combo to &quot;es - Spanish&quot;">
+         <command
+               required="false"
+               serialization="org.eclipse.debug.ui.commands.OpenRunConfigurations"/>
+      </subitem>
+      <subitem
+            label="Press &quot;OK&quot;">
+      </subitem>
+      <subitem
+      		label="Open the &quot;browser.product&quot; product definition file in the &quot;org.eclipse.browser&quot; project." skip="false">
+      </subitem>
+      <subitem
+            label="On the &quot;Configuration&quot; tab of the product editor, press &quot;Add Required Plug-ins&quot; in the &quot;Plug-ins and Fragments&quot; section.">
+      </subitem>
+      <subitem
+            label="Save the &quot;browser.product&quot; file via &quot;File-&gt;Save&quot; from the main menu.">
+      </subitem>
+      <subitem
+            label="On the &quot;Overview&quot; page of the product editor, click the &quot;Launch the product&quot; hyperlink under the &quot;Testing&quot; heading.  Notice how the menus are now in spanish and the browser name is now &quot;Spanish Eclipse Browser&quot;.">
+      </subitem>
+      <subitem
+			label="Select &quot;File-&gt;Exit&quot; from the main menu to close the second Eclipse instance." skip="false">
+      </subitem>
+   </item>
+</cheatsheet>
