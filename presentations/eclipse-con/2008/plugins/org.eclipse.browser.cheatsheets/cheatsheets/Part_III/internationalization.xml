@@ -149,7 +149,7 @@ To learn more about using cheat sheets, click the help button in the top right c
             label="In the &quot;New File wizard&quot;, select the &quot;org.eclipse.browser.nl1&quot; project as the parent folder, then input &quot;plugin_es.properties&quot; into the &quot;File name&quot; text box.  Press &quot;Finish&quot;.">
       </subitem>
       <subitem
-            label="Enter &quot;view.name.0 = Spanish Eclipse Browser&quot; into the file.">
+            label="Enter &quot;view.name.0 = Navegador Eclipse&quot; into the file.">
       </subitem>
       <subitem
             label="Select &quot;File-&gt;Save&quot; from the main menu.">
