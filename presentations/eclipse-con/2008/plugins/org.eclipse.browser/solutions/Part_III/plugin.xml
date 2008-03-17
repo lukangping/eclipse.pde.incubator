@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<plugin>
+   <extension-point id="usefulLinks" name="%usefulLink.extPoint" schema="schema/usefulLinks.exsd"/>
+   <extension
+         point="org.eclipse.browser.usefulLinks">
+      <linkObject
+            link="http://www.eclipse.org/downloads/"
+            name="%link.object.name.eclipse.downloads"
+            description="%link.object.description.eclipse.downloads">
+      </linkObject>
+      <linkObject
+            link="https://bugs.eclipse.org/bugs/"
+            name="%link.object.name.eclipse.bugs"
+            description="%link.object.description.eclipse.bugs">
+      </linkObject>
+      <linkObject
+            link="http://wiki.eclipse.org/index.php/Main_Page"
+            name="%link.object.name.eclipsepedia"
+            description="%link.object.description.eclipsepedia">
+      </linkObject>         
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+            class="org.eclipse.browser.application.Perspective"
+            icon="$nl$/icons/eclipse_icon.gif"
+            id="org.eclipse.browser.perspective"
+            name="%perspective.name">
+      </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            class="org.eclipse.browser.view.ui.EclipseBrowserView"
+            icon="$nl$/icons/eclipse_icon.gif"
+            id="org.eclipse.browser.view"
+            name="%view.name.0">
+      </view>
+   </extension>
+   <extension
+         id="application"
+         point="org.eclipse.core.runtime.applications">
+      <application
+            cardinality="singleton-global"
+            thread="main"
+            visible="true">
+         <run
+               class="org.eclipse.browser.application.Application">
+         </run>
+      </application>
+   </extension>
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.browser.application"
+            name="%product.name.0">
+         <property
+               name="appName"
+               value="Eclipse Broswer Product">
+         </property>
+         <property
+               name="aboutImage"
+               value="branding/world_about.gif">
+         </property>
+         <property
+               name="aboutText"
+               value="This is a bluct about my Eclipse Browser Product">
+         </property>
+         <property
+               name="windowImages"
+               value="branding/world_16-16_windows.gif,branding/world_32-32_windows.gif">
+         </property>
+      </product>
+   </extension>
+ 
+</plugin>
