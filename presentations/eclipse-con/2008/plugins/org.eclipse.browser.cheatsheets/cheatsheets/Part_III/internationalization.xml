@@ -22,7 +22,7 @@ To learn more about using cheat sheets, click the help button in the top right c
                serialization="org.eclipse.ui.window.preferences"/>
       </subitem>
       <subitem
-            label="Navigate to &quot;Java-&gt;Compiler-&gt;Errors and Warnings&quot;.">
+            label="Navigate to &quot;Java-&gt;Compiler-&gt;Errors/Warnings&quot;.">
       </subitem>
       <subitem
             label="Change the value of &quot;Non-externalized strings (missing/unused $NON_NLS$ tag)&quot; to Warning.">
@@ -56,6 +56,9 @@ To learn more about using cheat sheets, click the help button in the top right c
       <subitem
             label="Press &quot;Finish&quot;">
       </subitem>
+      <subitem
+            label="Press &quot;Close&quot; on the Externalize Strings dialog">
+      </subitem>
    </item>
    <item
          title="Externalize UI Strings in Plug-in markup"
@@ -67,7 +70,7 @@ To learn more about using cheat sheets, click the help button in the top right c
             label="Right click on the plugin.xml file in the &quot;org.eclipse.browser&quot; project and  Select &quot;PDE Tools-&gt;Externalize Strings...&quot; from the context menu.">
       </subitem>
       <subitem
-            label="Select &quot;plugin.xml&quot; under &quot;org.eclipse.browser&quot; in the table on the left.  Notice the non-externalized key from your plugin.xml are displayed under &quot;Strings to externalize&quot;.  Press &quot;Next&quot; to see the changes which will be made."
+            label="Select &quot;plugin.xml&quot; under &quot;org.eclipse.browser&quot; in the table on the left.  Notice the non-externalized keys from your plugin.xml are displayed under &quot;Strings to externalize&quot;.  Press &quot;Next&quot; to see the changes which will be made."
             skip="true">
       </subitem>
       <subitem

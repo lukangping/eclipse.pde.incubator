@@ -31,7 +31,7 @@
       <cheatsheet
             category="org.eclipse.browser.cheatsheets.category"
             composite="false"
-            contentFile="cheatsheets/Part_II/internationalization.xml"
+            contentFile="cheatsheets/Part_III/internationalization.xml"
             id="org.eclipse.browser.cheatsheets.internationalization"
             name="Part III: Internationalizing the Eclipse Browser Plug-in">
          <description>
