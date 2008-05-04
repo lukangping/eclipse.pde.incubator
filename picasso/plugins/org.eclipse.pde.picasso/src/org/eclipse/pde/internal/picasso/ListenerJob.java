@@ -22,7 +22,6 @@ public class ListenerJob extends UIJob {
 		super(name);
 	}
 
-	@Override
 	public IStatus runInUIThread(IProgressMonitor monitor) {
 		getDisplay().addFilter(SWT.Show, new DebugFilter());
 		return Status.OK_STATUS;
