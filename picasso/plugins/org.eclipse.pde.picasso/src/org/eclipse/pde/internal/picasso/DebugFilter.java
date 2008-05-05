@@ -20,7 +20,7 @@ public class DebugFilter implements Listener {
 	public void handleEvent(Event event) {
 		Widget widget = event.widget;
 		if(widget instanceof Control) {
-			SwtDebugUtility.decorate((Control) widget);
+			Painter.decorate((Control) widget);
 		}
 	}
 

@@ -10,6 +10,7 @@
  *******************************************************************************/
 package org.eclipse.pde.internal.picasso;
 
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.osgi.framework.BundleContext;
@@ -21,6 +22,7 @@ public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
 	public static final String PLUGIN_ID = "org.eclipse.pde.picasso";
+	public static final String OPTION_ID_PAINT = "paint";
 
 	// The shared instance
 	private static Activator plugin;
@@ -38,8 +40,12 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-		UIJob job = new ListenerJob(Messages.ListenerJob_name);
-		job.schedule();
+		
+		String option = Platform.getDebugOption(PLUGIN_ID + '/' + OPTION_ID_PAINT);
+		if(option != null && option.equalsIgnoreCase("true")) {
+			UIJob job = new ListenerJob(Messages.ListenerJob_name);
+			job.schedule();
+		}
 	}
 
 	/*
