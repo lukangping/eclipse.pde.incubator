@@ -21,8 +21,10 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "org.eclipse.pde.picasso";
-	public static final String OPTION_ID_PAINT = "paint";
+	public static final String PLUGIN_ID = "org.eclipse.pde.picasso"; //$NON-NLS-1$
+	public static final String OPTION_ID_PAINT = "paint"; //$NON-NLS-1$
+	public static final String OPTION_ID_PAINT_EXTRA_COMPOSITE_MARGIN = "paint/extraCompositeMargin"; //$NON-NLS-1$
+	public static final String OPTION_ID_PAINT_TOOL_TIP = "paint/toolTip"; //$NON-NLS-1$
 
 	// The shared instance
 	private static Activator plugin;
@@ -41,11 +43,18 @@ public class Activator extends AbstractUIPlugin {
 		super.start(context);
 		plugin = this;
 		
-		String option = Platform.getDebugOption(PLUGIN_ID + '/' + OPTION_ID_PAINT);
-		if(option != null && option.equalsIgnoreCase("true")) {
-			UIJob job = new ListenerJob(Messages.ListenerJob_name);
-			job.schedule();
-		}
+		String paintOption = getDebugOption(OPTION_ID_PAINT);
+		if (Boolean.parseBoolean(paintOption) == false) return;
+		String paintToolTipOption = getDebugOption(OPTION_ID_PAINT_TOOL_TIP);
+		boolean toolTip = Boolean.parseBoolean(paintToolTipOption);
+		String paintExtraCompositeMarginOption = getDebugOption(OPTION_ID_PAINT_EXTRA_COMPOSITE_MARGIN);
+		int extraCompositeMargin = Integer.parseInt(paintExtraCompositeMarginOption);
+		UIJob job = new ListenerJob(Messages.ListenerJob_name, extraCompositeMargin, toolTip);
+		job.schedule();
+	}
+
+	private String getDebugOption(String option) {
+		return Platform.getDebugOption(PLUGIN_ID + '/' + option);
 	}
 
 	/*
@@ -67,5 +76,4 @@ public class Activator extends AbstractUIPlugin {
 	public static Activator getDefault() {
 		return plugin;
 	}
-
 }

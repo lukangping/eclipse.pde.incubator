@@ -28,7 +28,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Layout;
 
 /**
- * SwtDebugUtility.java
+ * Painter.java
  */
 public final class Painter extends Object {
 	//
@@ -63,16 +63,16 @@ public final class Painter extends Object {
 		buffer.append(Painter.LINE_SEPARATOR);
 		buffer.append("  layout=");  //$NON-NLS-1$
 
-		if (layout instanceof GridLayout) { // $codepro.audit.disable disallowInstanceof
+		if (layout instanceof GridLayout) {
 			GridLayout gridLayout = (GridLayout) layout;
 			Painter.createGridLayoutToolTip(buffer, gridLayout);
-		} else if (layout instanceof FormLayout) { // $codepro.audit.disable disallowInstanceof
+		} else if (layout instanceof FormLayout) {
 			FormLayout formLayout = (FormLayout) layout;
 			Painter.createFormLayoutToolTip(buffer, formLayout);
-		} else if (layout instanceof FillLayout) { // $codepro.audit.disable disallowInstanceof
+		} else if (layout instanceof FillLayout) {
 			FillLayout fillLayout = (FillLayout) layout;
 			Painter.createFillLayoutToolTip(buffer, fillLayout);
-		} else if (layout instanceof RowLayout) { // $codepro.audit.disable disallowInstanceof
+		} else if (layout instanceof RowLayout) {
 			RowLayout rowLayout = (RowLayout) layout;
 			Painter.createRowLayoutToolTip(buffer, rowLayout);
 		} else {
@@ -347,7 +347,10 @@ public final class Painter extends Object {
 		buffer.append("  parent=");  //$NON-NLS-1$
 		Control parent = control.getParent();
 		buffer.append(parent);
-		buffer.append(Painter.getHashCodeText(parent));
+		
+		if (parent != null) {
+			buffer.append(Painter.getHashCodeText(parent));
+		}
 
 		buffer.append(Painter.LINE_SEPARATOR);
 		buffer.append("  border width=");  //$NON-NLS-1$
@@ -367,7 +370,7 @@ public final class Painter extends Object {
 		FontData[] fontData = font.getFontData();
 		buffer.append(fontData [ 0 ]);  // Always just one on Windows.
 
-		if (control instanceof Composite) { // $codepro.audit.disable disallowInstanceof
+		if (control instanceof Composite) {
 			Composite composite = (Composite) control;
 			Painter.createCompositeToolTip(buffer, composite);
 		}
@@ -376,13 +379,13 @@ public final class Painter extends Object {
 		buffer.append(Painter.LINE_SEPARATOR);
 		buffer.append("  layout data=");  //$NON-NLS-1$
 
-		if (layoutData instanceof GridData) { // $codepro.audit.disable disallowInstanceof
+		if (layoutData instanceof GridData) {
 			GridData gridData = (GridData) layoutData;
 			Painter.createGridDataToolTip(buffer, gridData);
-		} else if (layoutData instanceof FormData) { // $codepro.audit.disable disallowInstanceof
+		} else if (layoutData instanceof FormData) {
 			FormData formData = (FormData) layoutData;
 			Painter.createFormDataToolTip(buffer, formData);
-		} else if (layoutData instanceof RowData) { // $codepro.audit.disable disallowInstanceof
+		} else if (layoutData instanceof RowData) {
 			RowData rowData = (RowData) layoutData;
 			Painter.createRowDataToolTip(buffer, rowData);
 		} else {
@@ -402,37 +405,43 @@ public final class Painter extends Object {
 		buffer.append(control.getStyle());
 	}
 
+	
 	public static void decorate(Control control) {
-		Painter.decorate(control, 0);
+		Painter.decorate(control, true);
+	}
+	
+	public static void decorate(Control control, boolean toolTip) {
+		Painter.decorate(control, 0, toolTip);
 	}
 
-	public static void decorate(Control control, int marginWidth) {
+	public static void decorate(Control control, int extraCompositeMargin, boolean toolTip) {
 		if (control == null) throw new IllegalArgumentException("The argument 'control' must not be null");  //$NON-NLS-1$
 		StringBuffer buffer = new StringBuffer(Painter.BUFFER_SIZE);
-		Painter.decorate(buffer, control, marginWidth, 0, 0);
+		Painter.decorate(buffer, control, extraCompositeMargin, 0, 0, toolTip);
 	}
 
-	private static void decorate(StringBuffer buffer, Control control, int marginWidth, int colorIndex, int childIndex) {
+	private static void decorate(StringBuffer buffer, Control control, int extraCompositeMargin, int colorIndex, int childIndex, boolean toolTip) {
 		int count = Painter.COLORS.length;
 		int index = colorIndex == count ? 0 : colorIndex;
 
 		Color color = Painter.COLORS [ index ];
 		control.setBackground(color);
 
-		Painter.createToolTip(buffer, control, childIndex);
-		String tip = Painter.getBufferValue(buffer);
+		if (toolTip == true) {
+			Painter.createToolTip(buffer, control, childIndex);
+			String tip = Painter.getBufferValue(buffer);
+			control.setToolTipText(tip);
+		}
 
-		control.setToolTipText(tip);
-
-		if (control instanceof Composite) { // $codepro.audit.disable disallowInstanceof
+		if (control instanceof Composite) {
 			Composite composite = (Composite) control;
-			Painter.padComposite(composite, marginWidth);
+			Painter.padComposite(composite, extraCompositeMargin);
 			Control[] children = composite.getChildren();
 			Control child;
 
 			for (int i = 0; i < children.length; i++) {
 				child = children [ i ];
-				Painter.decorate(buffer, child, marginWidth, index + 1, i + 1);
+				Painter.decorate(buffer, child, extraCompositeMargin, index + 1, i + 1, toolTip);
 			}
 		}
 	}
@@ -522,26 +531,28 @@ public final class Painter extends Object {
 		return color;
 	}
 
-	private static void padComposite(Composite composite, int marginWidth) {
+	private static void padComposite(Composite composite, int extraCompositeMargin) {
 		Layout compositeLayout = composite.getLayout();
 		if (compositeLayout == null) return;  // Early return.
 
+		if (extraCompositeMargin < 0) return; // Early return.
+		
 		if (compositeLayout instanceof GridLayout) {
 			GridLayout layout = (GridLayout) compositeLayout;
-			layout.marginWidth += marginWidth;
-			layout.marginHeight += marginWidth;
+			layout.marginWidth += extraCompositeMargin;
+			layout.marginHeight += extraCompositeMargin;
 		} else if (compositeLayout instanceof RowLayout) {
 			RowLayout layout = (RowLayout) compositeLayout;
-			layout.marginWidth += marginWidth;
-			layout.marginHeight += marginWidth;
+			layout.marginWidth += extraCompositeMargin;
+			layout.marginHeight += extraCompositeMargin;
 		} else if (compositeLayout instanceof FillLayout) {
 			FillLayout layout = (FillLayout) compositeLayout;
-			layout.marginWidth += marginWidth;
-			layout.marginHeight += marginWidth;
+			layout.marginWidth += extraCompositeMargin;
+			layout.marginHeight += extraCompositeMargin;
 		} else if (compositeLayout instanceof FormLayout) {
 			FormLayout layout = (FormLayout) compositeLayout;
-			layout.marginWidth += marginWidth;
-			layout.marginHeight += marginWidth;
+			layout.marginWidth += extraCompositeMargin;
+			layout.marginHeight += extraCompositeMargin;
 		}
 	}
 

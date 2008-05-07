@@ -17,14 +17,17 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.progress.UIJob;
 
 public class ListenerJob extends UIJob {
-
-	public ListenerJob(String name) {
+	private int extraCompositeMargin;
+	private boolean toolTip;
+	
+	public ListenerJob(String name, int extraCompositeMargin, boolean toolTip) {
 		super(name);
+		this.extraCompositeMargin = extraCompositeMargin;
+		this.toolTip = toolTip;
 	}
 
 	public IStatus runInUIThread(IProgressMonitor monitor) {
-		getDisplay().addFilter(SWT.Show, new DebugFilter());
+		getDisplay().addFilter(SWT.Show, new DebugFilter(extraCompositeMargin, toolTip));
 		return Status.OK_STATUS;
 	}
-
 }

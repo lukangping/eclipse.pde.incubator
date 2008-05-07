@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %bundleName
 Bundle-SymbolicName: org.eclipse.pde.picasso;singleton:=true
+Bundle-Vendor: %bundleVendor
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: org.eclipse.pde.internal.picasso.Activator
 Require-Bundle: org.eclipse.ui;bundle-version="[3.3.0,4.0.0)",

@@ -16,12 +16,19 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Widget;
 
 public class DebugFilter implements Listener {
-
+	private int extraCompositeMargin;
+	private boolean toolTip;
+	
+	public DebugFilter(int extraCompositeMargin, boolean toolTip) {
+		super();
+		this.extraCompositeMargin = extraCompositeMargin;
+		this.toolTip = toolTip;
+	}
+	
 	public void handleEvent(Event event) {
 		Widget widget = event.widget;
-		if(widget instanceof Control) {
-			Painter.decorate((Control) widget);
+		if (widget instanceof Control) {
+			Painter.decorate((Control) widget, extraCompositeMargin, toolTip);
 		}
 	}
-
 }
