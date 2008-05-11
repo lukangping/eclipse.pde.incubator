@@ -13,13 +13,7 @@ package org.eclipse.pde.internal.picasso;
 import org.eclipse.ui.IStartup;
 
 public class DebugStartup implements IStartup {
-
-	public DebugStartup() {}
-	
 	public void earlyStartup() {
 		// do nothing
 	}
-
-	
-
 }
