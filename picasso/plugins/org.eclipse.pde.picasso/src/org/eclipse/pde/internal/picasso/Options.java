@@ -33,7 +33,7 @@ public class Options extends Object {
 
 	private boolean getBooleanOption(String option, boolean defaultValue) {
 		String value = getOption(option);
-		boolean result = value != null ? Boolean.parseBoolean(value) : defaultValue;
+		boolean result = value != null ? Boolean.valueOf(value).booleanValue() : defaultValue;
 		return result;
 	}
 
@@ -43,10 +43,10 @@ public class Options extends Object {
 		boolean result;
 
 		if (value != null) {
-			result = Boolean.parseBoolean(value);
+			result = Boolean.valueOf(value).booleanValue();
 		} else {
 			String propertyValue = properties.getProperty(option);
-			result = propertyValue != null ? Boolean.parseBoolean(propertyValue) : defaultValue;
+			result = propertyValue != null ? Boolean.valueOf(propertyValue).booleanValue() : defaultValue;
 		}
 
 		return result;
