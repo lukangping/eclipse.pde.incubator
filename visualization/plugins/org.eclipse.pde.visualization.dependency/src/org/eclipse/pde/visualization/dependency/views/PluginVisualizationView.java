@@ -37,7 +37,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
-import org.eclipse.pde.internal.ui.wizards.PluginSelectionDialog;
+import org.eclipse.pde.internal.ui.dialogs.PluginSelectionDialog;
 import org.eclipse.pde.visualization.dependency.Activator;
 import org.eclipse.pde.visualization.dependency.analysis.ErrorReporting;
 import org.eclipse.pde.visualization.dependency.analysis.UnresolvedError;

@@ -10,7 +10,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.forms,
  org.eclipse.equinox.launcher,
  org.eclipse.core.resources
-Eclipse-LazyStart: true
+Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .,
  org.eclipse.draw2d_3.4.0.200710041438.jar,
  org.eclipse.zest.core_0.7.0.200710041438.jar,
