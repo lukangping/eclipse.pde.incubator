@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: OverviewPage.java,v 1.1 2009/02/13 13:26:26 bcabe Exp $
+ * $Id: OverviewPage.java,v 1.2 2009/02/15 00:42:33 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor;
 
@@ -123,6 +123,7 @@ public class OverviewPage extends AbstractEmfFormPage {
 		 * Bind Properties composite
 		 */
 		final StructuredViewer listViewer = _propertiesComposite.getPropertiesViewer().left;
+		((EmfFormEditor<Component>) getEditor()).addViewerToListenTo(listViewer);
 		listViewer.setContentProvider(new AdapterFactoryContentProvider(((EmfFormEditor<?>) getEditor()).getAdapterFactory()));
 		listViewer.setLabelProvider(new AdapterFactoryLabelProvider(((EmfFormEditor<?>) getEditor()).getAdapterFactory()));
 		listViewer.setInput(getObservedValue().getValue());
