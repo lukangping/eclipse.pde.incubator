@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.eclipse.pde.visualization.dependency_feature"
-      label="Plug-in Dependency Visualization (incubation)"
+      label="%featureName"
       version="0.1.0.20071015"
-      provider-name="the CHISEL group">
+      provider-name="%providerName">
 
    <description url="http://www.eclipse.org/pde/incubator/dependency-visualization/index.php">
       The dependency visualization aims to provide a set of views to
