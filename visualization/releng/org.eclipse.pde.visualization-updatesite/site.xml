@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <site>
-   <feature url="features/org.eclipse.pde.visualization.dependency_feature_0.5.0.jar" id="org.eclipse.pde.visualization.dependency_feature" version="0.5.0"/>
+   <feature url="features/org.eclipse.pde.visualization.dependency_feature_0.5.0.jar" id="org.eclipse.pde.visualization.dependency_feature" version="0.5.0">
+      <category name="org.eclipse.pde.incubator"/>
+   </feature>
+   <category-def name="org.eclipse.pde.incubator" label="Plug-in Development"/>
 </site>
