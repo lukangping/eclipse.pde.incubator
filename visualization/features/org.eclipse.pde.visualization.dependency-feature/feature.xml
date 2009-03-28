@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.pde.visualization.dependency_feature"
       label="%featureName"
-      version="0.1.0.20071015"
+      version="0.5.0.qualifier"
       provider-name="%providerName">
 
    <description url="http://www.eclipse.org/pde/incubator/dependency-visualization/index.php">
@@ -15,6 +15,16 @@ to understand the dependencies between their plug-ins.
    <license>
       %license
    </license>
+
+   <requires>
+      <import plugin="org.eclipse.ui" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.core.runtime" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.pde.ui" version="3.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.forms" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.draw2d" version="3.4.0" match="compatible"/>
+      <import plugin="org.eclipse.zest.core" version="1.0.100" match="compatible"/>
+      <import plugin="org.eclipse.zest.layouts" version="1.0.0" match="compatible"/>
+   </requires>
 
    <plugin
          id="org.eclipse.pde.visualization.dependency"
