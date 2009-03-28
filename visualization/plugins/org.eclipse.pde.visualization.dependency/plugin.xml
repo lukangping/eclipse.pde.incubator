@@ -3,15 +3,11 @@
 <plugin>
    <extension
          point="org.eclipse.ui.views">
-      <category
-            name="Visualizations"
-            id="org.eclipse.pde.visualization">
-      </category>
       <view
-            name="Graph Plug-in Dependencies"
+            name="%view.name"
             icon="icons/obj16/req_plugins_obj.gif"
-            category="org.eclipse.pde.visualization"
-            class="org.eclipse.pde.visualization.dependency.views.PluginVisualizationView"
+            category="org.eclipse.pde.ui"
+            class="org.eclipse.pde.internal.visualization.dependency.views.PluginVisualizationView"
             id="org.eclipse.pde.visualization.views.SampleView">
       </view>
    </extension>

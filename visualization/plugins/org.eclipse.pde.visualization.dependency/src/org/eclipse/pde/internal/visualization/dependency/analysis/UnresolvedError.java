@@ -8,18 +8,13 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.analysis;
+package org.eclipse.pde.internal.visualization.dependency.analysis;
 
 import org.eclipse.osgi.service.resolver.BundleSpecification;
-import org.eclipse.pde.visualization.dependency.views.PluginVisualizationView;
+import org.eclipse.pde.internal.visualization.dependency.views.PluginVisualizationView;
 import org.eclipse.ui.forms.IMessage;
 import org.eclipse.ui.forms.IMessageManager;
 
-/**
- * Concrete class for handling unresolved errors
- * @author irbull
- *
- */
 public class UnresolvedError extends ErrorReporting {
 
 	public final static String ERROR_MESSAGE = "Unresolved Bundle";

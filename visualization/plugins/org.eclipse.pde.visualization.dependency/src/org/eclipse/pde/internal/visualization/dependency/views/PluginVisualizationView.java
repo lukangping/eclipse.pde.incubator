@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Copyright 2005, 2000 CHISEL Group, University of Victoria, Victoria, BC,
  * Canada. All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -38,9 +38,10 @@ import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.core.plugin.IPluginModelBase;
 import org.eclipse.pde.internal.ui.dialogs.PluginSelectionDialog;
-import org.eclipse.pde.visualization.dependency.Activator;
-import org.eclipse.pde.visualization.dependency.analysis.ErrorReporting;
-import org.eclipse.pde.visualization.dependency.analysis.UnresolvedError;
+import org.eclipse.pde.internal.visualization.dependency.Activator;
+import org.eclipse.pde.internal.visualization.dependency.PDEVizImages;
+import org.eclipse.pde.internal.visualization.dependency.analysis.ErrorReporting;
+import org.eclipse.pde.internal.visualization.dependency.analysis.UnresolvedError;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.graphics.Font;
@@ -53,7 +54,6 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.forms.ManagedForm;
 import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
@@ -97,6 +97,9 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private ManagedForm managedForm = null;
 	private GraphViewer viewer;
 	private Action focusDialogAction;
+	private Action focusDialogActionToolbar;
+	private Action showCalleesAction;
+	private Action showCallersAction;
 	private Action focusAction;
 	private Action pinAction;
 	private Action unPinAction;
@@ -114,6 +117,50 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	private VisualizationForm visualizationForm;
 	private Font searchFont;
 
+	
+	class ShowCalleesAction extends Action {
+
+		public ShowCalleesAction() {
+			super("", AS_RADIO_BUTTON); //$NON-NLS-1$
+			setText("Callees");
+			setDescription("Show Callees");
+			setToolTipText("Show Callees");
+			setImageDescriptor(PDEVizImages.DESC_CALLEES);
+		}
+
+		/*
+		 * @see Action#actionPerformed
+		 */
+		public void run() {
+			if (isChecked()) {
+				showDependendBundles(false);
+				// disable detailed analysis for reverse dependencies
+				visualizationForm.getDependencyAnalysis().setEnabled(true);
+			}
+		}
+	}
+
+	class ShowCallersAction extends Action {
+		public ShowCallersAction() {
+			super("", AS_RADIO_BUTTON); //$NON-NLS-1$
+			setText("Show Callers");
+			setDescription("Show Callers");
+			setToolTipText("Show Callers");
+			setImageDescriptor(PDEVizImages.DESC_CALLERS);
+		}
+
+		/*
+		 * @see Action#actionPerformed
+		 */
+		public void run() {
+			if (isChecked()) {
+				showDependendBundles(true);
+				// disable detailed analysis for reverse dependencies
+				visualizationForm.getDependencyAnalysis().setEnabled(false);
+			}
+		}
+	}	
+	
 	/**
 	 * The constructor.
 	 */
@@ -224,6 +271,21 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		viewer.update(contentProvider.getElements(currentNode), null);
 		viewer.applyLayout();
 	}
+	
+	void showDependendBundles(boolean enable) {
+		StructuredSelection selection = ((StructuredSelection) viewer.getSelection());
+		if (selection != null) {
+			viewer.setSelection(new StructuredSelection());
+			this.selectionChanged(null);
+		}
+
+		this.contentProvider.setReverseBundleDependencies(enable);
+		this.currentLabelProvider.setReverseBundleDependencies(enable);
+		
+		viewer.refresh();
+		viewer.applyLayout();
+	}
+	
 
 	/**
 	 * Enable dependency path in the view. This will highlight all the nodes
@@ -310,8 +372,14 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 * @param toolBarManager
 	 */
 	private void fillLocalToolBar(IToolBarManager toolBarManager) {
+		toolBarManager.add(focusDialogActionToolbar);
+		toolBarManager.add(new Separator());
+		toolBarManager.add(showCalleesAction);
+		toolBarManager.add(showCallersAction);
+		toolBarManager.add(new Separator());
 		toolBarManager.add(historyAction);
 		toolBarManager.add(forwardAction);
+		toolBarManager.add(new Separator());
 		toolBarManager.add(screenshotAction);
 	}
 
@@ -413,8 +481,16 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		};
 		// @tag action : Focus on ... Action
 		focusDialogAction.setText("Focus On ...");
-		focusDialogAction.setToolTipText("Focus on a plugin");
+		focusDialogAction.setToolTipText("Focus on a plug-in");
 
+		focusDialogActionToolbar = new Action() {
+			public void run() {
+				focusDialogAction.run();
+			}
+		};
+		focusDialogActionToolbar.setToolTipText("Focus on a plug-in...");
+		focusDialogActionToolbar.setImageDescriptor(PDEVizImages.DESC_FOCUS);
+		
 		historyAction = new Action() {
 			public void run() {
 				if (historyStack.size() > 0) {
@@ -432,7 +508,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		historyAction.setText("Back");
 		historyAction.setToolTipText("Previous plugin");
 		historyAction.setEnabled(false);
-		historyAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.BACKWARD_ENABLED));
+		historyAction.setImageDescriptor(PDEVizImages.DESC_BACKWARD_ENABLED);
 
 		forwardAction = new Action() {
 			public void run() {
@@ -449,7 +525,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		forwardAction.setText("Forward");
 		forwardAction.setToolTipText("Go forward one plugin");
 		forwardAction.setEnabled(false);
-		forwardAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.FORWARD_ENABLED));
+		forwardAction.setImageDescriptor(PDEVizImages.DESC_FORWARD_ENABLED);
 
 		screenshotAction = new Action() {
 			public void run() {
@@ -475,10 +551,14 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		};
 
 		screenshotAction.setText("Take A Screenshot");
-		screenshotAction.setImageDescriptor(Activator.getDefault().getImageRegistry().getDescriptor(Activator.SNAPSHOT));
+		screenshotAction.setImageDescriptor(PDEVizImages.DESC_SNAPSHOT);
 		screenshotAction.setToolTipText("Take screenshot");
 		screenshotAction.setEnabled(true);
-
+		
+		showCalleesAction = new ShowCalleesAction();
+		showCalleesAction.setChecked(true);
+		showCallersAction = new ShowCallersAction();
+		showCallersAction.setChecked(false);
 	}
 
 	/**
@@ -505,6 +585,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 		}
 		focusAction.setToolTipText("Focus on a plugin");
+		focusAction.setImageDescriptor(PDEVizImages.DESC_FOCUS);
 	}
 
 	private void makeUnPinAction() {
@@ -574,7 +655,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	 * @param manager
 	 */
 	private void fillContextMenu(IMenuManager manager) {
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(new Separator());
 		if (((IStructuredSelection) viewer.getSelection()).size() > 0) {
 			makeFocusAction(((IStructuredSelection) viewer.getSelection()).getFirstElement());
 			manager.add(focusAction);
@@ -583,7 +664,7 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 		manager.add(focusDialogAction);
 		// Other plug-ins can contribute there actions here
 		if (((IStructuredSelection) viewer.getSelection()).size() > 0 || this.pinnedNode != null) {
-			manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+			manager.add(new Separator());
 		}
 		if (this.pinnedNode != null) {
 			makeUnPinAction();
@@ -594,12 +675,12 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 			manager.add(pinAction);
 		}
 
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(new Separator());
 		manager.add(historyAction);
 		manager.add(forwardAction);
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(new Separator());
 		manager.add(screenshotAction);
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
+		manager.add(new Separator());
 		manager.add(contextZoomContributionViewItem);
 	}
 
@@ -622,4 +703,5 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 	public AbstractZoomableViewer getZoomableViewer() {
 		return viewer;
 	}
+
 }

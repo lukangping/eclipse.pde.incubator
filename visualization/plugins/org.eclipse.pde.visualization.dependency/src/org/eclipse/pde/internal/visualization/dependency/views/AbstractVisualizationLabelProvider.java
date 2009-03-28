@@ -8,7 +8,7 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,7 +18,7 @@ import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.osgi.service.resolver.BundleSpecification;
 import org.eclipse.pde.internal.ui.views.dependencies.DependenciesLabelProvider;
-import org.eclipse.pde.visualization.dependency.Activator;
+import org.eclipse.pde.internal.visualization.dependency.Activator;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.RGB;
@@ -75,6 +75,7 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 	
 	private Color rootColor = null;
 	private Color rootSelectedColor = null;
+	private boolean reverseBundleDependencies = false;
 
 	/**
 	 * Create a new Abstract Visualization Label Provider
@@ -354,4 +355,12 @@ abstract class AbstractVisualizationLabelProvider implements VisualizationLabelP
 		this.showVersionNumber = show;
 	}
 
+	public void setReverseBundleDependencies(boolean reverseBundleDependencies) {
+		this.reverseBundleDependencies  = reverseBundleDependencies;
+	}
+
+	public boolean isReverseBundleDependencies() {
+		return reverseBundleDependencies;
+	}
+	
 }

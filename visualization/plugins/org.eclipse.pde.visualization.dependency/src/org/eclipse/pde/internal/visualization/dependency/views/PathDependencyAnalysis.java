@@ -8,7 +8,7 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
 import java.util.Arrays;
 import java.util.HashSet;

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Copyright 2005, 2009 CHISEL Group, University of Victoria, Victoria, BC,
  * Canada. All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -8,30 +8,33 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.osgi.service.resolver.BundleDescription;
 import org.eclipse.zest.core.viewers.IGraphEntityContentProvider;
 
-/**
- * 
- * @author Ian Bull
- * 
- */
 class GraphContentProvider implements IGraphEntityContentProvider {
 
 	Object currentBundle = null;
+	private boolean reverseBundleDependencies;
 
 
 	private Object[] getDependencies(Object bundle) {
 		if (bundle != null) {
+			if (reverseBundleDependencies) {
+				return DependencyUtil.getDependentBundles(bundle);
+			}
 			return AnalysisUtil.getPrerequisites(new Object[] { currentBundle });
 		}
 		return new BundleDescription[0];
 	}
 
+	// Returns all entities that should be linked with the given entity
 	public Object[] getConnectedTo(Object entity) {
+		if (reverseBundleDependencies) {
+			return DependencyUtil.getConnectedBundles(entity, currentBundle);
+		}
 		return AnalysisUtil.getDependencies(entity);
 	}
 
@@ -52,6 +55,10 @@ class GraphContentProvider implements IGraphEntityContentProvider {
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
 		currentBundle = newInput;
 
+	}
+
+	public void setReverseBundleDependencies(boolean enable) {
+		this.reverseBundleDependencies = enable;
 	}
 
 }

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2005-2006, CHISEL Group, University of Victoria, Victoria, BC,
+ * Copyright 2005, 2009 CHISEL Group, University of Victoria, Victoria, BC,
  * Canada. All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -8,14 +8,14 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
 import org.eclipse.jface.dialogs.IMessageProvider;
-import org.eclipse.pde.visualization.dependency.Activator;
-import org.eclipse.pde.visualization.dependency.analysis.ErrorReporting;
+import org.eclipse.pde.internal.visualization.dependency.PDEVizImages;
+import org.eclipse.pde.internal.visualization.dependency.analysis.ErrorReporting;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.ModifyEvent;
@@ -57,9 +57,6 @@ import org.eclipse.zest.core.widgets.Graph;
 /**
  * This class encapsulates the process of creating the form view in the PDE
  * visualization tool.
- * 
- * @author Ian Bull
- * 
  */
 /* package */class VisualizationForm {
 
@@ -68,7 +65,7 @@ import org.eclipse.zest.core.widgets.Graph;
 	 * abstracted for internationalization
 	 */
 	private static String Plugin_Dependency_Analysis = "Plug-in Dependency Analysis";
-	private static String Controls = "Controls";
+	private static String Controls = "Options";
 	private static String Show_Dependency_Path = "Show Dependency Path";
 	private static String Version_Number = "Show Bundle Version Numbers";
 
@@ -156,7 +153,7 @@ import org.eclipse.zest.core.widgets.Graph;
 				searchBox.setText("");
 			}
 		});
-		cancelIcon.setImage(Activator.getDefault().getImageRegistry().get(Activator.SEARCH_CANCEL));
+		cancelIcon.setImage(PDEVizImages.get(PDEVizImages.IMG_SEARCH_CANCEL));
 		toolkit.paintBordersFor(headClient);
 		form.setHeadClient(headClient);
 		searchBox.addModifyListener(new ModifyListener() {
@@ -172,7 +169,7 @@ import org.eclipse.zest.core.widgets.Graph;
 		cancelIcon.setEnabled(false);
 
 		form.setText(Plugin_Dependency_Analysis);
-		form.setImage(Activator.getDefault().getImageRegistry().get(Activator.REQ_PLUGIN_OBJ));
+		form.setImage(PDEVizImages.get(PDEVizImages.IMG_REQ_PLUGIN_OBJ));
 		enableSearchBox(false);
 
 		// Add a hyperlink listener for the messages
@@ -417,6 +414,10 @@ import org.eclipse.zest.core.widgets.Graph;
 		controls.setClient(controlComposite);
 	}
 
+
+	Button getDependencyAnalysis() {
+		return dependencyAnalysis;
+	}
 
 	/**
 	 * Gets the currentGraphViewern

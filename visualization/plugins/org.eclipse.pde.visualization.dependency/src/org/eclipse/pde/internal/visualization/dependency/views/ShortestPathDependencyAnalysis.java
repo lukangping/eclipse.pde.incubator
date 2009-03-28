@@ -8,8 +8,9 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.eclipse.zest.core.viewers.EntityConnectionData;
@@ -18,23 +19,25 @@ import org.eclipse.zest.core.viewers.GraphViewer;
 /**
  * 
  * @author Ian Bull
- * 
  */
-class HighlightDependencyLableProvider extends AbstractVisualizationLabelProvider {
+public class ShortestPathDependencyAnalysis extends AbstractVisualizationLabelProvider {
 
-	public HighlightDependencyLableProvider(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
-		super(viewer, currentLabelProvider);
+	public ShortestPathDependencyAnalysis(GraphViewer viewer, AbstractVisualizationLabelProvider currentLabelProvider) {
+		super(viewer,currentLabelProvider );
 	}
 
 	protected void calculateInterestingDependencies(HashSet interestingRels, HashSet interestingEntities) {
 
-		if (getSelected() != null) {
-			Object[] descriptions = AnalysisUtil.getDependencies(this.getSelected());
+		if (this.getSelected() != null) {
+			Object[] descriptions = AnalysisUtil.getPath(this.rootNode, this.getSelected());
+
 			for (int i = 0; i < descriptions.length; i++) {
-				EntityConnectionData entityConnectionData = new EntityConnectionData(this.getSelected(), descriptions[i]);
-				interestingRels.add(entityConnectionData);
-				interestingEntities.add(descriptions[i]);
+				for (int j = 0; j < descriptions.length; j++) {
+					EntityConnectionData entityConnectionData = new EntityConnectionData(descriptions[i], descriptions[j]);
+					interestingRels.add(entityConnectionData);
+				}
 			}
+			interestingEntities.addAll(Arrays.asList(descriptions));
 		}
 	}
 

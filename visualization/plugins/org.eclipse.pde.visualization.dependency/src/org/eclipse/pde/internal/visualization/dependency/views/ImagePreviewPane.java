@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2005-2007, CHISEL Group, University of Victoria, Victoria, BC,
+ * Copyright 2005, 2009 CHISEL Group, University of Victoria, Victoria, BC,
  * Canada. All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -8,12 +8,12 @@
  * Contributors: The Chisel Group, University of Victoria IBM CAS, IBM Toronto
  * Lab
  ******************************************************************************/
-package org.eclipse.pde.visualization.dependency.views;
+package org.eclipse.pde.internal.visualization.dependency.views;
 
-import org.eclipse.pde.visualization.dependency.Activator;
+import org.eclipse.pde.internal.visualization.dependency.PDEVizImages;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.ImageData;
@@ -37,9 +37,6 @@ import org.eclipse.swt.widgets.ToolItem;
 /**
  * An image preview pane to show a preview of the screenshot and allow the user to save
  * the image to a file.
- * 
- * @author Ian Bull
- *
  */
 public class ImagePreviewPane extends Dialog {
 
@@ -61,12 +58,8 @@ public class ImagePreviewPane extends Dialog {
 		toolBar.setLayoutData(data);
 		
 		ToolItem saveItem = new ToolItem(toolBar, SWT.NONE);
-		saveItem.setImage(Activator.getDefault().getImageRegistry().get(Activator.SAVEEDIT));
-		saveItem.addSelectionListener(new SelectionListener() {
-
-			public void widgetDefaultSelected(SelectionEvent e) {
-				
-			}
+		saveItem.setImage(PDEVizImages.get(PDEVizImages.IMG_SAVEEDIT));
+		saveItem.addSelectionListener(new SelectionAdapter() {
 
 			public void widgetSelected(SelectionEvent e) {
 				FileDialog dialog = new FileDialog (shell, SWT.SAVE);
@@ -166,7 +159,7 @@ public class ImagePreviewPane extends Dialog {
  		Shell parent = getParent();
  		shell = new Shell(parent, SWT.DIALOG_TRIM | SWT.APPLICATION_MODAL | SWT.RESIZE | SWT.MAX);
  		shell.setText(getText());
- 		shell.setImage(Activator.getDefault().getImageRegistry().get(Activator.PLUGIN_OBJ));
+ 		shell.setImage(PDEVizImages.get(PDEVizImages.IMG_REQ_PLUGIN_OBJ));
  		
  		
  		
