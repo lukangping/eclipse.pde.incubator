@@ -151,6 +151,11 @@ public class AnalysisUtil {
 
 		Collection c = AnalysisUtil.getDescription(bundleDescription.getRequiredBundles());
 		c.addAll(getExportedDescription(bundleDescription, bundleDescription.getResolvedImports()));
+		
+		if (bundleDescription.getHost() != null) {
+			c.add(bundleDescription.getHost().getSupplier());
+		}
+		
 		/*
 		 * Iterator iterator = c.iterator(); while (iterator.hasNext() ) { if (
 		 * iterator.next() == null ) iterator.remove(); }
