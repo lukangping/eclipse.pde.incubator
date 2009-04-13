@@ -2,7 +2,7 @@
 <feature
       id="org.eclipse.pde.visualization.dependency_feature"
       label="%featureName"
-      version="0.5.0"
+      version="0.5.0.qualifier"
       provider-name="%providerName">
 
    <description url="http://www.eclipse.org/pde/incubator/dependency-visualization/index.php">
