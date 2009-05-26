@@ -1,0 +1,1 @@
+We're working here on implementing OSGi monitoring feature in PDE Plug-in registry.
