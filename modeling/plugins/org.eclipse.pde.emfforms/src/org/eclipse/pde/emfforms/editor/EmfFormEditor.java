@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: EmfFormEditor.java,v 1.4 2009/02/27 09:26:33 bcabe Exp $
+ * $Id: EmfFormEditor.java,v 1.5 2009/04/24 11:52:09 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.editor;
 
@@ -118,10 +118,9 @@ public abstract class EmfFormEditor<T extends EObject> extends FormEditor implem
 	}
 
 	/**
-	 * 
-	 * @return
+	 * @return the {@link IEmfFormEditorConfig} the editor will use as its configuration
 	 */
-	protected DefaultEmfFormEditorConfig getFormEditorConfig() {
+	protected IEmfFormEditorConfig getFormEditorConfig() {
 		return new DefaultEmfFormEditorConfig();
 	}
 
