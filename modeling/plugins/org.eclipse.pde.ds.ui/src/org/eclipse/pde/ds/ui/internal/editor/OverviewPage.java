@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: OverviewPage.java,v 1.8 2009/06/02 09:32:17 bcabe Exp $
+ * $Id: OverviewPage.java,v 1.9 2009/06/02 10:48:05 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor;
 
@@ -53,7 +53,7 @@ public class OverviewPage extends AbstractEmfFormPage {
 		 * Bind Component composite
 		 */
 		// component name
-		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextName()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Name()).observeDetail(getObservedValue()), null, null);
+		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextName()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Name()).observeDetail(getObservedValue()), new EMFValidatingUpdateValueStrategy(), null);
 		// component impl
 		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextImplementation()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Implementation()).value(ScrPackage.eINSTANCE.getImplementation_Class()).observeDetail(getObservedValue()), new EMFValidatingUpdateValueStrategy() {
 			@Override
@@ -65,13 +65,13 @@ public class OverviewPage extends AbstractEmfFormPage {
 		}, null);
 
 		// component activate
-		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextActivate()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Activate()).observeDetail(getObservedValue()), null, null);
+		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextActivate()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Activate()).observeDetail(getObservedValue()), new EMFValidatingUpdateValueStrategy(), null);
 
 		// component deactivate
-		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextDeactivate()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Deactivate()).observeDetail(getObservedValue()), null, null);
+		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextDeactivate()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Deactivate()).observeDetail(getObservedValue()), new EMFValidatingUpdateValueStrategy(), null);
 
 		// component modified
-		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextModified()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Modified()).observeDetail(getObservedValue()), null, null);
+		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(_componentComposite.getTextModified()), EMFEditProperties.value(editingDomain, ScrPackage.eINSTANCE.getComponent_Modified()).observeDetail(getObservedValue()), new EMFValidatingUpdateValueStrategy(), null);
 
 		/**
 		 * Bind Options composite
