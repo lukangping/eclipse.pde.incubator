@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: PDEFormToolkit.java,v 1.1 2009/02/12 22:20:32 bcabe Exp $
+ * $Id: IEmfFormEditorConfig.java,v 1.1 2009/04/24 11:52:09 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.editor;
 
@@ -25,6 +25,8 @@ public interface IEmfFormEditorConfig {
 	public abstract boolean isSaveAsAllowed();
 
 	public abstract boolean isUsingSharedClipboard();
+
+	public abstract boolean isShowOutlinePage();
 
 	/**
 	 * 
