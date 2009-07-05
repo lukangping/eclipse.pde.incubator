@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: IncrementalModelBuilder.java,v 1.2 2009/07/02 21:54:54 bcabe Exp $
+ * $Id: IncrementalModelBuilder.java,v 1.3 2009/07/03 21:07:44 bcabe Exp $
  */
 package org.eclipse.pde.ds.builder.internal.validation;
 
@@ -148,6 +148,8 @@ public abstract class IncrementalModelBuilder extends IncrementalProjectBuilder 
 			if (bundle instanceof IBundlePluginModelBase) {
 				IBundleModel bundleModel = ((IBundlePluginModelBase) bundle)
 						.getBundleModel();
+				// XXX for some reason, if we don't call load() by hand, some headers are missing (???)
+				bundleModel.load();
 				String serviceComponents = bundleModel.getBundle().getHeader(
 						ComponentConstants.SERVICE_COMPONENT);
 				StringTokenizer tok = new StringTokenizer(serviceComponents,
