@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: NewPropertyPage.java,v 1.6 2009/06/02 09:34:14 bcabe Exp $
+ * $Id: NewPropertyPage.java,v 1.7 2009/06/02 10:48:05 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor.wizard;
 
@@ -68,7 +68,7 @@ public class NewPropertyPage extends WizardPage {
 		}, null);
 
 		//Value
-		bindingContext.bindValue(SWTObservables.observeText(propertyComposite.getTextValue(), SWT.FocusOut), EMFEditProperties.value(ed, ScrPackage.eINSTANCE.getProperty_Value()).observeDetail(iov), new EMFValidatingUpdateValueStrategy(), null);
+		bindingContext.bindValue(SWTObservables.observeText(propertyComposite.getTextValue(), SWT.FocusOut), EMFEditProperties.value(ed, ScrPackage.eINSTANCE.getProperty_Value()).observeDetail(iov), null, null);
 	}
 
 	public void createProperty() {
