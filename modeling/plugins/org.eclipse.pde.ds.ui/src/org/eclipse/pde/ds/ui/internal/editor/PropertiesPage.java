@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: PropertiesPage.java,v 1.8 2009/07/05 20:22:53 bcabe Exp $
+ * $Id: PropertiesPage.java,v 1.9 2009/07/06 21:08:14 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor;
 
@@ -90,7 +90,7 @@ public class PropertiesPage extends AbstractEmfFormPage {
 	}
 
 	private void createDataMasterDetailSection(Composite parent) {
-		_propertiesMasterDetail = new PropertiesMasterDetail(getEditor(), "Properties");
+		_propertiesMasterDetail = new PropertiesMasterDetail(getEditor());
 		_propertiesMasterDetail.createContent(this.getManagedForm());
 		// it is bad to manipulate editor here, but to manage Cut/Copy/Paste,
 		// the editor shall add a listener the viewer, and this is a way for him
