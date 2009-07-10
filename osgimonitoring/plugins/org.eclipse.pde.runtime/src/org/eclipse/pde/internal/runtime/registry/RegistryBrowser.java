@@ -8,6 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Jacek Pospychala <jacek.pospychala@pl.ibm.com> - bug 211127
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
@@ -16,11 +17,11 @@ import java.util.List;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.pde.internal.runtime.*;
+import org.eclipse.pde.internal.runtime.registry.RegistryBrowserContentProvider.Folder;
 import org.eclipse.pde.internal.runtime.registry.model.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
@@ -34,7 +35,6 @@ import org.eclipse.ui.dialogs.FilteredTree;
 import org.eclipse.ui.dialogs.PatternFilter;
 import org.eclipse.ui.part.DrillDownAdapter;
 import org.eclipse.ui.part.ViewPart;
-import org.osgi.framework.BundleException;
 
 public class RegistryBrowser extends ViewPart {
 
@@ -157,7 +157,8 @@ public class RegistryBrowser extends ViewPart {
 	}
 
 	private void initializeModel() {
-		model = RegistryModelFactory.getRegistryModel("local"); //$NON-NLS-1$
+		model = RegistryModelFactory.getRegistryModel("local:///"); //$NON-NLS-1$
+
 		fTreeViewer.setInput(model);
 		listener = new RegistryBrowserModelChangeListener(RegistryBrowser.this);
 		model.addModelChangeListener(listener);
@@ -428,28 +429,20 @@ public class RegistryBrowser extends ViewPart {
 
 		fStartAction = new Action(PDERuntimeMessages.RegistryView_startAction_label) {
 			public void run() {
-				try {
-					List bundles = getSelectedBundles();
-					for (Iterator it = bundles.iterator(); it.hasNext();) {
-						Bundle bundle = (Bundle) it.next();
-						bundle.start();
-					}
-				} catch (BundleException e) {
-					PDERuntimePlugin.log(e);
+				List bundles = getSelectedBundles();
+				for (Iterator it = bundles.iterator(); it.hasNext();) {
+					Bundle bundle = (Bundle) it.next();
+					model.start(bundle);
 				}
 			}
 		};
 
 		fStopAction = new Action(PDERuntimeMessages.RegistryView_stopAction_label) {
 			public void run() {
-				try {
-					List bundles = getSelectedBundles();
-					for (Iterator it = bundles.iterator(); it.hasNext();) {
-						Bundle bundle = (Bundle) it.next();
-						bundle.stop();
-					}
-				} catch (BundleException e) {
-					PDERuntimePlugin.log(e);
+				List bundles = getSelectedBundles();
+				for (Iterator it = bundles.iterator(); it.hasNext();) {
+					Bundle bundle = (Bundle) it.next();
+					model.stop(bundle);
 				}
 			}
 		};
@@ -459,7 +452,7 @@ public class RegistryBrowser extends ViewPart {
 				List bundles = getSelectedBundles();
 				for (Iterator it = bundles.iterator(); it.hasNext();) {
 					Bundle bundle = (Bundle) it.next();
-					bundle.enable();
+					model.enable(bundle);
 				}
 			}
 		};
@@ -469,7 +462,7 @@ public class RegistryBrowser extends ViewPart {
 				List bundles = getSelectedBundles();
 				for (Iterator it = bundles.iterator(); it.hasNext();) {
 					Bundle bundle = (Bundle) it.next();
-					bundle.disable();
+					model.disable(bundle);
 				}
 			}
 		};
@@ -479,16 +472,20 @@ public class RegistryBrowser extends ViewPart {
 				List bundles = getSelectedBundles();
 				for (Iterator it = bundles.iterator(); it.hasNext();) {
 					Bundle bundle = (Bundle) it.next();
-					MultiStatus problems = bundle.diagnose();
+					String[] problems = model.diagnose(bundle);
+					MultiStatus multiStatus = new MultiStatus(PDERuntimePlugin.ID, IStatus.INFO, PDERuntimeMessages.RegistryView_found_problems, null);
+					for (int i = 0; i < problems.length; i++) {
+						IStatus status = new Status(IStatus.WARNING, PDERuntimePlugin.ID, problems[i]);
+						multiStatus.add(status);
+					}
 
-					Dialog dialog;
-					if ((problems != null) && (problems.getChildren().length > 0)) {
-						dialog = new DiagnosticsDialog(getSite().getShell(), PDERuntimeMessages.RegistryView_diag_dialog_title, null, problems, IStatus.WARNING);
+					DiagnosticsDialog dialog;
+					if ((multiStatus != null) && (multiStatus.getChildren().length > 0)) {
+						dialog = new DiagnosticsDialog(getSite().getShell(), PDERuntimeMessages.RegistryView_diag_dialog_title, null, multiStatus, IStatus.WARNING);
 						dialog.open();
 					} else {
 						MessageDialog.openInformation(getSite().getShell(), PDERuntimeMessages.RegistryView_diag_dialog_title, PDERuntimeMessages.RegistryView_no_unresolved_constraints);
 					}
-
 				}
 			}
 		};
@@ -715,6 +712,10 @@ public class RegistryBrowser extends ViewPart {
 			fTreeViewer.refresh(object);
 			updateTitle();
 		}
+	}
+
+	RegistryModel getModel() {
+		return model;
 	}
 
 	public Object getAdapter(Class clazz) {

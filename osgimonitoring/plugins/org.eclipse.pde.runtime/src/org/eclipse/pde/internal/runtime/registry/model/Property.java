@@ -8,12 +8,13 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Wolfgang Schell <ws@jetztgrad.net> - bug 260055
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
-import org.osgi.framework.Constants;
-
 public class Property extends ModelObject implements Comparable {
+
+	private static final long serialVersionUID = 1L;
 	public static final String PREFIX_SERVICE = "service."; //$NON-NLS-1$
 	public static final String PREFIX_COMPONENT = "component."; //$NON-NLS-1$
 
@@ -91,11 +92,11 @@ public class Property extends ModelObject implements Comparable {
 		String name0 = getName();
 		String name1 = other.getName();
 
-		if (Constants.OBJECTCLASS.equals(name0)) {
+		if ("objectClass".equals(name0)) { //$NON-NLS-1$
 			return -1;
 		}
 
-		if (Constants.OBJECTCLASS.equals(name1)) {
+		if ("objectClass".equals(name1)) { //$NON-NLS-1$
 			return 1;
 		}
 
@@ -130,5 +131,5 @@ public class Property extends ModelObject implements Comparable {
 		// simply compare strings
 		return name0.compareTo(name1);
 	}
-
+	
 }

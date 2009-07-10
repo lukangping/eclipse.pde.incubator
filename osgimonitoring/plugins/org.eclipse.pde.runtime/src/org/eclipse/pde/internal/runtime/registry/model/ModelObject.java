@@ -7,14 +7,14 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
-public abstract class ModelObject {
+import java.io.Serializable;
 
-	protected RegistryModel model;
+public abstract class ModelObject implements Serializable {
 
-	public void setModel(RegistryModel model) {
-		this.model = model;
-	}
+	private static final long serialVersionUID = 1L;
+
 }

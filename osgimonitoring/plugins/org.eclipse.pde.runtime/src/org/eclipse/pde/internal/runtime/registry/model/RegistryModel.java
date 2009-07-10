@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
@@ -22,7 +23,6 @@ public class RegistryModel {
 
 	private BackendChangeListener backendListener = new BackendChangeListener() {
 		public void addBundle(Bundle adapter) {
-			adapter.setModel(RegistryModel.this);
 			ModelChangeDelta delta = new ModelChangeDelta(adapter, ModelChangeDelta.ADDED);
 
 			bundles.put(new Long(adapter.getId()), adapter);
@@ -58,11 +58,9 @@ public class RegistryModel {
 			}
 
 			fireModelChangeEvent(new ModelChangeDelta[] {delta});
-			adapter.setModel(null);
 		}
 
 		public void updateBundle(Bundle adapter, int updated) {
-			adapter.setModel(RegistryModel.this);
 			ModelChangeDelta delta = new ModelChangeDelta(adapter, updated);
 
 			bundles.put(new Long(adapter.getId()), adapter); // replace old with new one
@@ -78,14 +76,12 @@ public class RegistryModel {
 			ModelChangeDelta serviceNameDelta = null;
 			if (!serviceNames.contains(adapter.getName())) {
 				ServiceName name = adapter.getName();
-				name.setModel(RegistryModel.this);
 
 				serviceNames.add(name);
 
 				serviceNameDelta = new ModelChangeDelta(name, ModelChangeDelta.ADDED);
 			}
 
-			adapter.setModel(RegistryModel.this);
 			services.put(new Long(adapter.getId()), adapter);
 
 			ModelChangeDelta delta = new ModelChangeDelta(adapter, ModelChangeDelta.ADDED);
@@ -110,16 +106,12 @@ public class RegistryModel {
 
 			if (serviceNameDelta != null) {
 				fireModelChangeEvent(new ModelChangeDelta[] {serviceNameDelta, delta});
-				adapter.getName().setModel(null);
-				adapter.setModel(null);
 			} else {
 				fireModelChangeEvent(new ModelChangeDelta[] {delta});
-				adapter.setModel(null);
 			}
 		}
 
 		public void updateService(ServiceRegistration adapter) {
-			adapter.setModel(RegistryModel.this);
 			services.put(new Long(adapter.getId()), adapter);
 
 			ModelChangeDelta delta = new ModelChangeDelta(adapter, ModelChangeDelta.UPDATED);
@@ -129,7 +121,6 @@ public class RegistryModel {
 
 		public void addExtensions(Extension[] extensionAdapters) {
 			for (int i = 0; i < extensionAdapters.length; i++) {
-				extensionAdapters[i].setModel(RegistryModel.this);
 				String id = extensionAdapters[i].getExtensionPointUniqueIdentifier();
 				ExtensionPoint extPoint = (ExtensionPoint) extensionPoints.get(id);
 				extPoint.getExtensions().add(extensionAdapters[i]);
@@ -154,15 +145,10 @@ public class RegistryModel {
 				delta[i] = new ModelChangeDelta(extensionAdapters[i], ModelChangeDelta.REMOVED);
 			}
 			fireModelChangeEvent(delta);
-
-			for (int i = 0; i < extensionAdapters.length; i++) {
-				extensionAdapters[i].setModel(null);
-			}
 		}
 
 		public void addExtensionPoints(ExtensionPoint[] extensionPointAdapters) {
 			for (int i = 0; i < extensionPointAdapters.length; i++) {
-				extensionPointAdapters[i].setModel(RegistryModel.this);
 				extensionPoints.put(extensionPointAdapters[i].getUniqueIdentifier(), extensionPointAdapters[i]);
 			}
 
@@ -183,10 +169,6 @@ public class RegistryModel {
 				delta[i] = new ModelChangeDelta(extensionPointAdapters[i], ModelChangeDelta.REMOVED);
 			}
 			fireModelChangeEvent(delta);
-
-			for (int i = 0; i < extensionPointAdapters.length; i++) {
-				extensionPointAdapters[i].setModel(null);
-			}
 		}
 	};
 
@@ -208,6 +190,10 @@ public class RegistryModel {
 
 		this.backend = backend;
 		backend.setRegistryListener(backendListener);
+	}
+
+	public BackendChangeListener getBackendChangeListener() {
+		return this.backendListener;
 	}
 
 	protected void addFragment(Bundle fragment) {
@@ -233,12 +219,15 @@ public class RegistryModel {
 		hostFragments.remove(fragment);
 	}
 
-	public void connect(IProgressMonitor monitor, boolean forceInit) {
-		backend.connect(monitor);
+	public boolean connect(IProgressMonitor monitor, boolean forceInit) {
+		if (!backend.connect(monitor))
+			return false;
 
 		if (forceInit) {
 			initialize(monitor);
 		}
+
+		return true;
 	}
 
 	public void initialize(IProgressMonitor monitor) {
@@ -293,7 +282,7 @@ public class RegistryModel {
 	 *  
 	 * @param objects
 	 */
-	protected void fireModelChangeEvent(ModelChangeDelta[] delta) {
+	synchronized protected void fireModelChangeEvent(ModelChangeDelta[] delta) {
 		for (Iterator i = listeners.iterator(); i.hasNext();) {
 			ModelChangeListener listener = (ModelChangeListener) i.next();
 			listener.modelChanged(delta);
@@ -383,12 +372,93 @@ public class RegistryModel {
 		return false;
 	}
 
-	/*	void setEnabled(Bundle bundle, boolean enabled);
+	public ExtensionPoint[] getExtensionPoints(Bundle adapter) {
+		ExtensionPoint[] extPoints = getExtensionPoints();
+		List result = new ArrayList();
 
-		void start(Bundle bundle) throws BundleException; // XXX Create custom Exception
+		for (int i = 0; i < extPoints.length; i++) {
+			if (extPoints[i].getContributorId().longValue() == adapter.getId())
+				result.add(extPoints[i]);
+		}
+		return (ExtensionPoint[]) result.toArray(new ExtensionPoint[result.size()]);
+	}
 
-		void stop(Bundle bundle) throws BundleException;
+	public Extension[] getExtensions(Bundle adapter) {
+		ExtensionPoint[] extPoints = getExtensionPoints();
+		List result = new ArrayList();
 
-		MultiStatus diagnose(Bundle bundle);*/
+		for (int i = 0; i < extPoints.length; i++) {
+			for (Iterator it = extPoints[i].getExtensions().iterator(); it.hasNext();) {
+				Extension a = (Extension) it.next();
+				if (a.getContributorId().longValue() == adapter.getId())
+					result.add(a);
+			}
 
+		}
+		return (Extension[]) result.toArray(new Extension[result.size()]);
+	}
+
+	public ServiceRegistration[] getRegisteredServices(Bundle adapter) {
+		ServiceRegistration[] services = getServices();
+		List result = new ArrayList();
+
+		String symbolicName = adapter.getSymbolicName();
+
+		for (int i = 0; i < services.length; i++) {
+			if (symbolicName.equals(services[i].getBundle()))
+				result.add(services[i]);
+		}
+		return (ServiceRegistration[]) result.toArray(new ServiceRegistration[result.size()]);
+	}
+
+	public ServiceRegistration[] getServicesInUse(Bundle adapter) {
+		ServiceRegistration[] services = getServices();
+		List result = new ArrayList();
+
+		long id = adapter.getId();
+
+		for (int i = 0; i < services.length; i++) {
+			long[] usingBundles = services[i].getUsingBundleIds();
+			if (usingBundles != null) {
+				for (int j = 0; j < usingBundles.length; j++)
+					if (id == usingBundles[j])
+						result.add(services[i]);
+			}
+		}
+		return (ServiceRegistration[]) result.toArray(new ServiceRegistration[result.size()]);
+	}
+
+	public void start(Bundle adapter) {
+		backend.start(adapter.getId());
+	}
+
+	public void stop(Bundle adapter) {
+		backend.stop(adapter.getId());
+	}
+
+	public void enable(Bundle adapter) {
+		backend.setEnabled(adapter.getId(), true);
+	}
+
+	public void disable(Bundle adapter) {
+		backend.setEnabled(adapter.getId(), false);
+	}
+
+	public String[] diagnose(Bundle adapter) {
+		return backend.diagnose(adapter.getId());
+	}
+
+	public Bundle[] getUsingBundles(ServiceRegistration reg) {
+		long[] usingBundles = reg.getUsingBundleIds();
+		if (usingBundles.length == 0)
+			return new Bundle[0];
+
+		Set bundles = new HashSet();
+		for (int i = 0; i < usingBundles.length; i++) {
+			Bundle bundle = getBundle(new Long(usingBundles[i]));
+			if (bundle != null)
+				bundles.add(bundle);
+		}
+		return (Bundle[]) bundles.toArray(new Bundle[bundles.size()]);
+	}
 }

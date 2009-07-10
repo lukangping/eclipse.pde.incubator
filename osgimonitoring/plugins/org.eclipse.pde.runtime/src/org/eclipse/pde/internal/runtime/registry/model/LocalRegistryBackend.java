@@ -8,6 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Wolfgang Schell <ws@jetztgrad.net> - bug 259348
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
@@ -17,7 +18,8 @@ import java.util.Arrays;
 import org.eclipse.core.runtime.*;
 import org.eclipse.osgi.service.resolver.*;
 import org.eclipse.osgi.util.ManifestElement;
-import org.eclipse.pde.internal.runtime.*;
+import org.eclipse.pde.internal.runtime.MessageHelper;
+import org.eclipse.pde.internal.runtime.PDERuntimePlugin;
 import org.osgi.framework.*;
 import org.osgi.service.packageadmin.PackageAdmin;
 
@@ -32,13 +34,15 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 	/* (non-Javadoc)
 	 * @see org.eclipse.pde.internal.runtime.registry.model.local.RegistryBackend#connect()
 	 */
-	public void connect(IProgressMonitor monitor) {
+	public boolean connect(IProgressMonitor monitor) {
 		if (monitor.isCanceled())
-			return;
+			return false;
 
 		PDERuntimePlugin.getDefault().getBundleContext().addBundleListener(this);
 		Platform.getExtensionRegistry().addListener(this);
 		PDERuntimePlugin.getDefault().getBundleContext().addServiceListener(this);
+
+		return true;
 	}
 
 	/* (non-Javadoc)
@@ -62,21 +66,31 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 	/* (non-Javadoc)
 	 * @see org.eclipse.pde.internal.runtime.registry.model.local.RegistryBackend#start(org.osgi.framework.Bundle)
 	 */
-	public void start(long id) throws BundleException {
-		PDERuntimePlugin.getDefault().getBundleContext().getBundle(id).start();
+	public void start(long id) {
+		try {
+			PDERuntimePlugin.getDefault().getBundleContext().getBundle(id).start();
+		} catch (BundleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.pde.internal.runtime.registry.model.local.RegistryBackend#stop(org.osgi.framework.Bundle)
 	 */
-	public void stop(long id) throws BundleException {
-		PDERuntimePlugin.getDefault().getBundleContext().getBundle(id).stop();
+	public void stop(long id) {
+		try {
+			PDERuntimePlugin.getDefault().getBundleContext().getBundle(id).stop();
+		} catch (BundleException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/* (non-Javadoc)
 	 * @see org.eclipse.pde.internal.runtime.registry.model.local.RegistryBackend#diagnose(org.osgi.framework.Bundle)
 	 */
-	public MultiStatus diagnose(long id) {
+	public String[] diagnose(long id) {
 		PlatformAdmin plaformAdmin = PDERuntimePlugin.getDefault().getPlatformAdmin();
 		State state = plaformAdmin.getState(false);
 
@@ -86,19 +100,16 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 		VersionConstraint[] unsatisfied = platformAdmin.getStateHelper().getUnsatisfiedConstraints(desc);
 		ResolverError[] resolverErrors = platformAdmin.getState(false).getResolverErrors(desc);
 
-		MultiStatus problems = new MultiStatus(PDERuntimePlugin.ID, IStatus.INFO, PDERuntimeMessages.RegistryView_found_problems, null);
+		String[] problems = new String[unsatisfied.length + resolverErrors.length];
+
 		for (int i = 0; i < resolverErrors.length; i++) {
-			if ((resolverErrors[i].getType() & (ResolverError.MISSING_FRAGMENT_HOST | ResolverError.MISSING_GENERIC_CAPABILITY | ResolverError.MISSING_IMPORT_PACKAGE | ResolverError.MISSING_REQUIRE_BUNDLE)) != 0)
-				continue;
-			IStatus status = new Status(IStatus.WARNING, PDERuntimePlugin.ID, resolverErrors[i].toString());
-			problems.add(status);
+			problems[i] = resolverErrors[i].toString();
 		}
-
-		for (int i = 0; i < unsatisfied.length; i++) {
-			IStatus status = new Status(IStatus.WARNING, PDERuntimePlugin.ID, MessageHelper.getResolutionFailureMessage(unsatisfied[i]));
-			problems.add(status);
+		int j = 0;
+		for (int i = resolverErrors.length; i < unsatisfied.length + resolverErrors.length; i++) {
+			problems[i] = MessageHelper.getResolutionFailureMessage(unsatisfied[j]);
+			j++;
 		}
-
 		return problems;
 	}
 
@@ -299,6 +310,9 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 			return null;
 		}
 
+		if (bundleEntry == null)
+			return null;
+
 		try {
 			bundleEntry = FileLocator.resolve(bundleEntry);
 		} catch (IOException e) { // do nothing
@@ -491,5 +505,10 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 		org.osgi.framework.Bundle b = PDERuntimePlugin.getDefault().getBundleContext().getBundle(id);
 		PackageAdmin packageAdmin = PDERuntimePlugin.getDefault().getPackageAdmin();
 		packageAdmin.refreshPackages(new org.osgi.framework.Bundle[] {b});
+	}
+
+	public void setBackendChangeListener(BackendChangeListener listener) {
+		// TODO Auto-generated method stub
+
 	}
 }

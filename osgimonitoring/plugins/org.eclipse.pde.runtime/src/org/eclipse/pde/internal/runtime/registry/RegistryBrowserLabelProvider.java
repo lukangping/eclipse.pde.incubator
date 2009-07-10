@@ -7,16 +7,16 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
-
-import org.eclipse.pde.internal.runtime.PDERuntimeMessages;
 
 import java.util.Arrays;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.pde.internal.runtime.*;
+import org.eclipse.pde.internal.runtime.registry.RegistryBrowserContentProvider.Folder;
 import org.eclipse.pde.internal.runtime.registry.model.*;
 import org.eclipse.swt.graphics.Image;
 import org.osgi.framework.Constants;

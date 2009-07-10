@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *    Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
@@ -53,14 +54,14 @@ public class RegistryBrowserModelChangeListener implements ModelChangeListener {
 				return object;
 			} else if (object instanceof ExtensionPoint) {
 				ExtensionPoint ext = (ExtensionPoint) object;
-				return ext.getContributor();
+				return fRegistryBrowser.getModel().getBundle(ext.getContributorId());
 			} else if (object instanceof Extension) {
 				Extension ext = (Extension) object;
-				return ext.getContributor();
+				return fRegistryBrowser.getModel().getBundle(ext.getContributorId());
 			} else if (object instanceof ServiceRegistration) {
 				ServiceRegistration reg = (ServiceRegistration) object;
 
-				Bundle[] bundles = reg.getUsingBundles();
+				Bundle[] bundles = fRegistryBrowser.getModel().getUsingBundles(reg);
 				if (bundles.length == 0) {
 					return reg.getBundle();
 				}
@@ -76,14 +77,15 @@ public class RegistryBrowserModelChangeListener implements ModelChangeListener {
 				return object;
 			} else if (object instanceof Extension) {
 				Extension ext = (Extension) object;
-				return ext.getExtensionPoint();
+				return fRegistryBrowser.getModel().getExtensionPoint(ext.getExtensionPointUniqueIdentifier());
 			}
 		} else if (fRegistryBrowser.getGroupBy() == RegistryBrowser.SERVICES) {
 			if (object instanceof ServiceRegistration) {
 				ServiceRegistration service = (ServiceRegistration) object;
 				return service.getName();
 			} else if (object instanceof Bundle) {
-				Object[] services = ((Bundle) object).getServicesInUse();
+				Bundle bundle = ((Bundle) object);
+				Object[] services = fRegistryBrowser.getModel().getServicesInUse(bundle);
 				for (int i = 0; i < services.length; i++) {
 					ServiceRegistration service = ((ServiceRegistration) services[i]);
 					services[i] = service.getName();

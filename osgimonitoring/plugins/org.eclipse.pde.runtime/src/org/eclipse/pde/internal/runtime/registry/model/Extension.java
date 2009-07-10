@@ -7,11 +7,13 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
 public class Extension extends ModelObject {
 
+	private static final long serialVersionUID = 1L;
 	private String namespaceIdentifier;
 	private String label;
 	private String extensionPointUniqueIdentifier;
@@ -103,20 +105,5 @@ public class Extension extends ModelObject {
 		result = prime * result + ((label == null) ? 0 : label.hashCode());
 		result = prime * result + ((namespaceIdentifier == null) ? 0 : namespaceIdentifier.hashCode());
 		return result;
-	}
-
-	public ExtensionPoint getExtensionPoint() {
-		if (model == null)
-			return null;
-		return model.getExtensionPoint(extensionPointUniqueIdentifier);
-	}
-
-	/**
-	 * @return contributor or <code>null</code> if contributor not present
-	 */
-	public Bundle getContributor() {
-		if (model == null || contributor == null)
-			return null;
-		return model.getBundle(contributor);
 	}
 }

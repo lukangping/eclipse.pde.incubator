@@ -7,26 +7,25 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.MultiStatus;
-import org.osgi.framework.BundleException;
 
 public interface RegistryBackend {
 
-	public void connect(IProgressMonitor monitor);
+	public boolean connect(IProgressMonitor monitor);
 
 	public void disconnect();
 
 	public void setEnabled(long id, boolean enabled);
 
-	public void start(long id) throws BundleException;
+	public void start(long id);
 
-	public void stop(long id) throws BundleException;
+	public void stop(long id);
 
-	public MultiStatus diagnose(long id);
+	public String[] diagnose(long id);
 
 	public void initializeBundles(IProgressMonitor monitor);
 

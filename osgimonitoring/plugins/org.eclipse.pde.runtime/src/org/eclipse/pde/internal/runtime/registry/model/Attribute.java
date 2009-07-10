@@ -7,10 +7,13 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
 public class Attribute extends ModelObject {
+
+	private static final long serialVersionUID = 1L;
 	public static final String F_LOCATION = "Location"; //$NON-NLS-1$
 
 	public static final String F_BUNDLE = "Bundle"; //$NON-NLS-1$

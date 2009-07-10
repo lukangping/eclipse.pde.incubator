@@ -7,10 +7,13 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
 public class ConfigurationElement extends Attribute {
+
+	private static final long serialVersionUID = 1L;
 
 	private Attribute[] elements = new Attribute[0];
 

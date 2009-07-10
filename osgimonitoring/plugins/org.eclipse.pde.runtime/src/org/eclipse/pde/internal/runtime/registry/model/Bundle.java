@@ -7,15 +7,13 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
-import java.util.*;
-import org.eclipse.core.runtime.MultiStatus;
-import org.osgi.framework.BundleException;
-
 public class Bundle extends ModelObject {
 
+	private static final long serialVersionUID = 1L;
 	public static final int ACTIVE = org.osgi.framework.Bundle.ACTIVE;
 	public static final int UNINSTALLED = org.osgi.framework.Bundle.UNINSTALLED;
 	public static final int INSTALLED = org.osgi.framework.Bundle.INSTALLED;
@@ -120,108 +118,12 @@ public class Bundle extends ModelObject {
 		return id;
 	}
 
-	public void start() throws BundleException {
-		if (model == null)
-			return;
-		model.backend.start(id);
-	}
-
-	public void stop() throws BundleException {
-		if (model == null)
-			return;
-		model.backend.stop(id);
-	}
-
-	public void enable() {
-		if (model == null)
-			return;
-		model.backend.setEnabled(id, true);
-	}
-
-	public void disable() {
-		if (model == null)
-			return;
-		model.backend.setEnabled(id, false);
-	}
-
-	public MultiStatus diagnose() {
-		if (model == null)
-			return null;
-		return model.backend.diagnose(id);
-	}
-
-	public ExtensionPoint[] getExtensionPoints() {
-		if (model == null)
-			return new ExtensionPoint[0];
-		ExtensionPoint[] extPoints = model.getExtensionPoints();
-		List result = new ArrayList();
-
-		for (int i = 0; i < extPoints.length; i++) {
-			if (extPoints[i].getContributorId().longValue() == id)
-				result.add(extPoints[i]);
-		}
-		return (ExtensionPoint[]) result.toArray(new ExtensionPoint[result.size()]);
-	}
-
-	public Extension[] getExtensions() {
-		if (model == null)
-			return new Extension[0];
-		ExtensionPoint[] extPoints = model.getExtensionPoints();
-		List result = new ArrayList();
-
-		for (int i = 0; i < extPoints.length; i++) {
-			for (Iterator it = extPoints[i].getExtensions().iterator(); it.hasNext();) {
-				Extension a = (Extension) it.next();
-				if (a.getContributorId().longValue() == id)
-					result.add(a);
-			}
-
-		}
-		return (Extension[]) result.toArray(new Extension[result.size()]);
-	}
-
-	public ServiceRegistration[] getRegisteredServices() {
-		if (model == null)
-			return new ServiceRegistration[0];
-		ServiceRegistration[] services = model.getServices();
-		List result = new ArrayList();
-
-		for (int i = 0; i < services.length; i++) {
-			if (symbolicName.equals(services[i].getBundle()))
-				result.add(services[i]);
-		}
-		return (ServiceRegistration[]) result.toArray(new ServiceRegistration[result.size()]);
-	}
-
-	public ServiceRegistration[] getServicesInUse() {
-		if (model == null)
-			return new ServiceRegistration[0];
-		ServiceRegistration[] services = model.getServices();
-		List result = new ArrayList();
-
-		for (int i = 0; i < services.length; i++) {
-			long[] usingBundles = services[i].getUsingBundleIds();
-			if (usingBundles != null) {
-				for (int j = 0; j < usingBundles.length; j++)
-					if (id == usingBundles[j])
-						result.add(services[i]);
-			}
-		}
-		return (ServiceRegistration[]) result.toArray(new ServiceRegistration[result.size()]);
-	}
-
 	public boolean equals(Object obj) {
 		return (obj instanceof Bundle) && (id == ((Bundle) obj).id);
 	}
 
 	public int hashCode() {
 		return (int) id;
-	}
-
-	public Bundle[] getFragments() {
-		if (model == null)
-			return new Bundle[0];
-		return model.getFragments(this);
 	}
 
 	public void setImportedPackages(BundlePrerequisite[] importedPackages) {

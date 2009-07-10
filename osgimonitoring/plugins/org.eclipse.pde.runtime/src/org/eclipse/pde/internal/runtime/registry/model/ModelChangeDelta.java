@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2008 IBM Corporation and others.
+ * Copyright (c) 2008, 2009 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
@@ -25,8 +26,13 @@ public class ModelChangeDelta {
 	public static final int RESOLVED = 7;
 	public static final int UNRESOLVED = 8;
 
+	// TODO SWITCH from HEAVY ModelChangeDelta carrying whole object, to LIGHT delta - name, type (Bundle/Service/Ext/ExtPt), id
 	private ModelObject fObject;
 	private int fFlag;
+
+	public ModelChangeDelta() {
+		// empty
+	}
 
 	public ModelChangeDelta(ModelObject object, int flag) {
 		fObject = object;
@@ -39,5 +45,13 @@ public class ModelChangeDelta {
 
 	public int getFlag() {
 		return fFlag;
+	}
+
+	public void setModelObject(ModelObject fObject) {
+		this.fObject = fObject;
+	}
+
+	public void setFlag(int flag) {
+		this.fFlag = flag;
 	}
 }

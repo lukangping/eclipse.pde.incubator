@@ -8,12 +8,15 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Wolfgang Schell <ws@jetztgrad.net> - bug 260055
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
 import java.util.Arrays;
 
 public class ServiceName extends ModelObject implements Comparable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String[] classes;
 
@@ -23,10 +26,6 @@ public class ServiceName extends ModelObject implements Comparable {
 
 	public String[] getClasses() {
 		return classes;
-	}
-
-	public ModelObject[] getChildren() {
-		return model.getServices(classes);
 	}
 
 	private static int hashCode(Object[] array) {

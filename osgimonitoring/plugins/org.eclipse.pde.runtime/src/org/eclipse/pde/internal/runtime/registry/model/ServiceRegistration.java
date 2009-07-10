@@ -8,13 +8,13 @@
  *  Contributors:
  *     IBM Corporation - initial API and implementation
  *     Wolfgang Schell <ws@jetztgrad.net> - bug 259348, 260055
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 public class ServiceRegistration extends ModelObject implements Comparable {
+
+	private static final long serialVersionUID = 1L;
 
 	private long id;
 	private String bundle;
@@ -65,19 +65,6 @@ public class ServiceRegistration extends ModelObject implements Comparable {
 
 	public long[] getUsingBundleIds() {
 		return usingBundles;
-	}
-
-	public Bundle[] getUsingBundles() {
-		if (usingBundles.length == 0)
-			return new Bundle[0];
-
-		Set bundles = new HashSet();
-		for (int i = 0; i < usingBundles.length; i++) {
-			Bundle bundle = model.getBundle(new Long(usingBundles[i]));
-			if (bundle != null)
-				bundles.add(bundle);
-		}
-		return (Bundle[]) bundles.toArray(new Bundle[bundles.size()]);
 	}
 
 	public Property[] getProperties() {
