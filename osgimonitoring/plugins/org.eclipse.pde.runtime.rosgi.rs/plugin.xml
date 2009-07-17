@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.pde.runtime.backends">
+      <backend
+            class="org.eclipse.pde.internal.runtime.registry.rosgi.RosgiRegistryBackend"
+            scheme="r-osgi">
+      </backend>
+   </extension>
+
+</plugin>
