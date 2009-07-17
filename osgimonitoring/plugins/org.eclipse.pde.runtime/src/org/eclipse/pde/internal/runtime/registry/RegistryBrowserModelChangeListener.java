@@ -11,7 +11,7 @@
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
-import org.eclipse.pde.internal.runtime.registry.model.*;
+import org.eclipse.pde.runtime.core.model.*;
 
 public class RegistryBrowserModelChangeListener implements ModelChangeListener {
 

@@ -15,7 +15,7 @@ package org.eclipse.pde.internal.runtime.registry;
 import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.jface.viewers.*;
-import org.eclipse.pde.internal.runtime.registry.model.*;
+import org.eclipse.pde.runtime.core.model.*;
 
 public class RegistryBrowserContentProvider implements ITreeContentProvider {
 

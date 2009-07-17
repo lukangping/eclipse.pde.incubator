@@ -9,11 +9,12 @@
  *     IBM Corporation - initial API and implementation
  *     Wojciech Galanciak - bug 282672
  *******************************************************************************/
-package org.eclipse.pde.internal.runtime.registry.model;
+package org.eclipse.pde.internal.runtime.registry;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import org.eclipse.core.runtime.*;
+import org.eclipse.pde.runtime.core.model.*;
 
 /**
  * Produces RegistryModels for URLs.

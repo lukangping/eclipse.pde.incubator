@@ -22,7 +22,7 @@ import org.eclipse.jface.viewers.*;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.pde.internal.runtime.*;
 import org.eclipse.pde.internal.runtime.registry.RegistryBrowserContentProvider.Folder;
-import org.eclipse.pde.internal.runtime.registry.model.*;
+import org.eclipse.pde.runtime.core.model.*;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.dnd.*;
