@@ -1,7 +1,10 @@
 package org.eclipse.pde.internal.runtime.registry.rosgi;
 
+import java.net.InetAddress;
+
 import org.eclipse.core.runtime.Assert;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.content.IContentTypeManager.ISelectionPolicy;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.core.IContainerManager;
 import org.eclipse.ecf.core.identity.IDFactory;
@@ -13,11 +16,14 @@ import org.eclipse.pde.runtime.core.model.BackendChangeListener;
 import org.eclipse.pde.runtime.core.model.RegistryBackend;
 import org.eclipse.pde.runtime.rosgi.rs.Activator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
 
-public class RosgiRegistryBackend implements RegistryBackend {
+import ch.ethz.iks.r_osgi.RemoteOSGiService;
+import ch.ethz.iks.r_osgi.Remoting;
 
-	private static final String DEFAUT_SERVER_HOST = "localhost:9278";
+public class RosgiRegistryBackend implements RegistryBackend {
+	private static final String DEFAULT_PORT = "9278";
 	private static final String DEFAULT_PROTOCOL = "r-osgi://";
 	private static final String DEFAULT_CONTAINER_TYPE = "ecf.r_osgi.peer";
 	
@@ -27,6 +33,8 @@ public class RosgiRegistryBackend implements RegistryBackend {
 	private ServiceTracker containerManagerServiceTracker;
 	private IContainer container;
 	
+	private String serverURI;
+	
 	public boolean connect(IProgressMonitor monitor) {
 		try {
 			IContainerManager containerManager = getContainerManagerService(); 
@@ -34,15 +42,9 @@ public class RosgiRegistryBackend implements RegistryBackend {
 			IRemoteServiceContainerAdapter containerAdapter = 
 				(IRemoteServiceContainerAdapter) container.getAdapter(IRemoteServiceContainerAdapter.class); 
 
-			String target = DEFAULT_PROTOCOL;
-			if (System.getProperty("server.host") != null)
-				target += System.getProperty("server.host");
-			else 
-				target += DEFAUT_SERVER_HOST;
-			
 			IRemoteServiceReference[] helloReferences = 
 				containerAdapter.getRemoteServiceReferences(
-						IDFactory.getDefault().createID(Activator.getDefault().getContainer().getConnectNamespace(), target), 
+						IDFactory.getDefault().createID(Activator.getDefault().getContainer().getConnectNamespace(), serverURI), 
 						IRosgiRegistryHost.class.getName(), null);
 			
 			Assert.isNotNull(helloReferences);
@@ -51,8 +53,20 @@ public class RosgiRegistryBackend implements RegistryBackend {
 			IRemoteService remoteService = containerAdapter.getRemoteService(helloReferences[0]);
 			remoteRosgiHost = (IRosgiRegistryHost) remoteService.getProxy(); 
 			registerBackendListener();
-			remoteRosgiHost.connectRemoteBackendChangeListener();
 			
+			String uri = DEFAULT_PROTOCOL + InetAddress.getLocalHost().getHostAddress() + ":";
+			if (System.getProperty("ch.ethz.iks.r_osgi.port") != null) {
+				remoteRosgiHost.setClientURI(uri + System.getProperty("ch.ethz.iks.r_osgi.port"));
+			}
+			else {
+				ServiceReference rosgiReference = Activator.getDefault().getBundleContext().getServiceReference("ch.ethz.iks.r_osgi.RemoteOSGiService");
+				RemoteOSGiService rosgi = (RemoteOSGiService) Activator.getDefault().getBundleContext().getService(rosgiReference);
+				remoteRosgiHost.setClientURI(uri + rosgi.getListeningPort("r-osgi"));
+			}
+			
+			if (remoteRosgiHost.connectRemoteBackendChangeListener() == false) {
+				throw new Exception("Unable to connect with server");
+			}
 			return true;
 
 		} catch (Exception e) {
@@ -131,5 +145,9 @@ public class RosgiRegistryBackend implements RegistryBackend {
 			containerManagerServiceTracker.open();
 		}
 		return (IContainerManager) containerManagerServiceTracker.getService();
+	}
+
+	public void setURI(String uri) {
+		this.serverURI = uri;
 	}
 }

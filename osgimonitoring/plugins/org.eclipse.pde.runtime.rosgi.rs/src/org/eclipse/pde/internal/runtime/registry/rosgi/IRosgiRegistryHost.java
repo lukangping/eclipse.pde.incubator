@@ -19,4 +19,6 @@ public interface IRosgiRegistryHost {
 	public void initializeServices();
 	
 	public void disconnect();
+	
+	public void setClientURI(String uri);
 }

@@ -18,13 +18,13 @@ import org.osgi.util.tracker.ServiceTracker;
 
 public class RosgiRegistryHost implements IRosgiRegistryHost {
 
-	private static final String DEFAUT_CLIENT_HOST = "localhost:9279";
-	private static final String DEFAULT_PROTOCOL = "r-osgi://";
 	private static final String DEFAULT_CONTAINER_TYPE = "ecf.r_osgi.peer";
 	
 	private LocalRegistryBackend backend;
 	private IContainer container;
 	private ServiceTracker containerManagerServiceTracker;
+	
+	private String clientURI;
 	
 	public RosgiRegistryHost() {
 		backend = new LocalRegistryBackend();
@@ -64,6 +64,9 @@ public class RosgiRegistryHost implements IRosgiRegistryHost {
 	}
 
 	public boolean connectRemoteBackendChangeListener() {
+		if (container != null) {
+			return false;
+		}
 		try {
 			IContainerManager containerManager = getContainerManagerService(); 
 			container = containerManager.getContainerFactory().createContainer(DEFAULT_CONTAINER_TYPE);
@@ -71,15 +74,9 @@ public class RosgiRegistryHost implements IRosgiRegistryHost {
 			IRemoteServiceContainerAdapter containerAdapter = 
 				(IRemoteServiceContainerAdapter) container.getAdapter(IRemoteServiceContainerAdapter.class);
 			
-			String target = DEFAULT_PROTOCOL;
-			if (System.getProperty("client.host") != null)
-				target += System.getProperty("client.host");
-			else 
-				target += DEFAUT_CLIENT_HOST;
-			
 			IRemoteServiceReference[] listenerReferences = 
 				containerAdapter.getRemoteServiceReferences(
-						IDFactory.getDefault().createID(container.getConnectNamespace(), target), 
+						IDFactory.getDefault().createID(container.getConnectNamespace(), clientURI), 
 						BackendChangeListener.class.getName(), null);
 			
 			Assert.isNotNull(listenerReferences);
@@ -116,5 +113,9 @@ public class RosgiRegistryHost implements IRosgiRegistryHost {
 			containerManagerServiceTracker.open();
 		}
 		return (IContainerManager) containerManagerServiceTracker.getService();
+	}
+
+	public void setClientURI(String uri) {
+		this.clientURI = uri;
 	}
 }
