@@ -2,6 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %name
 Bundle-SymbolicName: org.eclipse.pde.runtime.core
+Bundle-Localization: plugin
 Bundle-Version: 3.4.100.qualifier
 Bundle-Activator: org.eclipse.pde.runtime.core.PDERuntimeCorePlugin
 Require-Bundle: org.eclipse.core.runtime
