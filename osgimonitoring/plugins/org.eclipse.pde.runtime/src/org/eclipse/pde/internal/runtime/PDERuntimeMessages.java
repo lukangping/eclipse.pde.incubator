@@ -7,6 +7,7 @@
  *
  * Contributors:
  * IBM - Initial API and implementation
+ * Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 277648
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime;
 
@@ -26,6 +27,8 @@ public class PDERuntimeMessages extends NLS {
 	public static String ActiveMenuSection_6;
 	public static String ActiveMenuSection_7;
 
+	public static String RegistryView_connectAction_label;
+	public static String RegistryView_enterURL;
 	public static String RegistryView_refresh_label;
 	public static String RegistryView_refresh_tooltip;
 	public static String RegistryView_collapseAll_label;

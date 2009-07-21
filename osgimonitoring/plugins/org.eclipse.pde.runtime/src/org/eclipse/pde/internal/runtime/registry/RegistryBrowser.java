@@ -8,17 +8,20 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Jacek Pospychala <jacek.pospychala@pl.ibm.com> - bug 211127
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 277648
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.*;
 import java.util.List;
 import org.eclipse.core.runtime.*;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.action.*;
-import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.dialogs.*;
 import org.eclipse.jface.viewers.*;
+import org.eclipse.jface.window.Window;
 import org.eclipse.osgi.util.NLS;
 import org.eclipse.pde.internal.runtime.*;
 import org.eclipse.pde.internal.runtime.registry.RegistryBrowserContentProvider.Folder;
@@ -90,6 +93,7 @@ public class RegistryBrowser extends ViewPart {
 	private Action fGroupByServicesAction;
 	private Action fShowDisabledAction;
 	private Action fCopyAction;
+	private Action fConnectAction;
 
 	// advanced actions
 	private Action fStartAction;
@@ -156,8 +160,8 @@ public class RegistryBrowser extends ViewPart {
 		}
 	}
 
-	private void initializeModel() {
-		model = RegistryModelFactory.getRegistryModel("local:///"); //$NON-NLS-1$
+	private void initializeModel(String uri) {
+		model = RegistryModelFactory.getRegistryModel(uri);
 
 		fTreeViewer.setInput(model);
 		listener = new RegistryBrowserModelChangeListener(RegistryBrowser.this);
@@ -266,7 +270,7 @@ public class RegistryBrowser extends ViewPart {
 		if (fShowDisabledAction.isChecked())
 			fTreeViewer.addFilter(fDisabledFilter);
 
-		initializeModel();
+		initializeModel("local:///"); //$NON-NLS-1$
 
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(fTreeViewer.getControl(), IHelpContextIds.REGISTRY_VIEW);
 
@@ -304,6 +308,10 @@ public class RegistryBrowser extends ViewPart {
 		mgr.add(fShowDisabledAction);
 		mgr.add(new Separator());
 		mgr.add(fShowAdvancedOperationsAction);
+		if (Platform.getExtensionRegistry().getConfigurationElementsFor("org.eclipse.pde.runtime.backends").length != 0) { //$NON-NLS-1$
+			mgr.add(new Separator());
+			mgr.add(fConnectAction);
+		}
 
 	}
 
@@ -359,6 +367,27 @@ public class RegistryBrowser extends ViewPart {
 	 * toolbar and context menu actions
 	 */
 	private void makeActions() {
+		fConnectAction = new Action(PDERuntimeMessages.RegistryView_connectAction_label) {
+			public void run() {
+				InputDialog cd = new InputDialog(Display.getCurrent().getActiveShell(), PDERuntimeMessages.RegistryView_connectAction_label, PDERuntimeMessages.RegistryView_enterURL, new String(), new IInputValidator() {
+
+					public String isValid(String url) {
+						try {
+							// check if it's possible to instantiate given url
+							new URI(url);
+						} catch (URISyntaxException e) {
+							return e.getMessage();
+						}
+						return null;
+					}
+				});
+				if (cd.open() == Window.OK) {
+					model.disconnect();
+					initializeModel(cd.getValue());
+				}
+			}
+		};
+
 		fRefreshAction = new Action("refresh") { //$NON-NLS-1$
 			public void run() {
 				BusyIndicator.showWhile(fTreeViewer.getTree().getDisplay(), new Runnable() {
