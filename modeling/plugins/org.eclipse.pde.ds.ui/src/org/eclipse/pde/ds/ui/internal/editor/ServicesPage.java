@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: ServicesPage.java,v 1.3 2009/07/07 21:52:28 bcabe Exp $
+ * $Id: ServicesPage.java,v 1.4 2009/07/28 16:19:13 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor;
 
@@ -55,6 +55,7 @@ public class ServicesPage extends AbstractEmfFormPage {
 				Command command = AddCommand.create(editingDomain, ((Component) getEditor().getInputObservable().getValue()).getService(), ScrPackage.Literals.SERVICE__PROVIDE, p, idx);
 				editingDomain.getCommandStack().execute(command);
 
+				getViewer().refresh(); // FIXME this should not be needed :/
 				getViewer().setSelection(new StructuredSelection(AdapterFactoryEditingDomain.getWrapper(p, editingDomain)), true);
 			}
 		});
