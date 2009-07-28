@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *     Wojciech Galanciak - bug 282672
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282672, 283823
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
@@ -50,6 +50,7 @@ public class RegistryModelFactory {
 						Object obj = elements[i].createExecutableExtension("class"); //$NON-NLS-1$
 						if (obj instanceof RegistryBackend) {
 							RegistryBackend backend = (RegistryBackend) obj;
+							backend.setURI(s);
 							return new RegistryModel(backend);
 						}
 					} catch (CoreException e) {

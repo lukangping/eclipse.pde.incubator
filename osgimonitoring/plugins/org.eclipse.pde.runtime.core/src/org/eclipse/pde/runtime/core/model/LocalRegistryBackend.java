@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Wolfgang Schell <ws@jetztgrad.net> - bug 259348
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283823
  *******************************************************************************/
 package org.eclipse.pde.runtime.core.model;
 
@@ -507,8 +507,7 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 		packageAdmin.refreshPackages(new org.osgi.framework.Bundle[] {b});
 	}
 
-	public void setBackendChangeListener(BackendChangeListener listener) {
-		// TODO Auto-generated method stub
-
+	public void setURI(String uri) {
+		//in this backend it does nothing
 	}
 }

@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283823
  *******************************************************************************/
 package org.eclipse.pde.runtime.core.model;
 
@@ -34,5 +34,7 @@ public interface RegistryBackend {
 	public void setRegistryListener(BackendChangeListener listener);
 
 	public void initializeServices(IProgressMonitor monitor);
+
+	public void setURI(String uri);
 
 }
