@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Jacek Pospychala <jacek.pospychala@pl.ibm.com> - bug 211127
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 277648
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 277648, 284086, 283387
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
@@ -160,7 +160,7 @@ public class RegistryBrowser extends ViewPart {
 		}
 	}
 
-	private void initializeModel(String uri) {
+	void initializeModel(String uri) {
 		model = RegistryModelFactory.getRegistryModel(uri);
 
 		fTreeViewer.setInput(model);
@@ -169,7 +169,16 @@ public class RegistryBrowser extends ViewPart {
 
 		initializeModelJob = new Job(PDERuntimeMessages.RegistryBrowser_InitializingView) {
 			public IStatus run(IProgressMonitor monitor) {
-				model.connect(monitor, true);
+				if (! model.connect(monitor, true)) {
+					fTreeViewer.getControl().getDisplay().asyncExec(new Runnable() {
+						public void run() {
+							MessageDialog.openInformation(getSite().getShell(), PDERuntimeMessages.RegistryView_connectionError_title, PDERuntimeMessages.RegistryView_connectionError_message + model.getURI());
+						}
+					});
+					initializeModelJob = null;
+					initializeModel(LocalRegistryBackend.URI);
+					return Status.OK_STATUS;
+				}
 				initializeModelJob = null;
 				return monitor.isCanceled() ? Status.CANCEL_STATUS : Status.OK_STATUS;
 			}
@@ -534,7 +543,11 @@ public class RegistryBrowser extends ViewPart {
 	}
 
 	public void updateTitle() {
-		setContentDescription(getTitleSummary());
+		String uriString = ""; //$NON-NLS-1$
+		if (!LocalRegistryBackend.URI.equals(model.getURI())) //$NON-NLS-1$
+			uriString = "[" + model.getURI() + "] "; //$NON-NLS-1$ //$NON-NLS-2$
+
+		setContentDescription(uriString + getTitleSummary());
 	}
 
 	protected Tree getUndisposedTree() {

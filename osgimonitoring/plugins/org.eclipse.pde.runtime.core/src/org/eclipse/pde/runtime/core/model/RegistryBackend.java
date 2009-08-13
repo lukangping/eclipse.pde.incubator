@@ -37,4 +37,6 @@ public interface RegistryBackend {
 
 	public void setURI(String uri);
 
+	public String getURI();
+
 }

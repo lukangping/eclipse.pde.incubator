@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *    Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
+ *    Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283387
  *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry;
 
@@ -117,6 +117,9 @@ public class RegistryBrowserModelChangeListener implements ModelChangeListener {
 			int flag = deltas[i].getFlag();
 
 			switch (flag) {
+				case ModelChangeDelta.DISCONNECTED :
+					fRegistryBrowser.initializeModel(LocalRegistryBackend.URI);
+					break;
 				case ModelChangeDelta.ADDED :
 					if (topLevelElement(object)) {
 						fRegistryBrowser.add(object);

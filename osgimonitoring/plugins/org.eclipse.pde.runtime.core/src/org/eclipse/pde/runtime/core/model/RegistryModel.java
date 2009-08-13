@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283387, 284086
  *******************************************************************************/
 package org.eclipse.pde.runtime.core.model;
 
@@ -170,6 +170,10 @@ public class RegistryModel {
 			}
 			fireModelChangeEvent(delta);
 		}
+
+		public void backendDisconnect() {
+			fireModelChangeEvent(new ModelChangeDelta[] {new ModelChangeDelta(null, ModelChangeDelta.DISCONNECTED)});
+		}
 	};
 
 	private List listeners = new ArrayList();
@@ -194,6 +198,10 @@ public class RegistryModel {
 
 	public BackendChangeListener getBackendChangeListener() {
 		return this.backendListener;
+	}
+
+	public String getURI() {
+		return backend.getURI();
 	}
 
 	protected void addFragment(Bundle fragment) {

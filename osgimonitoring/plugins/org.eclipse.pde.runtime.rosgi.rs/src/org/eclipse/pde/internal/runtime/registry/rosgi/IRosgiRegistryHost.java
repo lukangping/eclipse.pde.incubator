@@ -1,24 +1,34 @@
+/*******************************************************************************
+ * Copyright (c) 2009 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.pde.internal.runtime.registry.rosgi;
 
 public interface IRosgiRegistryHost {
 	
-	public boolean connectRemoteBackendChangeListener();
+	boolean connectRemoteBackendChangeListener();
 	
-	public void setEnabled(long id, boolean enabled);
+	void setEnabled(long id, boolean enabled);
 
-	public void start(long id);
+	void start(long id);
 
-	public void stop(long id);
+	void stop(long id);
 
-	public String[] diagnose(long id);
+	String[] diagnose(long id);
 
-	public void initializeBundles();
+	void initializeBundles();
 
-	public void initializeExtensionPoints();
+	void initializeExtensionPoints();
 
-	public void initializeServices();
+	void initializeServices();
 	
-	public void disconnect();
+	void disconnect();
 	
-	public void setClientURI(String uri);
+	void setClientURI(String uri);
 }

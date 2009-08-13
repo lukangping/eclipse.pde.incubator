@@ -7,7 +7,7 @@
  *
  * Contributors:
  *     IBM Corporation - initial API and implementation
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283387
  *******************************************************************************/
 package org.eclipse.pde.runtime.core.model;
 
@@ -25,6 +25,7 @@ public class ModelChangeDelta {
 	public static final int STOPPED = 6;
 	public static final int RESOLVED = 7;
 	public static final int UNRESOLVED = 8;
+	public static final int DISCONNECTED = 9;
 
 	// TODO SWITCH from HEAVY ModelChangeDelta carrying whole object, to LIGHT delta - name, type (Bundle/Service/Ext/ExtPt), id
 	private ModelObject fObject;

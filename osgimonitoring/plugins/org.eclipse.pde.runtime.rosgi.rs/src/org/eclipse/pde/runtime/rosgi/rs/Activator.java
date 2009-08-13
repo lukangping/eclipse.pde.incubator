@@ -1,6 +1,18 @@
+/*******************************************************************************
+ * Copyright (c) 2009 IBM Corporation and others.
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors:
+ *     IBM Corporation - initial API and implementation
+ *******************************************************************************/
 package org.eclipse.pde.runtime.rosgi.rs;
 
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Plugin;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.ecf.core.ContainerCreateException;
 import org.eclipse.ecf.core.IContainer;
 import org.eclipse.ecf.core.IContainerManager;
@@ -9,7 +21,10 @@ import org.eclipse.ecf.remoteservice.IRemoteServiceRegistration;
 import org.eclipse.pde.internal.runtime.registry.rosgi.IRosgiRegistryHost;
 import org.eclipse.pde.internal.runtime.registry.rosgi.RosgiRegistryHost;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
+
+import ch.ethz.iks.r_osgi.RemoteOSGiService;
 
 public class Activator extends Plugin {
 
@@ -38,15 +53,16 @@ public class Activator extends Plugin {
 		try {
 			container = containerManager.getContainerFactory().createContainer("ecf.r_osgi.peer");
 		} catch (ContainerCreateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			getLog().log(new Status(IStatus.ERROR, PLUGIN_ID, e.getMessage(), e));
 		}
 		IRemoteServiceContainerAdapter containerAdapter = (IRemoteServiceContainerAdapter) container
 				.getAdapter(IRemoteServiceContainerAdapter.class); 
 		serviceRegistration = containerAdapter.registerRemoteService(
 				new String[] { IRosgiRegistryHost.class.getName() }, host, null); 
 		
-		System.out.println("IRosgiRegistryHost RemoteService registered");
+		ServiceReference rosgiReference = Activator.getDefault().getBundleContext().getServiceReference("ch.ethz.iks.r_osgi.RemoteOSGiService");
+		RemoteOSGiService rosgi = (RemoteOSGiService) Activator.getDefault().getBundleContext().getService(rosgiReference);
+		getLog().log(new Status(IStatus.INFO, PLUGIN_ID, "org.eclipse.pde.runtime.core is listening on r-osgi protocol, port " + rosgi.getListeningPort("r-osgi")));
 		return true;
 	}
 	

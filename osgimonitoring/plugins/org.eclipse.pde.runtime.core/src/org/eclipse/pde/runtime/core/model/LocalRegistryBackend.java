@@ -8,7 +8,7 @@
  * Contributors:
  *     IBM Corporation - initial API and implementation
  *     Wolfgang Schell <ws@jetztgrad.net> - bug 259348
- *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283823
+ *     Wojciech Galanciak <wojciech.galanciak@gmail.com> - bug 282804, 283823, 284086
  *******************************************************************************/
 package org.eclipse.pde.runtime.core.model;
 
@@ -24,6 +24,8 @@ import org.osgi.framework.*;
 import org.osgi.service.packageadmin.PackageAdmin;
 
 public class LocalRegistryBackend implements IRegistryEventListener, BundleListener, ServiceListener, RegistryBackend {
+
+	public static final String URI = "local:///"; //$NON-NLS-1$
 
 	private BackendChangeListener listener;
 
@@ -509,5 +511,9 @@ public class LocalRegistryBackend implements IRegistryEventListener, BundleListe
 
 	public void setURI(String uri) {
 		//in this backend it does nothing
+	}
+
+	public String getURI() {
+		return URI;
 	}
 }
