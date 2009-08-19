@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: DefaultEmfFormEditorConfig.java,v 1.2 2009/07/05 20:22:09 bcabe Exp $
+ * $Id: DefaultEmfFormEditorConfig.java,v 1.3 2009/08/19 14:54:21 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.editor;
 
@@ -34,7 +34,7 @@ public class DefaultEmfFormEditorConfig implements IEmfFormEditorConfig {
 	}
 
 	public boolean isShowSourcePage() {
-		return true;
+		return false;
 	}
 
 	public PDEFormToolkit createPDEFormToolkit(Display display) {
