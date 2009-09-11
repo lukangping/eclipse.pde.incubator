@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: DSEditor.java,v 1.5 2009/04/24 12:04:33 bcabe Exp $
+ * $Id: DSEditorConfig.java,v 1.2 2009/04/24 12:16:23 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor;
 
@@ -23,5 +23,10 @@ public class DSEditorConfig extends DefaultEmfFormEditorConfig {
 	@Override
 	public VALIDATE_ON_SAVE getValidateOnSave() {
 		return VALIDATE_ON_SAVE.VALIDATE_AND_WARN;
+	}
+
+	@Override
+	public boolean isShowSourcePage() {
+		return true;
 	}
 }
