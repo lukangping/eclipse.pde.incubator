@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: ComponentItemProvider.java,v 1.4 2009/02/15 00:42:47 bcabe Exp $
+ * $Id: ComponentItemProvider.java,v 1.5 2009/04/24 21:33:37 bcabe Exp $
  */
 package org.eclipse.pde.ds.scr.provider;
 
@@ -433,6 +433,11 @@ public class ComponentItemProvider
 				 FeatureMapUtil.createEntry
 					(ScrPackage.Literals.COMPONENT__PROPERTIES,
 					 ScrFactory.eINSTANCE.createProperties())));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ScrPackage.Literals.COMPONENT__REFERENCE,
+				 ScrFactory.eINSTANCE.createReference()));
 	}
 
 	/**
