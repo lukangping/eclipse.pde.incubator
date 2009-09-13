@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: IEmfFormEditorConfig.java,v 1.5 2009/09/13 18:04:04 bcabe Exp $
+ * $Id: IEmfFormEditorConfig.java,v 1.6 2009/09/13 18:18:43 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.editor;
 
@@ -54,6 +54,8 @@ public interface IEmfFormEditorConfig<E extends EmfFormEditor<O>, O extends EObj
 	boolean isShowOutlinePage();
 
 	boolean isShowSourcePage();
+
+	boolean isUseRichFormsTooltips();
 
 	/**
 	 * 
