@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: AbstractEmfFormPage.java,v 1.7 2009/08/07 11:03:24 bcabe Exp $
+ * $Id: RichTooltipHyperlinkAdapter.java,v 1.1 2009/09/13 20:32:58 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.internal.validation;
 
@@ -152,7 +152,6 @@ public class RichTooltipHyperlinkAdapter extends HyperlinkAdapter {
 		}
 		pw.println("</form>");
 		pw.flush();
-		//	System.out.println(sw.toString());
 		return sw.toString();
 	}
 
