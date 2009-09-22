@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: EmfFormEditor.java,v 1.28 2009/09/13 18:18:43 bcabe Exp $
+ * $Id: EmfFormEditor.java,v 1.29 2009/09/13 21:30:05 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.editor;
 
@@ -455,6 +455,7 @@ public abstract class EmfFormEditor<O extends EObject> extends FormEditor implem
 		_currentEObject = (O) resource.getContents().get(0);
 		_observableValue.setValue(_currentEObject);
 		_currentEObject.eAdapters().add(_validator);
+		validate();
 	}
 
 	/**
