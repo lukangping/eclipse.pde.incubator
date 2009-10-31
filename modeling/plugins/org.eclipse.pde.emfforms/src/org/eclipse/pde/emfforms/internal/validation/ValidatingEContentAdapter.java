@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: ValidatingEContentAdapter.java,v 1.11 2009/09/22 14:54:31 bcabe Exp $
+ * $Id: ValidatingEContentAdapter.java,v 1.12 2009/10/23 16:14:21 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.internal.validation;
 
@@ -100,7 +100,7 @@ public class ValidatingEContentAdapter extends EContentAdapter {
 
 	public void validate() {
 		IFormPage activePageInstance = _formEditor.getActivePageInstance();
-		if (_formEditor.getActivePageInstance() == null) {
+		if (activePageInstance == null || activePageInstance.getManagedForm() == null) {
 			return;
 		}
 
