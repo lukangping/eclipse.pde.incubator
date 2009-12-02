@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: PropertiesMasterDetail.java,v 1.16 2009/09/11 22:08:47 bcabe Exp $
+ * $Id: PropertiesMasterDetail.java,v 1.17 2009/09/12 14:40:57 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor.masterdetail;
 
@@ -72,7 +72,7 @@ public class PropertiesMasterDetail extends EmfMasterDetailBlock {
 	}
 
 	@Override
-	protected IFilter getCreateSiblingContextMenuFilter() {
+	public IFilter getCreateSiblingContextMenuFilter() {
 		return new IFilter() {
 			public boolean select(Object toTest) {
 				Object unwrappedElement = AdapterFactoryEditingDomain.unwrap(toTest);

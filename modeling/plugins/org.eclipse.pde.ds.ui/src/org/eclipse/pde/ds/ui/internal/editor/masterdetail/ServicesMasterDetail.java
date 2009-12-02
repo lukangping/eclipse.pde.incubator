@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: ServicesMasterDetail.java,v 1.11 2009/09/11 22:08:47 bcabe Exp $
+ * $Id: ServicesMasterDetail.java,v 1.12 2009/09/12 14:40:57 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor.masterdetail;
 
@@ -97,7 +97,7 @@ public class ServicesMasterDetail extends EmfMasterDetailBlock {
 	}
 
 	@Override
-	protected IFilter getCreateSiblingContextMenuFilter() {
+	public IFilter getCreateSiblingContextMenuFilter() {
 		return new IFilter() {
 			public boolean select(Object toTest) {
 				Object unwrappedElement = AdapterFactoryEditingDomain.unwrap(toTest);
