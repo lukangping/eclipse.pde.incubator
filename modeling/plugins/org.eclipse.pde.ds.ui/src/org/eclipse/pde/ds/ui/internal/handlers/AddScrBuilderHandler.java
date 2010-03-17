@@ -2,8 +2,7 @@ package org.eclipse.pde.ds.ui.internal.handlers;
 
 import org.eclipse.core.commands.*;
 import org.eclipse.core.resources.*;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.core.runtime.*;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
@@ -24,11 +23,22 @@ public class AddScrBuilderHandler extends AbstractHandler {
 	 * the command has been executed, so extract extract the needed information
 	 * from the application context.
 	 */
+	/* (non-Javadoc)
+	 * @see org.eclipse.core.commands.AbstractHandler#execute(org.eclipse.core.commands.ExecutionEvent)
+	 */
 	public Object execute(ExecutionEvent event) throws ExecutionException {
 		ISelection sel = HandlerUtil.getCurrentSelection(event);
 		if (!sel.isEmpty()) {
 			if (sel instanceof IStructuredSelection) {
-				IProject project = (IProject) ((IStructuredSelection) sel).getFirstElement();
+				Object elem = ((IStructuredSelection) sel).getFirstElement();
+				IProject project;
+				if (elem instanceof IProject)
+					project = (IProject) elem;
+				else if (elem instanceof IAdaptable) {
+					project = (IProject) ((IAdaptable) elem).getAdapter(IProject.class);
+				} else {
+					return null;
+				};
 
 				IProjectDescription projectDescription = null;
 				try {
