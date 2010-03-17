@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: ServicesMasterDetail.java,v 1.12 2009/09/12 14:40:57 bcabe Exp $
+ * $Id: ServicesMasterDetail.java,v 1.13 2009/12/02 11:35:15 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor.masterdetail;
 
@@ -16,12 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import org.eclipse.emf.edit.domain.AdapterFactoryEditingDomain;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.pde.ds.scr.*;
 import org.eclipse.pde.ds.ui.internal.editor.detailpart.services.ProvideDetailsPart;
 import org.eclipse.pde.ds.ui.internal.editor.detailpart.services.ReferenceDetailsPart;
 import org.eclipse.pde.emfforms.editor.EmfFormEditor;
 import org.eclipse.pde.emfforms.editor.EmfMasterDetailBlock;
+import org.eclipse.pde.emfforms.editor.actions.CreateElementDropDownAction;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.forms.IDetailsPage;
@@ -32,7 +34,12 @@ public class ServicesMasterDetail extends EmfMasterDetailBlock {
 	private Button _btnAddRequired;
 
 	public ServicesMasterDetail(EmfFormEditor<?> editor) {
-		super(editor, "Services", EmfMasterDetailBlock.USE_CUSTOM_PUSH_BUTTONS);
+		super(editor, "Services", EmfMasterDetailBlock.USE_CUSTOM_PUSH_BUTTONS | USE_GENERIC_TOOLBAR_BUTTONS);
+	}
+
+	@Override
+	protected Action createCustomToolbarAddAction() {
+		return new CreateElementDropDownAction(this);
 	}
 
 	@Override
