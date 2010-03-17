@@ -8,13 +8,13 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: DSEditor.java,v 1.11 2009/07/18 13:52:29 bcabe Exp $
+ * $Id: DSEditor.java,v 1.12 2009/09/13 18:04:02 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.eclipse.core.resources.*;
+import org.eclipse.core.resources.IResourceChangeListener;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.pde.ds.scr.Component;
 import org.eclipse.pde.ds.scr.provider.ScrItemProviderAdapterFactory;
@@ -41,13 +41,6 @@ public class DSEditor extends EmfFormEditor<Component> implements IResourceChang
 	}
 
 	@Override
-	public void createModel() {
-		super.createModel();
-
-		ResourcesPlugin.getWorkspace().addResourceChangeListener(this, IResourceChangeEvent.POST_CHANGE);
-	}
-
-	@Override
 	protected List<AbstractEmfFormPage> getPagesToAdd() throws PartInitException {
 		List<AbstractEmfFormPage> pages = new ArrayList<AbstractEmfFormPage>(1);
 
@@ -69,12 +62,6 @@ public class DSEditor extends EmfFormEditor<Component> implements IResourceChang
 		ArrayList<Image> list = new ArrayList<Image>(1);
 		list.add(null);
 		return list;
-	}
-
-	@Override
-	public void dispose() {
-		ResourcesPlugin.getWorkspace().removeResourceChangeListener(this);
-		super.dispose();
 	}
 
 	@Override
