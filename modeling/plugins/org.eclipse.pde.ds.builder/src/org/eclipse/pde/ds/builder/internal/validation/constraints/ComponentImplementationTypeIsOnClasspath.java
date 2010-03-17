@@ -8,16 +8,17 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: ComponentImplementationTypeIsOnClasspath.java,v 1.3 2009/07/02 21:54:54 bcabe Exp $
+ * $Id: ComponentImplementationTypeIsOnClasspath.java,v 1.4 2009/07/03 20:14:25 bcabe Exp $
  */
 package org.eclipse.pde.ds.builder.internal.validation.constraints;
+
+import org.eclipse.pde.emfforms.builder.EMFHelper;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.emf.validation.AbstractModelConstraint;
 import org.eclipse.emf.validation.IValidationContext;
 import org.eclipse.emf.validation.model.ConstraintStatus;
 import org.eclipse.jdt.core.*;
-import org.eclipse.pde.ds.builder.internal.validation.EMFHelper;
 import org.eclipse.pde.ds.builder.internal.validation.EnhancedConstraintStatus;
 import org.eclipse.pde.ds.scr.Implementation;
 import org.eclipse.pde.ds.scr.ScrPackage;

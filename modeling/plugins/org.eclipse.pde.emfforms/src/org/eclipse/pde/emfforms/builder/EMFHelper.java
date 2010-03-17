@@ -1,4 +1,4 @@
-package org.eclipse.pde.ds.builder.internal.validation;
+package org.eclipse.pde.emfforms.builder;
 
 import org.eclipse.core.resources.*;
 import org.eclipse.core.runtime.Path;

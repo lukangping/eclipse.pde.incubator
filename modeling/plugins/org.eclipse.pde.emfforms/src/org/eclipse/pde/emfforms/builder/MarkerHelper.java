@@ -1,4 +1,4 @@
-package org.eclipse.pde.ds.builder.internal.validation;
+package org.eclipse.pde.emfforms.builder;
 
 import java.util.*;
 import org.eclipse.core.resources.*;
@@ -33,8 +33,7 @@ public final class MarkerHelper {
 		}
 	}
 
-	private static void createMarker(Diagnostic diagnostic,
-			Map<URI, IFile> visitedResources) throws CoreException {
+	private static void createMarker(Diagnostic diagnostic, Map<URI, IFile> visitedResources) throws CoreException {
 		String markerType = MarkerHelper.VALIDATION_MARKER_TYPE;
 
 		EObject target = (EObject) diagnostic.getData().get(0);
@@ -43,8 +42,7 @@ public final class MarkerHelper {
 
 		// Normalize the URI to something that we can deal with like file or
 		// platform scheme
-		resourceUri = r.getResourceSet().getURIConverter().normalize(
-				resourceUri);
+		resourceUri = r.getResourceSet().getURIConverter().normalize(resourceUri);
 
 		IFile file = visitedResources.get(resourceUri);
 
@@ -62,31 +60,29 @@ public final class MarkerHelper {
 			IMarker marker = file.createMarker(markerType);
 
 			marker.setAttribute(IMarker.SOURCE_ID, diagnostic.getCode());
-			marker.setAttribute(EValidator.URI_ATTRIBUTE, EcoreUtil.getURI(
-					target).toString());
+			marker.setAttribute(EValidator.URI_ATTRIBUTE, EcoreUtil.getURI(target).toString());
 
 			switch (diagnostic.getSeverity()) {
-			case IStatus.INFO:
-				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
-				marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_LOW);
-				break;
-			case IStatus.WARNING:
-				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
-				marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
-				break;
-			case IStatus.ERROR:
-			case IStatus.CANCEL:
-				marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-				marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
-				break;
+				case IStatus.INFO :
+					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_INFO);
+					marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_LOW);
+					break;
+				case IStatus.WARNING :
+					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_WARNING);
+					marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_NORMAL);
+					break;
+				case IStatus.ERROR :
+				case IStatus.CANCEL :
+					marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+					marker.setAttribute(IMarker.PRIORITY, IMarker.PRIORITY_HIGH);
+					break;
 			}
 
 			marker.setAttribute(IMarker.MESSAGE, diagnostic.getMessage());
 		}
 	}
 
-	public static void createMarkers(final Diagnostic validationDiagnostic,
-			IProgressMonitor monitor) throws CoreException {
+	public static void createMarkers(final Diagnostic validationDiagnostic, IProgressMonitor monitor) throws CoreException {
 		if (validationDiagnostic.getSeverity() == Diagnostic.OK) {
 			return;
 		}
@@ -99,13 +95,10 @@ public final class MarkerHelper {
 				final Map<URI, IFile> visitedResources = new HashMap<URI, IFile>();
 
 				if (!validationDiagnostic.getChildren().isEmpty()) {
-					m.beginTask("Create validation markers",
-							validationDiagnostic.getChildren().size());
-					for (Diagnostic diagnostic : validationDiagnostic
-							.getChildren()) {
+					m.beginTask("Create validation markers", validationDiagnostic.getChildren().size());
+					for (Diagnostic diagnostic : validationDiagnostic.getChildren()) {
 						List<?> data = diagnostic.getData();
-						if (data != null && !data.isEmpty()
-								&& data.get(0) instanceof EObject) {
+						if (data != null && !data.isEmpty() && data.get(0) instanceof EObject) {
 							createMarker(diagnostic, visitedResources);
 						}
 
