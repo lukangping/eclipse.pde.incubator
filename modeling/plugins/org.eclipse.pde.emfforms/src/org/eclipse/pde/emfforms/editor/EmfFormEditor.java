@@ -8,9 +8,11 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: EmfFormEditor.java,v 1.35 2009/12/22 14:19:11 bcabe Exp $
+ * $Id: EmfFormEditor.java,v 1.36 2010/01/04 13:27:36 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.editor;
+
+import org.eclipse.pde.emfforms.internal.editor.SharedClipboardAdapterFactoryEditingDomain;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -550,30 +552,6 @@ public abstract class EmfFormEditor<O extends EObject> extends FormEditor implem
 					}
 				}
 			}
-		}
-	}
-
-	private static class SharedClipboardAdapterFactoryEditingDomain extends AdapterFactoryEditingDomain {
-		private static Collection<Object> clipboard;
-
-		/**
-		 * @param adapterFactory
-		 * @param commandStack
-		 * @param resourceToReadOnlyMap
-		 */
-		public SharedClipboardAdapterFactoryEditingDomain(AdapterFactory adapterFactory, CommandStack commandStack, Map<Resource, Boolean> resourceToReadOnlyMap) {
-			super(adapterFactory, commandStack, resourceToReadOnlyMap);
-
-		}
-
-		@Override
-		public Collection<Object> getClipboard() {
-			return SharedClipboardAdapterFactoryEditingDomain.clipboard;
-		}
-
-		@Override
-		public void setClipboard(Collection<Object> clipboard) {
-			SharedClipboardAdapterFactoryEditingDomain.clipboard = clipboard;
 		}
 	}
 
