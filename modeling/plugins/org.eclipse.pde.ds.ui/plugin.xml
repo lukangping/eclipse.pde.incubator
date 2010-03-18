@@ -7,7 +7,6 @@
             class="org.eclipse.pde.ds.ui.internal.editor.DSEditor"
             contributorClass="org.eclipse.pde.emfforms.editor.EmfActionBarContributor"
             default="true"
-            extensions="numerical"
             filenames="component.xml"
             icon="icons/obj16/ds_obj.gif"
             id="org.eclipse.pde.ds.ui.emf.editor"
