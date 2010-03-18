@@ -8,7 +8,7 @@
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *
- * $Id: PropertiesDetailsPart.java,v 1.2 2009/07/06 21:08:14 bcabe Exp $
+ * $Id: PropertiesDetailsPart.java,v 1.3 2009/07/07 09:36:46 bcabe Exp $
  */
 package org.eclipse.pde.ds.ui.internal.editor.detailpart.properties;
 
@@ -57,7 +57,7 @@ public class PropertiesDetailsPart extends EmfDetailsPart {
 
 	protected void bind(DataBindingContext bindingContext) {
 		// Entry
-		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(propertiesComposite.getTextEntry()), EMFEditProperties.value(getEditingDomain(), ScrPackage.eINSTANCE.getProperties_Entry()).observeDetail(getCurrentSelection()), null, null);
+		bindingContext.bindValue(WidgetProperties.text(SWT.FocusOut).observe(propertiesComposite.getTextEntry()), EMFEditProperties.value(getEditingDomain(), ScrPackage.eINSTANCE.getProperties_Entry()).observeDetail(getCurrentSelection()));
 	}
 
 	public void setFocus() {
