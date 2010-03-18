@@ -9,6 +9,7 @@
             isConfigurable="true">
          <run
                class="org.eclipse.pde.ds.builder.internal.validation.ScrBuilder">
+               <parameter name="content-type" value="org.eclipse.pde.ds.content-type" />
          </run>
       </builder>
    </extension>
