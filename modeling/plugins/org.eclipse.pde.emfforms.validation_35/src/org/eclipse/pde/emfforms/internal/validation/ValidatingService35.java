@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2009 Anyware Technologies and others.
+ * Copyright (c) 2009, 2010 Anyware Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,8 +7,9 @@
  * 
  * Contributors:
  *     Anyware Technologies - initial API and implementation
+ *     Jacques LESCOT <JLescot@sierrawireless.com> - bug 210585
  *
- * $Id: ValidatingService35.java,v 1.3 2009/08/21 20:25:45 bcabe Exp $
+ * $Id: ValidatingService35.java,v 1.4 2009/08/22 11:36:36 bcabe Exp $
  */
 package org.eclipse.pde.emfforms.internal.validation;
 
@@ -17,6 +18,7 @@ import java.util.List;
 import org.eclipse.core.databinding.Binding;
 import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.observable.IObserving;
+import org.eclipse.core.databinding.observable.list.IObservableList;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.jface.databinding.swt.ISWTObservable;
@@ -64,8 +66,7 @@ public class ValidatingService35 implements ValidatingService {
 		List<?> diagnosticData = diagnostic.getData();
 		if (diagnosticData.size() >= 2) {
 			if (diagnosticData.get(0) == emfObservable.getObserved()) {
-				if (diagnosticData.get(1) == ((IObservableValue) emfObservable)
-						.getValueType()) {
+				if ((emfObservable instanceof IObservableValue && (diagnosticData.get(1) == ((IObservableValue) emfObservable).getValueType())) || (emfObservable instanceof IObservableList && (diagnosticData.get(1) == ((IObservableList) emfObservable).getElementType()))) {
 					if (swtObservable.getWidget() instanceof Control) {
 						Control control = (Control) swtObservable.getWidget();
 						messageManager.addMessage(swtObservable, diagnostic
