@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>emfforms</artifactId>
+        <groupId>org.eclipse.pde</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+  <groupId>org.eclipse.pde.emfforms</groupId>
+  <artifactId>bundles</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>org.eclipse.pde.ds</module>
+    <module>org.eclipse.pde.ds.builder</module>
+    <module>org.eclipse.pde.ds.edit</module>
+    <module>org.eclipse.pde.ds.ui</module>
+    <module>org.eclipse.pde.emfforms</module>
+    <module>org.eclipse.pde.emfforms.validation_35</module>
+  </modules>
+</project>
