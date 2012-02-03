@@ -1,10 +1,10 @@
 /**
- * Copyright (c) 2009, 2010 Anyware Technologies and others.
+ * Copyright (c) 2009, 2012 Anyware Technologies and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
+ *
  * Contributors:
  *     Anyware Technologies - initial API and implementation
  *     Sebastien Moran <smoran@sierrawireless.com> - bug 292926
@@ -69,7 +69,7 @@ public class ValidatingEContentAdapter extends EContentAdapter {
 					boolean result = true;
 					for (Iterator<EObject> i = eContents.iterator(); i.hasNext() && (result || diagnostics != null);) {
 						EObject child = i.next();
-						// in case of cross resource containment, 
+						// in case of cross resource containment,
 						// avoid to validate a child which are not in the container resource
 						Resource eChildResource = child.eResource();
 						if (eContainerResource != null && eChildResource == eContainerResource) {
@@ -86,7 +86,7 @@ public class ValidatingEContentAdapter extends EContentAdapter {
 	private void forceValidatingService34Registration() {
 		if (getValidatorService() == null) {
 			BundleContext context = Activator.getDefault().getBundle().getBundleContext();
-			Properties serviceProperties = new Properties();
+			Dictionary<String, Object> serviceProperties = new Hashtable<String, Object>();
 			serviceProperties.put(Constants.SERVICE_RANKING, 10);
 			context.registerService(ValidatingService.class.getName(), new ValidatingService34(), serviceProperties);
 		}
