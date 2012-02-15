@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2005, 2009 CHISEL Group, University of Victoria, Victoria, BC,
+ * Copyright 2005, 2012 CHISEL Group, University of Victoria, Victoria, BC,
  * Canada. All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -60,6 +60,9 @@ import org.eclipse.zest.core.widgets.Graph;
  */
 /* package */class VisualizationForm {
 
+	private static final String SymbolicName_Match_Pattern = "Bundle Name Match Regexp";
+	private static final String SymbolicName_Exclude_Pattern = "Bundle Name Exclude Regexp";
+	private static final String Hide_Fragments = "Hide Fragments";
 	/*
 	 * These are all the strings used in the form. These can probably be
 	 * abstracted for internationalization
@@ -410,6 +413,38 @@ import org.eclipse.zest.core.widgets.Graph;
 
 		setDependencyPath(false);
 		dependencyOptions.setClient(dependencyOptionsComposite);
+		
+		
+		Composite filteringComposite = this.toolkit.createComposite(controlComposite, SWT.NONE);
+		filteringComposite.setLayout(new GridLayout(1, false));
+		final Button hideFragmentsButton = this.toolkit.createButton(filteringComposite, Hide_Fragments, SWT.CHECK);
+		hideFragmentsButton.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				view.setHideFragments(hideFragmentsButton.getSelection());				
+			}
+		});
+		
+		this.toolkit.createLabel(filteringComposite, SymbolicName_Match_Pattern);
+		final Text symbolicNamesMatchPattern = this.toolkit.createText(filteringComposite, "", SWT.BORDER);
+		symbolicNamesMatchPattern.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		symbolicNamesMatchPattern.addModifyListener(new ModifyListener() {
+			
+			public void modifyText(ModifyEvent arg0) {
+				view.setSymbolicNameMatchPattern(symbolicNamesMatchPattern.getText());
+			}
+		});
+		
+		this.toolkit.createLabel(filteringComposite, SymbolicName_Exclude_Pattern);
+		final Text symbolicNamesExcludePattern = this.toolkit.createText(filteringComposite, "", SWT.BORDER);
+		symbolicNamesExcludePattern.setLayoutData(new GridData(SWT.FILL, SWT.NONE, true, false));
+		symbolicNamesExcludePattern.addModifyListener(new ModifyListener() {
+			
+			public void modifyText(ModifyEvent arg0) {
+				view.setSymbolicNameExcludePattern(symbolicNamesExcludePattern.getText());
+			}
+		});
+		
+		
 
 		controls.setClient(controlComposite);
 	}

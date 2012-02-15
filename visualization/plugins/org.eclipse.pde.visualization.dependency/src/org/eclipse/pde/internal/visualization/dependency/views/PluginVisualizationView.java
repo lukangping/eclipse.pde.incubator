@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright 2005, 2000 CHISEL Group, University of Victoria, Victoria, BC,
+ * Copyright 2005, 2012 CHISEL Group, University of Victoria, Victoria, BC,
  * Canada. All rights reserved. This program and the accompanying materials are
  * made available under the terms of the Eclipse Public License v1.0 which
  * accompanies this distribution, and is available at
@@ -702,6 +702,34 @@ public class PluginVisualizationView extends ViewPart implements IZoomableWorkbe
 
 	public AbstractZoomableViewer getZoomableViewer() {
 		return viewer;
+	}
+
+	void setSymbolicNameMatchPattern(String pPattern) {
+		if (pPattern.trim().length() >0) {
+			this.contentProvider.setSymbolicNamesPatternsToMatch(new String[]{pPattern.trim()});
+		} else {
+			this.contentProvider.setSymbolicNamesPatternsToMatch(new String[0]);
+		}
+		
+		viewer.refresh();
+		viewer.applyLayout();
+	}
+
+	void setSymbolicNameExcludePattern(String pPattern) {
+		if (pPattern.trim().length() >0) {
+			this.contentProvider.setSymbolicNamesPatternsToExcludes(new String[]{pPattern.trim()});
+		} else {
+			this.contentProvider.setSymbolicNamesPatternsToExcludes(new String[0]);
+		}
+		
+		viewer.refresh();
+		viewer.applyLayout();
+	}
+
+	public void setHideFragments(boolean pHideFragments) {		
+		this.contentProvider.setHideFragments(pHideFragments);		
+		viewer.refresh();
+		viewer.applyLayout();
 	}
 
 }
